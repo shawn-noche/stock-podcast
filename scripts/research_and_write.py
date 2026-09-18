@@ -13,9 +13,10 @@ import json
 import os
 import re
 import sys
+import time
 from datetime import datetime, timezone
 
-import requests
+import anthropic
 
 import config
 
@@ -23,9 +24,8 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PENDING_DIR = os.path.join(ROOT, "pending")
 USED_STOCKS_PATH = os.path.join(ROOT, "state", "used_stocks.json")
 
-ANTHROPIC_URL = "https://api.anthropic.com/v1/messages"
 ANTHROPIC_MODEL = "claude-sonnet-5"
-ANTHROPIC_VERSION = "2023-06-01"
+MAX_ATTEMPTS = 3
 
 SCHEMA_INSTRUCTIONS = """
 Respond with ONLY a single JSON object, no markdown code fences, no commentary
@@ -178,37 +178,49 @@ def extract_json(text):
 
 
 def call_claude(prompt, api_key):
-    resp = requests.post(
-        ANTHROPIC_URL,
-        headers={
-            "x-api-key": api_key,
-            "anthropic-version": ANTHROPIC_VERSION,
-            "content-type": "application/json",
-        },
-        json={
-            "model": ANTHROPIC_MODEL,
-            "max_tokens": 8192,
-            "tools": [
-                {
-                    "type": "web_search_20260318",
-                    "name": "web_search",
-                    "max_uses": 8,
-                }
-            ],
-            "messages": [{"role": "user", "content": prompt}],
-        },
-        timeout=600,
-    )
-    if resp.status_code != 200:
-        die(f"Claude API request failed ({resp.status_code}): {resp.text[:2000]}")
-    data = resp.json()
-    if data.get("stop_reason") == "max_tokens":
-        print("WARNING: response was truncated at max_tokens; output may be incomplete.", file=sys.stderr)
-    text_parts = [
-        block["text"] for block in data.get("content", [])
-        if block.get("type") == "text"
-    ]
-    return "\n".join(text_parts)
+    # This request can involve several web searches plus writing a long
+    # script, which can take minutes. Streaming keeps the connection
+    # actively fed with data the whole time instead of sitting idle
+    # waiting for one big response -- idle connections like that get
+    # silently dropped by network infrastructure in between (this is what
+    # caused the very first run to fail with a RemoteDisconnected error).
+    client = anthropic.Anthropic(api_key=api_key, max_retries=2, timeout=900.0)
+
+    last_error = None
+    for attempt in range(1, MAX_ATTEMPTS + 1):
+        try:
+            print(f"Calling Claude API (attempt {attempt}/{MAX_ATTEMPTS})...")
+            text_parts = []
+            with client.messages.stream(
+                model=ANTHROPIC_MODEL,
+                max_tokens=8192,
+                tools=[
+                    {
+                        "type": "web_search_20260318",
+                        "name": "web_search",
+                        "max_uses": 8,
+                    }
+                ],
+                messages=[{"role": "user", "content": prompt}],
+            ) as stream:
+                for event in stream:
+                    if event.type == "content_block_delta" and getattr(event.delta, "type", None) == "text_delta":
+                        text_parts.append(event.delta.text)
+                    elif event.type == "content_block_start" and getattr(event.content_block, "type", None) == "server_tool_use":
+                        print("  ...running a web search")
+                final_message = stream.get_final_message()
+            if final_message.stop_reason == "max_tokens":
+                print("WARNING: response was truncated at max_tokens; output may be incomplete.", file=sys.stderr)
+            return "".join(text_parts)
+        except (anthropic.APIConnectionError, anthropic.APITimeoutError, anthropic.InternalServerError) as e:
+            last_error = e
+            print(f"  attempt {attempt} failed with a transient error: {e}", file=sys.stderr)
+            if attempt < MAX_ATTEMPTS:
+                time.sleep(10 * attempt)
+        except anthropic.APIStatusError as e:
+            die(f"Claude API request failed ({e.status_code}): {e.response.text[:2000]}")
+
+    die(f"Claude API request failed after {MAX_ATTEMPTS} attempts: {last_error}")
 
 
 def validate_episode(ep):
