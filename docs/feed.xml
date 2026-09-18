@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Under the Radar</title>
+    <link>https://shawn-noche.github.io/stock-podcast/</link>
+    <atom:link href="https://shawn-noche.github.io/stock-podcast/feed.xml" rel="self" type="application/rss+xml" />
+    <language>en-us</language>
+    <description>A daily deep dive into overlooked, under-the-radar stocks, with a weekly recap every Saturday and a look ahead every Sunday. Two hosts, one under-covered ticker at a time. Not financial advice.</description>
+    <itunes:summary>A daily deep dive into overlooked, under-the-radar stocks, with a weekly recap every Saturday and a look ahead every Sunday. Two hosts, one under-covered ticker at a time. Not financial advice.</itunes:summary>
+    <itunes:author>Under the Radar Podcast</itunes:author>
+    <itunes:owner>
+      <itunes:name>Shawn</itunes:name>
+      <itunes:email>shawnoche@gmail.com</itunes:email>
+    </itunes:owner>
+    <itunes:image href="https://shawn-noche.github.io/stock-podcast/cover.jpg" />
+    <image>
+      <url>https://shawn-noche.github.io/stock-podcast/cover.jpg</url>
+      <title>Under the Radar</title>
+      <link>https://shawn-noche.github.io/stock-podcast/</link>
+    </image>
+    <itunes:category text="Business">
+      <itunes:category text="Investing" />
+    </itunes:category>
+    <itunes:explicit>false</itunes:explicit>
+    <lastBuildDate>Fri, 18 Sep 2026 20:22:58 +0000</lastBuildDate>
+
+  </channel>
+</rss>
