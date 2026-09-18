@@ -1,0 +1,51 @@
+name: Produce Episode
+
+on:
+  schedule:
+    # 10:00 UTC daily (~6:00am ET). Adjust for daylight saving as needed.
+    - cron: '0 10 * * *'
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install ffmpeg
+        run: sudo apt-get update -y && sudo apt-get install -y ffmpeg
+
+      - name: Install Python dependencies
+        run: pip install requests
+
+      - name: Research and write today's script
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: python scripts/research_and_write.py
+
+      - name: Generate audio for pending episodes
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: python scripts/generate_audio.py
+
+      - name: Rebuild RSS feed
+        run: python scripts/build_rss.py
+
+      - name: Commit and push published episode
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add docs pending state
+          git diff --cached --quiet && echo "Nothing to commit" || git commit -m "Publish episode $(date -u +%Y-%m-%d)"
+          git push
