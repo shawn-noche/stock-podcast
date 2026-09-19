@@ -4,7 +4,18 @@ on:
   schedule:
     # 10:00 UTC daily (~6:00am ET). Adjust for daylight saving as needed.
     - cron: '0 10 * * *'
-  workflow_dispatch: {}
+  workflow_dispatch:
+    inputs:
+      episode_type:
+        description: "Force an episode type (leave as 'auto' to use today's normal schedule)"
+        required: false
+        default: auto
+        type: choice
+        options:
+          - auto
+          - weekday_deep_dive
+          - saturday_recap
+          - sunday_preview
 
 permissions:
   contents: write
@@ -32,6 +43,7 @@ jobs:
       - name: Research and write today's script
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          FORCE_EPISODE_TYPE: ${{ github.event.inputs.episode_type == 'auto' && '' || github.event.inputs.episode_type }}
         run: python scripts/research_and_write.py
 
       - name: Generate audio for pending episodes
