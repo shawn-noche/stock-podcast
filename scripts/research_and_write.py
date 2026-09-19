@@ -3,11 +3,29 @@
 (with its server-side web search tool), then drops the result into
 pending/ for generate_audio.py to turn into audio.
 
-This is the one step in the pipeline that needs real judgment and real
-research: picking a genuinely under-the-radar stock, reading its investor
-relations page and two most recent earnings reports, pulling recent news,
-and writing natural two-host dialogue. Runs inside GitHub Actions, which
-has normal internet access.
+This runs as TWO separate Claude API calls rather than one combined call:
+
+1. RESEARCH: has the web_search tool, produces a short plain-text research
+   brief (not the episode itself).
+2. WRITE: has NO tools at all, takes the research brief as input, and
+   writes the final two-host JSON episode script.
+
+Why split it up: the original single-call design asked the model to
+search AND write a ~3000-word script in one continuous exchange. That
+combination turned out to be fragile in two ways that kept causing failed
+runs -- (a) after using up its search budget the model sometimes kept
+retrying refused searches many more times instead of stopping, and each
+retry re-sends the whole growing conversation as input tokens, which is
+what caused one run to cost $3.23; and (b) by the time a long research
+phase finished, there often wasn't enough of the max_tokens budget left
+for the model to finish writing the full script, so it got cut off
+mid-way with no usable output. Splitting the work in two makes each call
+much easier to bound: the research call only has to produce a short brief
+(so truncation is far less likely and a failed attempt is cheap to retry),
+and the write call structurally CANNOT run away on search, because it
+doesn't have the search tool at all.
+
+Runs inside GitHub Actions, which has normal internet access.
 """
 import json
 import os
@@ -49,8 +67,22 @@ The "lines" array is the full two-host conversation, in order. Write it as a
 natural, energetic back-and-forth between two co-hosts named Alex and
 Jordan -- not a lecture, not a script one person reads. Use contractions,
 let them react to and build on what the other just said, disagree a little
-where reasonable, and vary sentence length. Do not use stage directions or
-sound effect cues, only spoken words.
+where reasonable, and vary sentence length.
+
+IMPORTANT for how the audio will sound: each line is recorded separately by
+a text-to-speech voice and then stitched together with a short pause
+between lines -- there is no way to make two lines play at once. So do NOT
+write ultra-short one-or-two-word interjections that depend on quick timing
+to land ("Right." "Exactly." "Totally." as their own line), and do NOT have
+one host cut off or finish the other's sentence -- that reads fine on paper
+but with a pause inserted between every line it sounds like the hosts are
+talking over each other. Instead, give each line a complete, clear thought
+of at least a full sentence, and have hosts respond to what the other
+FINISHED saying, not interrupt mid-thought. Reactions and quick agreement
+are fine as long as they're a full beat ("That's exactly the surprising
+part to me.") rather than a bare one-word interjection standing alone.
+
+Do not use stage directions or sound effect cues, only spoken words.
 
 The disclaimer below must appear, spoken in full by one of the hosts, near
 the very end of the episode, immediately before the final sign-off line(s):
@@ -110,8 +142,11 @@ def episode_type_for_weekday(weekday):
     return "weekday_deep_dive"
 
 
-def build_prompt(episode_type, today_str, avoid_tickers, assigned_candidate=None):
-    host_names = "Alex and Jordan"
+# ---------------------------------------------------------------------------
+# Stage 1: research (has web_search, produces a short plain-text brief)
+# ---------------------------------------------------------------------------
+
+def build_research_prompt(episode_type, today_str, avoid_tickers, assigned_candidate=None):
     if episode_type == "weekday_deep_dive":
         avoid_str = ", ".join(avoid_tickers) if avoid_tickers else "(none yet)"
 
@@ -125,8 +160,8 @@ def build_prompt(episode_type, today_str, avoid_tickers, assigned_candidate=None
    rest of your research. If it clearly no longer fits (acquired,
    delisted, ballooned into mega-cap territory, or having an unusually
    hyped/heavily-covered week), pick a different genuinely
-   under-the-radar small-to-mid-cap US stock instead, and briefly
-   mention in the episode that you swapped picks and why."""
+   under-the-radar small-to-mid-cap US stock instead, and note in your
+   brief that you swapped picks and why."""
         else:
             pick_instruction = f"""1. Identify ONE US-listed, small-to-mid cap stock (roughly $300M-$10B market
    cap as a guideline, not a hard rule) that is genuinely under-the-radar --
@@ -134,22 +169,20 @@ def build_prompt(episode_type, today_str, avoid_tickers, assigned_candidate=None
    this week, NOT a meme stock riding pure hype. Do not pick any of these
    tickers, which the show has already covered recently: {avoid_str}."""
 
-        return f"""You are producing today's ({today_str}) episode of "Under the Radar," a
-daily podcast about overlooked, under-the-radar publicly traded stocks. The
-two co-hosts are {host_names}. Target length: 15-25 minutes of spoken
-dialogue, roughly 2600-3800 words total across both hosts.
+        return f"""You are the RESEARCHER for today's ({today_str}) episode of "Under the
+Radar," a daily podcast about overlooked, under-the-radar publicly traded
+stocks. Your ONLY job right now is research -- someone else will turn your
+notes into the actual episode script, so do NOT write any dialogue.
 
 You have a budget of AT MOST {MAX_SEARCHES} web searches total -- be
 economical. Combine what you need into broad, well-targeted queries rather
-than many narrow ones (e.g. one query per: candidate/pick, IR page +
-earnings, recent news), and stop searching as soon as you have enough to
-write a great episode. IMPORTANT: if a search is ever refused because
+than many narrow ones. IMPORTANT: if a search is ever refused because
 you've used up this budget, do NOT try again -- immediately stop searching
-and write the episode using only the information you've already gathered.
+and write up your brief using only what you've already gathered.
 Repeatedly re-attempting a blocked search wastes a huge amount of money for
 no benefit, so treat a refusal as a hard stop, not a retry signal.
 
-Do this research using web search before writing anything:
+Do this research using web search:
 
 {pick_instruction}
 2. Find that company's investor relations page and read its two most recent
@@ -159,73 +192,138 @@ Do this research using web search before writing anything:
 3. Search for recent news about the company from the last few weeks beyond
    the earnings reports (product news, contracts, insider activity,
    analyst commentary, sector context).
-4. Write the two-host episode script. It must, in this rough order:
-   - Cold open that hooks the listener on why this stock is worth 20 minutes
-     of their time.
-   - Explain in plain, accessible language what the company actually does
-     and, specifically, how it makes money (its business model and revenue
-     streams) -- assume the listener has never heard of it.
-   - Walk through what stood out in the two most recent earnings reports:
-     revenue trends, growth, margins, guidance, surprises.
-   - Cover the recent news you found and what it means going forward.
-   - Discuss explicitly why this stock is flying under the radar right now,
-     and what could change that.
-   - Close with the required disclaimer (verbatim, spoken by one host) and a
-     sign-off.
 
-{SCHEMA_INSTRUCTIONS}"""
+When you're done, write a RESEARCH BRIEF as plain text (not JSON, no
+dialogue) using exactly these headings:
+
+TICKER: <the ticker>
+COMPANY: <company name>
+WHAT IT DOES / HOW IT MAKES MONEY: <plain-language explanation of the
+  business model and revenue streams>
+RECENT EARNINGS: <what stood out in the two most recent reports -- revenue,
+  growth, margins, guidance, surprises>
+RECENT NEWS: <notable news from the last few weeks and what it means>
+WHY UNDER THE RADAR: <why this stock is flying under the radar right now,
+  and what could change that>
+
+Keep it factual and reasonably concise -- this is working notes for a
+writer, not the finished episode, so plain prose or bullet points under
+each heading is fine."""
 
     if episode_type == "saturday_recap":
-        return f"""You are producing this Saturday's ({today_str}) weekly recap episode of
-"Under the Radar," a podcast about the stock market. Co-hosts:
-{host_names}. Target length: ~20 minutes, roughly 2800-3400 words.
+        return f"""You are the RESEARCHER for this Saturday's ({today_str}) weekly recap
+episode of "Under the Radar," a podcast about the stock market. Your ONLY
+job right now is research -- someone else will turn your notes into the
+actual episode script, so do NOT write any dialogue.
 
 You have a budget of AT MOST {MAX_SEARCHES} web searches total -- be
 economical, use broad well-targeted queries rather than many narrow ones.
 IMPORTANT: if a search is ever refused because you've used up this budget,
-do NOT try again -- immediately stop searching and write the episode using
-only what you've already gathered. Repeatedly re-attempting a blocked
-search wastes a huge amount of money for no benefit.
+do NOT try again -- immediately stop searching and write up your brief
+using only what you've already gathered. Repeatedly re-attempting a
+blocked search wastes a huge amount of money for no benefit.
 
 Use web search to research the past week (Monday through Friday) in the US
 stock market: major index performance, the most significant market-moving
 stories, notable earnings from the week, and any macro/economic data
-releases that mattered. Also briefly revisit how the market reacted to
+releases that mattered. Also briefly check how the market reacted to
 under-the-radar-style stocks generally this week if there's anything
 notable.
 
-Write a natural two-host conversation recapping the week: what happened,
-why it mattered, and any threads worth remembering. Close with the required
-disclaimer (verbatim, spoken by one host) and a sign-off.
+When you're done, write a RESEARCH BRIEF as plain text (not JSON, no
+dialogue) using exactly these headings:
 
-Note: this episode has no single featured ticker; set "tickers" to an empty
-list unless specific stocks are central to the recap, in which case list
-them.
+TICKERS: <any specific tickers central to the week, or "none">
+INDEX PERFORMANCE: <how major indices did this week and why>
+BIGGEST STORIES: <the most significant market-moving stories of the week>
+NOTABLE EARNINGS: <earnings that mattered this week>
+MACRO / ECONOMIC DATA: <economic releases that mattered>
+UNDER-THE-RADAR ANGLE: <how smaller/overlooked stocks fared this week, if
+  notable>
 
-{SCHEMA_INSTRUCTIONS}"""
+Keep it factual and reasonably concise -- this is working notes for a
+writer, not the finished episode."""
 
     # sunday_preview
-    return f"""You are producing this Sunday's ({today_str}) week-ahead preview episode of
-"Under the Radar," a podcast about the stock market. Co-hosts: {host_names}.
-Keep this SHORT: target 5-10 minutes, roughly 900-1500 words.
+    return f"""You are the RESEARCHER for this Sunday's ({today_str}) week-ahead preview
+episode of "Under the Radar," a podcast about the stock market. Your ONLY
+job right now is research -- someone else will turn your notes into the
+actual episode script, so do NOT write any dialogue.
 
 You have a budget of AT MOST {MAX_SEARCHES} web searches total -- be
 economical, use broad well-targeted queries rather than many narrow ones.
 IMPORTANT: if a search is ever refused because you've used up this budget,
-do NOT try again -- immediately stop searching and write the episode using
-only what you've already gathered. Repeatedly re-attempting a blocked
-search wastes a huge amount of money for no benefit.
+do NOT try again -- immediately stop searching and write up your brief
+using only what you've already gathered. Repeatedly re-attempting a
+blocked search wastes a huge amount of money for no benefit.
 
 Use web search to find what's coming up in the next week: scheduled major
 earnings releases, economic data releases (e.g. CPI, jobs report, Fed
 meetings), and any other notable calendar events for US markets.
 
-Write a brief, upbeat two-host conversation previewing what to watch for in
-the week ahead. Close with the required disclaimer (verbatim, spoken by one
-host) and a sign-off.
+When you're done, write a RESEARCH BRIEF as plain text (not JSON, no
+dialogue) using exactly these headings:
 
-Note: set "tickers" to any specific tickers mentioned, or an empty list if
-none are central.
+TICKERS: <any specific tickers worth mentioning, or "none">
+EARNINGS TO WATCH: <major companies reporting next week>
+ECONOMIC DATA TO WATCH: <releases/events next week and why they matter>
+OTHER NOTABLE EVENTS: <anything else worth flagging>
+
+Keep it short and factual -- this is working notes for a writer, not the
+finished episode."""
+
+
+# ---------------------------------------------------------------------------
+# Stage 2: writing (no tools at all -- cannot run away on search)
+# ---------------------------------------------------------------------------
+
+def build_writing_prompt(episode_type, today_str, research_notes):
+    host_names = "Alex and Jordan"
+
+    if episode_type == "weekday_deep_dive":
+        length_guidance = ("Target length: 15-25 minutes of spoken dialogue, roughly "
+                            "2600-3800 words total across both hosts.")
+        structure = """It must, in this rough order:
+   - Cold open that hooks the listener on why this stock is worth 20 minutes
+     of their time.
+   - Explain in plain, accessible language what the company actually does
+     and, specifically, how it makes money -- assume the listener has never
+     heard of it.
+   - Walk through what stood out in the two most recent earnings reports:
+     revenue trends, growth, margins, guidance, surprises.
+   - Cover the recent news and what it means going forward.
+   - Discuss explicitly why this stock is flying under the radar right now,
+     and what could change that.
+   - Close with the required disclaimer (verbatim, spoken by one host) and a
+     sign-off."""
+    elif episode_type == "saturday_recap":
+        length_guidance = "Target length: ~20 minutes, roughly 2800-3400 words."
+        structure = """Recap the week: what happened, why it mattered, and any threads worth
+   remembering, based on the research notes below. This episode has no
+   single featured ticker unless the notes name specific stocks central to
+   the recap. Close with the required disclaimer (verbatim, spoken by one
+   host) and a sign-off."""
+    else:
+        length_guidance = "Keep this SHORT: target 5-10 minutes, roughly 900-1500 words."
+        structure = """Preview what to watch for in the week ahead, based on the research notes
+   below, in a brief, upbeat tone. Close with the required disclaimer
+   (verbatim, spoken by one host) and a sign-off."""
+
+    return f"""You are the WRITER for today's ({today_str}) episode of "Under the Radar,"
+a podcast about the stock market. The two co-hosts are {host_names}. A
+researcher has already done the legwork -- your job is to turn their notes
+into a natural, engaging two-host conversation. Do not invent facts beyond
+what's in the notes below, but you have full freedom in how to phrase and
+pace the conversation.
+
+{length_guidance}
+
+{structure}
+
+RESEARCH NOTES:
+\"\"\"
+{research_notes}
+\"\"\"
 
 {SCHEMA_INSTRUCTIONS}"""
 
@@ -249,24 +347,16 @@ def extract_json(text):
 PRICE_INPUT_PER_MTOK = 2.00
 PRICE_OUTPUT_PER_MTOK = 10.00
 PRICE_PER_1000_SEARCHES = 10.00
-# A real weekday deep dive genuinely needs on the order of 8-9 searches
-# (find the pick, read two earnings reports, check recent news -- several
-# distinct lookups). An earlier, tighter budget of 5 caused every single
-# run to hit the limit, get refused, and then the model kept trying
-# anyway instead of stopping -- which is what caused a run to balloon to
-# 1.4M input tokens and ~$3.23 for one episode. Budgeting enough searches
-# for it to actually finish in one pass is the real fix: if it never gets
-# refused, it never has a reason to retry.
 MAX_SEARCHES = 8
 
-# Safety net: the model is instructed to stop cleanly once it hits
-# MAX_SEARCHES, but if it ever ignores that and keeps re-attempting refused
-# searches anyway, each retry re-sends the whole growing conversation as
-# input tokens. If total search *attempts* (including refused ones) blows
-# past this ceiling, we abort the connection outright rather than let cost
-# run away unbounded. Set with real headroom above the ~9 attempts a normal
-# run uses, so this only ever fires on genuinely runaway behavior, not on
-# ordinary research.
+# Safety net for the research call: the model is instructed to stop
+# cleanly once it hits MAX_SEARCHES, but if it ever ignores that and keeps
+# re-attempting refused searches anyway, each retry re-sends the whole
+# growing conversation as input tokens. If total search *attempts*
+# (including refused ones) blows past this ceiling, we abort the
+# connection outright. Because this only guards the (short) research call
+# now, not a call that also has to write the full script, an abort here is
+# cheap to retry.
 HARD_SEARCH_ATTEMPT_CEILING = MAX_SEARCHES + 6
 
 
@@ -278,7 +368,7 @@ class TruncatedResponse(Exception):
     pass
 
 
-def log_usage_and_cost(usage):
+def log_usage_and_cost(usage, label):
     input_tokens = usage.input_tokens
     output_tokens = usage.output_tokens
     searches = usage.server_tool_use.web_search_requests if usage.server_tool_use else 0
@@ -288,44 +378,45 @@ def log_usage_and_cost(usage):
         + searches / 1000 * PRICE_PER_1000_SEARCHES
     )
     print(
-        f"Usage: {input_tokens} input tokens, {output_tokens} output tokens, "
-        f"{searches} billed web searches -> approx ${cost:.3f} for this episode"
+        f"[{label}] {input_tokens} input tokens, {output_tokens} output tokens, "
+        f"{searches} billed web searches -> approx ${cost:.3f}"
     )
+    return cost
 
 
-def call_claude(prompt, api_key):
-    # This request can involve several web searches plus writing a long
-    # script, which can take minutes. Streaming keeps the connection
-    # actively fed with data the whole time instead of sitting idle
-    # waiting for one big response -- idle connections like that get
-    # silently dropped by network infrastructure in between (this is what
-    # caused the very first run to fail with a RemoteDisconnected error).
+def call_claude(prompt, api_key, label, use_search, max_tokens):
+    # Streaming keeps the connection actively fed with data the whole time
+    # instead of sitting idle waiting for one big response -- idle
+    # connections like that get silently dropped by network infrastructure
+    # in between (this is what caused the very first run to fail with a
+    # RemoteDisconnected error).
     client = anthropic.Anthropic(api_key=api_key, max_retries=2, timeout=900.0)
 
+    tools = None
+    if use_search:
+        tools = [{"type": "web_search_20260318", "name": "web_search", "max_uses": MAX_SEARCHES}]
+
     last_error = None
+    total_cost = 0.0
     for attempt in range(1, MAX_ATTEMPTS + 1):
         try:
-            print(f"Calling Claude API (attempt {attempt}/{MAX_ATTEMPTS})...")
+            print(f"[{label}] Calling Claude API (attempt {attempt}/{MAX_ATTEMPTS})...")
             text_parts = []
             search_attempts = 0
-            with client.messages.stream(
+            stream_kwargs = dict(
                 model=ANTHROPIC_MODEL,
-                max_tokens=32000,
-                tools=[
-                    {
-                        "type": "web_search_20260318",
-                        "name": "web_search",
-                        "max_uses": MAX_SEARCHES,
-                    }
-                ],
+                max_tokens=max_tokens,
                 messages=[{"role": "user", "content": prompt}],
-            ) as stream:
+            )
+            if tools:
+                stream_kwargs["tools"] = tools
+            with client.messages.stream(**stream_kwargs) as stream:
                 for event in stream:
                     if event.type == "content_block_delta" and getattr(event.delta, "type", None) == "text_delta":
                         text_parts.append(event.delta.text)
                     elif event.type == "content_block_start" and getattr(event.content_block, "type", None) == "server_tool_use":
                         search_attempts += 1
-                        print(f"  ...search attempt {search_attempts}")
+                        print(f"[{label}]   ...search attempt {search_attempts}")
                         if search_attempts > HARD_SEARCH_ATTEMPT_CEILING:
                             # Close the connection immediately -- stop paying
                             # for further generation on a run that's ignoring
@@ -336,35 +427,27 @@ def call_claude(prompt, api_key):
                                 "without stopping; aborted to cap cost"
                             )
                 final_message = stream.get_final_message()
-            log_usage_and_cost(final_message.usage)
+            total_cost += log_usage_and_cost(final_message.usage, label)
             if final_message.stop_reason == "max_tokens":
-                # The response got cut off before finishing -- almost
-                # always mid-way through writing the final episode JSON,
-                # since that's the longest single piece of text in the
-                # whole exchange. Whatever text we captured is incomplete
-                # and not worth trying to parse or salvage; treat this as
-                # retryable, the same as a runaway search loop, rather
-                # than silently returning broken output that will just
-                # fail JSON parsing later with no attempts left.
                 raise TruncatedResponse(
-                    "response was truncated at max_tokens before finishing "
-                    "(likely mid-script); discarding this attempt"
+                    "response was truncated at max_tokens before finishing; "
+                    "discarding this attempt"
                 )
-            return "".join(text_parts)
+            return "".join(text_parts), total_cost
         except (RunawaySearchLoop, TruncatedResponse) as e:
             last_error = e
-            print(f"  attempt {attempt} aborted: {e}", file=sys.stderr)
+            print(f"[{label}]   attempt {attempt} aborted: {e}", file=sys.stderr)
             if attempt < MAX_ATTEMPTS:
                 time.sleep(5)
         except (anthropic.APIConnectionError, anthropic.APITimeoutError, anthropic.InternalServerError) as e:
             last_error = e
-            print(f"  attempt {attempt} failed with a transient error: {e}", file=sys.stderr)
+            print(f"[{label}]   attempt {attempt} failed with a transient error: {e}", file=sys.stderr)
             if attempt < MAX_ATTEMPTS:
                 time.sleep(10 * attempt)
         except anthropic.APIStatusError as e:
-            die(f"Claude API request failed ({e.status_code}): {e.response.text[:2000]}")
+            die(f"[{label}] Claude API request failed ({e.status_code}): {e.response.text[:2000]}")
 
-    die(f"Claude API request failed after {MAX_ATTEMPTS} attempts: {last_error}")
+    die(f"[{label}] Claude API request failed after {MAX_ATTEMPTS} attempts: {last_error}")
 
 
 def validate_episode(ep):
@@ -421,9 +504,25 @@ def main():
         else:
             print("No state/candidate_stocks.json found; falling back to open-ended pick.")
 
-    prompt = build_prompt(episode_type, today_str, avoid_tickers, assigned_candidate)
-    print(f"Requesting script from Claude for episode_type={episode_type}, date={today_str}...")
-    raw_text = call_claude(prompt, api_key)
+    print(f"=== Stage 1: research (episode_type={episode_type}, date={today_str}) ===")
+    research_prompt = build_research_prompt(episode_type, today_str, avoid_tickers, assigned_candidate)
+    # Research output is just a short brief, not a full script, so a much
+    # smaller max_tokens is plenty and keeps a truncation-triggered retry
+    # cheap.
+    research_notes, research_cost = call_claude(
+        research_prompt, api_key, label="research", use_search=True, max_tokens=4000
+    )
+    print("--- research brief ---")
+    print(research_notes)
+    print("--- end research brief ---")
+
+    print(f"=== Stage 2: writing (episode_type={episode_type}, date={today_str}) ===")
+    writing_prompt = build_writing_prompt(episode_type, today_str, research_notes)
+    raw_text, writing_cost = call_claude(
+        writing_prompt, api_key, label="write", use_search=False, max_tokens=16000
+    )
+    print(f"Total cost for this episode: approx ${research_cost + writing_cost:.3f}")
+
     episode = extract_json(raw_text)
     validate_episode(episode)
 
