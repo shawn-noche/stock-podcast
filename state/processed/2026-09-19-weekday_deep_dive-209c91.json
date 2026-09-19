@@ -1,0 +1,263 @@
+{
+  "episode_type": "weekday_deep_dive",
+  "date": "2026-09-19",
+  "title": "The Workers' Comp Company That Bought Back 70% of Itself",
+  "tickers": [
+    "CRVL"
+  ],
+  "description": "Everyone's ignoring CorVel Corporation, a debt-free, thirty-year compounder in the unglamorous world of workers' comp claims management and medical bill repricing. We dig into why revenue growth just reaccelerated to 11%, why the stock is still down nearly 50% over the past year, and why almost nobody is talking about it.",
+  "lines": [
+    {
+      "speaker": "alex",
+      "text": "Okay, Jordan, I want you to picture the least glamorous business you can possibly imagine. No app, no subscription box, no rocket ship. It processes paperwork for injured workers."
+    },
+    {
+      "speaker": "jordan",
+      "text": "You had me at unglamorous. That's basically our show's mission statement at this point."
+    },
+    {
+      "speaker": "alex",
+      "text": "Exactly. But this one's compounded revenue for like three decades, it just bought back seventy percent of its own shares outstanding over its history, it's debt-free with over two hundred fifty million in cash, and the stock is down almost fifty percent over the past year for reasons that honestly have very little to do with how the business is actually performing."
+    },
+    {
+      "speaker": "jordan",
+      "text": "Okay, that gap between the stock price and the fundamentals is exactly the kind of thing that gets me interested. What is this thing?"
+    },
+    {
+      "speaker": "alex",
+      "text": "It's CorVel Corporation, ticker CRVL on the Nasdaq. And I'll be honest, before I dug into it I had never heard of it either. It's a workers' compensation and healthcare cost-containment company out of Fort Worth, Texas, originally built out in Oregon. Market cap's sitting in that three-to-four-billion-dollar range, so it's a real company, it's just completely invisible to most retail investors."
+    },
+    {
+      "speaker": "jordan",
+      "text": "Give me a little history here, because 'thirty years of compounding' is a big claim."
+    },
+    {
+      "speaker": "alex",
+      "text": "CorVel's actually been public since the late nineties, and it's been run for most of that time by the Combs family \u2014 Gordon Combs and now his son Michael Combs as Executive Chairman. It's never taken on debt to grow, it's never done a splashy acquisition spree, and it's just quietly reinvested cash flow into technology and share buybacks year after year. It's about as far from a hype stock as you can get, which is exactly why it never comes up on financial television."
+    },
+    {
+      "speaker": "jordan",
+      "text": "Workers' comp. Okay, so like, if I hurt my back at a warehouse job, this is the company quietly working behind the scenes to make sure my claim gets processed?"
+    },
+    {
+      "speaker": "alex",
+      "text": "Pretty much. Let's actually break down how they make money, because it's more interesting than it sounds. CorVel basically operates in two connected buckets. The first is called Patient Management. That's claims management, case management, utilization review, bill review \u2014 basically the operational guts of handling an injury claim from the day it's reported to the day it's resolved."
+    },
+    {
+      "speaker": "jordan",
+      "text": "So when an employer or an insurance company gets a workers' comp claim, instead of handling all that in-house, they outsource the whole administrative and clinical coordination piece to CorVel."
+    },
+    {
+      "speaker": "alex",
+      "text": "Right, and CorVel charges fees tied to that work \u2014 per claim, per case, sometimes bundled service fees. The second bucket is Network Solutions, which is more about the money side: preferred provider networks, medical fee auditing, bill repricing, independent medical exams. Basically making sure the price paid for a doctor's visit or an MRI actually matches negotiated network rates instead of list price."
+    },
+    {
+      "speaker": "jordan",
+      "text": "So that second piece is where they're literally saving their customers money on medical costs, and presumably taking a cut of those savings or a fee for running the network."
+    },
+    {
+      "speaker": "alex",
+      "text": "Exactly, and that's the beauty of the model \u2014 their customers are insurance companies, third-party administrators, and big self-insured employers, and CorVel's whole pitch is 'we reduce your medical cost exposure and administrative headache, and we do it with more automation and data than you could build yourself.' It's recurring, it's sticky, and it scales with claims volume without a ton of incremental headcount because they've leaned hard into automation and AI-enabled workflows on the back end."
+    },
+    {
+      "speaker": "jordan",
+      "text": "Okay so it's basically a B2B services and data company wearing a workers' comp costume. That actually makes a lot more sense now. Let's get into the numbers, because that's where this gets interesting."
+    },
+    {
+      "speaker": "alex",
+      "text": "Let's do it. Start with the full fiscal year, because CorVel's fiscal year ends in March, so their fiscal 2026 just wrapped a few months ago. Revenue for the year was nine hundred fifty-nine million dollars, up seven percent from eight hundred ninety-six million the year before. EPS came in at two dollars and fourteen cents, up seventeen percent from a dollar eighty-three."
+    },
+    {
+      "speaker": "jordan",
+      "text": "Seven percent top-line growth doesn't sound like a screaming growth stock, but EPS growing more than double the rate of revenue tells me margins are expanding nicely."
+    },
+    {
+      "speaker": "alex",
+      "text": "They are. In the March quarter alone \u2014 that's their fiscal Q4 \u2014 revenue was two hundred forty-nine million, up seven percent, and operating margin improved by a hundred forty basis points to fifteen percent. Net income for the full year hit a hundred ten million, up almost sixteen percent, and free cash flow for the year was sixty-six million, up over ten percent."
+    },
+    {
+      "speaker": "jordan",
+      "text": "Okay, that's a company getting more efficient as it grows, not just growing for growth's sake. What about the most recent quarter, because that's the one that actually matters most right now?"
+    },
+    {
+      "speaker": "alex",
+      "text": "This is the one that got my attention. Fiscal Q1 2027, the June quarter, revenue jumped to two hundred sixty million, an eleven percent increase year over year \u2014 so growth actually accelerated from that seven percent pace. EPS was sixty-three cents, up twenty-two percent."
+    },
+    {
+      "speaker": "jordan",
+      "text": "Whoa, that's a nice reacceleration. What drove it? Because workers' comp claims volumes have generally been kind of soft industry-wide the last couple years as employment growth cooled."
+    },
+    {
+      "speaker": "alex",
+      "text": "That's the interesting wrinkle. Claims volume actually grew eight percent year over year, which management called out as the largest quarterly increase since December of 2024. And on the earnings call, the Executive Chairman, Michael Combs, tied that partly to new client implementations ramping up plus some tail claim activity."
+    },
+    {
+      "speaker": "jordan",
+      "text": "Tail claims meaning older, longer-running cases still working through the system."
+    },
+    {
+      "speaker": "alex",
+      "text": "Right. But honestly the more important number to me is new customer sales, which were up over sixty percent year over year in the quarter, and up forty percent on a trailing twelve-month basis. That tells you they're winning share, not just riding a claims-volume tailwind that could reverse."
+    },
+    {
+      "speaker": "jordan",
+      "text": "Okay, I'll push back a little here \u2014 that's one quarter of sales momentum. I'd want to see that sixty percent new-sales number hold up before I get too excited. Sales bookings can be lumpy."
+    },
+    {
+      "speaker": "alex",
+      "text": "Fair, and I'd flag one more thing that cuts the other way \u2014 there was a one-time item in that June quarter, a settlement of some legacy accounts receivable, that added roughly seven cents to EPS. So some of that twenty-two percent EPS growth is a bit inflated versus the underlying run rate."
+    },
+    {
+      "speaker": "jordan",
+      "text": "Right, so strip that out and it's still solid growth, just not quite as dramatic as the headline number suggests. I appreciate you not just cherry-picking the good stuff."
+    },
+    {
+      "speaker": "alex",
+      "text": "That's the job. But even backing that out, this is a company with an eleven percent revenue grower, expanding margins, a debt-free balance sheet, two hundred fifty-six million dollars in cash, and days sales outstanding \u2014 basically how fast they're collecting what they're owed \u2014 improving to thirty-nine days. That's a healthy, well-run operator."
+    },
+    {
+      "speaker": "jordan",
+      "text": "And you mentioned buybacks earlier \u2014 walk me through that, because seventy percent of shares outstanding is a wild number."
+    },
+    {
+      "speaker": "alex",
+      "text": "It really is. On the call, the CFO, Brian Nichols, said that since inception CorVel has repurchased a hundred fifteen-point-six million shares for a total of nine hundred ten million dollars \u2014 that's seventy percent of total shares outstanding, at an average price of seven dollars and eighty-seven cents. In just the June quarter they bought back about three hundred seventy-seven thousand shares for twenty-one-point-eight million dollars."
+    },
+    {
+      "speaker": "jordan",
+      "text": "An average buyback price of under eight bucks when the stock's now trading in the high fifties tells you management has been doing this for a very long time, very consistently, completely off everyone's radar."
+    },
+    {
+      "speaker": "alex",
+      "text": "Which is a big part of the story here, honestly. Let's pivot to the news beyond earnings, because there's real stuff happening. The biggest one: CorVel just launched a new product called Marketwise Repricing. It's a medical bill repricing tool that uses market-based reimbursement data instead of the traditional fee-schedule approach, and it plugs directly into their existing bill review programs."
+    },
+    {
+      "speaker": "jordan",
+      "text": "So this is them expanding that Network Solutions revenue stream \u2014 giving customers a more modern, data-driven way to control medical costs, which presumably comes with its own fee attached."
+    },
+    {
+      "speaker": "alex",
+      "text": "Exactly, and it comes right on the heels of them also rolling out something called Executive Advisory Services during the June quarter. Both are classic CorVel playbook moves \u2014 take an existing customer relationship and layer on a new fee-based service rather than having to go find brand-new logos every time."
+    },
+    {
+      "speaker": "jordan",
+      "text": "That's a nice, capital-light way to grow. Okay, now the less flattering news \u2014 I saw there's been some insider selling."
+    },
+    {
+      "speaker": "alex",
+      "text": "Yeah, let's not gloss over that. Michael Combs, the Executive Chairman, sold around seven thousand shares on the open market in early June at roughly sixty dollars and twenty-two cents a share \u2014 that was about seventeen percent of his direct individual holding at the time, and it was actually the largest single insider sale in the prior three months. Looking at the broader picture, insiders have been net sellers by about five-and-a-half million dollars over the trailing twelve months."
+    },
+    {
+      "speaker": "jordan",
+      "text": "Now, I don't want to be alarmist \u2014 insiders sell for all kinds of boring reasons, taxes, diversification, whatever. But when you combine insider selling with a stock that's already down hard, it's worth at least raising an eyebrow."
+    },
+    {
+      "speaker": "alex",
+      "text": "Totally fair, and I'll add the stock context because it's kind of wild. CRVL is down close to fifty percent over the past year and still down double digits year-to-date even after a small bounce recently. It's trading around fifty-seven dollars a share, and some of the technical chatter out there has actually flagged it as, quote, ultra-oversold."
+    },
+    {
+      "speaker": "jordan",
+      "text": "Fifty percent down for a company that just posted eleven percent revenue growth and expanding margins? That's a pretty big disconnect. What's actually been dragging the stock, if it's not the fundamentals?"
+    },
+    {
+      "speaker": "alex",
+      "text": "And here's the valuation lens on top of that: at around fifty-seven dollars a share against that two dollars and fourteen cents in fiscal 2026 earnings, you're looking at roughly a twenty-six times trailing earnings multiple. That's not dirt cheap in an absolute sense, but for a debt-free company growing revenue double digits again and expanding margins, it's not expensive either \u2014 especially compared to where high-quality compounders in healthcare services have traded historically."
+    },
+    {
+      "speaker": "jordan",
+      "text": "Twenty-six times earnings for low double-digit growth and margin expansion is honestly pretty reasonable. It's not a statistically screaming-cheap value stock, but it's also not priced for the kind of pessimism that a fifty percent drawdown usually implies."
+    },
+    {
+      "speaker": "alex",
+      "text": "From what I'm seeing, it's really more of a sector-sentiment story than a CorVel-specific story. There's been a broader re-rating of healthcare cost-containment and managed-care-adjacent names \u2014 investors got nervous about medical cost trend, reimbursement pressure, and how workers' comp and auto claims businesses fit into that. CorVel got dragged down with the group even though its own numbers have stayed strong."
+    },
+    {
+      "speaker": "jordan",
+      "text": "That's actually a classic setup for an under-the-radar stock \u2014 good company, bad neighborhood, and the market kind of throws the baby out with the bathwater."
+    },
+    {
+      "speaker": "alex",
+      "text": "Which is exactly why this one's on the show today. And there's a little bit of short interest building too \u2014 nothing dramatic, roughly one-point-four million shares short as of the most recent settlement date, up a couple percent from the prior period. So there's clearly some skepticism out there, but it's not exactly a heavily shorted meme situation either."
+    },
+    {
+      "speaker": "jordan",
+      "text": "Let's talk about the actual 'why is nobody talking about this' question, because I think it's more than just sector sentiment."
+    },
+    {
+      "speaker": "alex",
+      "text": "A few reasons stack up here. One, the business itself is just inherently boring \u2014 nobody's writing viral headlines about medical bill repricing software. Two, analyst coverage is thin; this isn't a stock getting fifteen sell-side notes a week like the mega-caps. Three, the Combs family has run this thing for decades with a long-term, buyback-heavy, low-key capital allocation approach, and that kind of quiet compounding just doesn't generate news flow the way a flashy growth story does."
+    },
+    {
+      "speaker": "jordan",
+      "text": "There's also just a plain liquidity issue. With something like seventy percent of the float retired through buybacks over the years, the number of shares actually available to trade day to day is small. Big institutional funds that need to put meaningful money to work sometimes just can't build a large position without moving the price a lot, so they skip it entirely."
+    },
+    {
+      "speaker": "alex",
+      "text": "That's such an underrated point. A shrinking float is great for existing shareholders long term, but in the short term it can actually keep a stock off the radar of the exact big funds that would otherwise create buying pressure and analyst attention."
+    },
+    {
+      "speaker": "jordan",
+      "text": "And I'd add a fourth \u2014 it's not marketed as an AI story even though it kind of is one. They're leaning on AI-enabled automation to drive that margin expansion we talked about, but because the ticker isn't wrapped in an AI narrative, it gets completely skipped over by anyone screening for that theme."
+    },
+    {
+      "speaker": "alex",
+      "text": "That's a great point actually. If CorVel rebranded tomorrow as 'an AI-powered claims automation platform,' I guarantee you'd see multiple expansion just from the label alone."
+    },
+    {
+      "speaker": "jordan",
+      "text": "Before we move to catalysts, can we back up for a second and talk about who else plays in this space? Because I feel like most listeners have heard of Sedgwick, maybe, if they've ever filed a claim."
+    },
+    {
+      "speaker": "alex",
+      "text": "Sedgwick's the giant in the space, but it's privately held, backed by private equity money, so you literally cannot buy it as a public investor. There's also Genex Services and a handful of others, but most of the big names in claims management and cost containment are either private, owned by insurance conglomerates, or bundled inside a much bigger diversified company. CorVel is one of the very few pure-play, publicly traded, standalone options in this exact niche."
+    },
+    {
+      "speaker": "jordan",
+      "text": "So if you actually want direct exposure to the workers' comp cost-containment theme as a public market investor, there's basically no alternative ticker to rotate into. That scarcity is part of the story too."
+    },
+    {
+      "speaker": "alex",
+      "text": "Right, and it also means there's no obvious comp set for analysts to point to when they're trying to value it, which probably adds to the thin coverage problem. You can't just say 'it trades at a discount to its peer group' when there basically isn't a clean peer group on the public markets."
+    },
+    {
+      "speaker": "jordan",
+      "text": "So what would actually change that and put this on more people's radar? Because 'quietly good company' isn't always enough to move a stock."
+    },
+    {
+      "speaker": "alex",
+      "text": "A few catalysts I'd watch. First, if that new-sales momentum \u2014 the sixty percent jump \u2014 proves durable over the next couple of quarters rather than being a one-off, that reaccelerating growth story could start attracting growth-oriented eyes. Second, any signs that the broader healthcare-services sector sentiment stabilizes would probably lift CorVel along with it, since a lot of this pressure looks more macro than company-specific. Third, continued cross-sell success from Marketwise Repricing and Executive Advisory Services would show the model scaling in new directions."
+    },
+    {
+      "speaker": "jordan",
+      "text": "And honestly, at some point a stock that's down fifty percent while fundamentals are improving becomes its own catalyst \u2014 value investors and quant screens eventually notice that disconnect, especially with a balance sheet this clean and a management team with a multi-decade track record of shrinking the share count."
+    },
+    {
+      "speaker": "alex",
+      "text": "I think that's the real thesis here. This isn't a stock that's going to double because of a viral product launch. It's a slow, unglamorous compounder that the market temporarily lumped in with a sector it's getting nervous about \u2014 and the actual numbers just don't support that level of pessimism."
+    },
+    {
+      "speaker": "jordan",
+      "text": "I'd still watch that insider selling and want to see a couple more quarters of that new-business momentum before getting too aggressive, but I get why it's on the show. It's exactly the kind of name that just doesn't show up anywhere unless you go looking for it."
+    },
+    {
+      "speaker": "alex",
+      "text": "Which is the whole point of this show. Before we wrap, Jordan, you want to do the honors?"
+    },
+    {
+      "speaker": "jordan",
+      "text": "Yeah. Quick reminder before we get into it: everything in this episode is for informational and entertainment purposes only. It is not financial advice, and you should always do your own research or talk to a licensed financial advisor before making investment decisions."
+    },
+    {
+      "speaker": "alex",
+      "text": "Couldn't have said it better. That's CorVel Corporation, ticker CRVL, for today's Under the Radar."
+    },
+    {
+      "speaker": "jordan",
+      "text": "Thanks for spending twenty minutes with us on a workers' comp claims company, of all things. We'll catch you next time with another one nobody's talking about."
+    },
+    {
+      "speaker": "alex",
+      "text": "See you then."
+    }
+  ]
+}
