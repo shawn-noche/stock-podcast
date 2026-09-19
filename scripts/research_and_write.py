@@ -230,7 +230,7 @@ def call_claude(prompt, api_key):
             search_attempts = 0
             with client.messages.stream(
                 model=ANTHROPIC_MODEL,
-                max_tokens=8192,
+                max_tokens=16000,
                 tools=[
                     {
                         "type": "web_search_20260318",
