@@ -24,6 +24,7 @@ import config
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PENDING_DIR = os.path.join(ROOT, "pending")
 USED_STOCKS_PATH = os.path.join(ROOT, "state", "used_stocks.json")
+CANDIDATE_STOCKS_PATH = os.path.join(ROOT, "state", "candidate_stocks.json")
 
 ANTHROPIC_MODEL = "claude-sonnet-5"
 MAX_ATTEMPTS = 3
@@ -76,6 +77,30 @@ def save_used_stocks(entries):
         json.dump(entries, f, indent=2)
 
 
+def load_candidate_stocks():
+    # A pre-approved list of genuinely under-the-radar tickers to work
+    # through in order (state/candidate_stocks.json -- edit it any time to
+    # add or remove names). Working from a known list instead of asking
+    # the model to discover a pick each time skips the most expensive,
+    # least predictable part of the research (open-ended screening), so
+    # the model can go straight to reading earnings reports and news for
+    # a specific company. If the file is missing or every candidate has
+    # already been covered, we fall back to letting the model pick its
+    # own stock, so the show never gets stuck.
+    if os.path.exists(CANDIDATE_STOCKS_PATH):
+        with open(CANDIDATE_STOCKS_PATH) as f:
+            return json.load(f)
+    return []
+
+
+def next_candidate(candidates, used_tickers):
+    for c in candidates:
+        ticker = (c.get("ticker") or "").strip().upper()
+        if ticker and ticker not in used_tickers:
+            return {"ticker": ticker, "company": c.get("company", ticker)}
+    return None
+
+
 def episode_type_for_weekday(weekday):
     # Monday=0 ... Sunday=6
     if weekday == 5:
@@ -85,10 +110,30 @@ def episode_type_for_weekday(weekday):
     return "weekday_deep_dive"
 
 
-def build_prompt(episode_type, today_str, avoid_tickers):
+def build_prompt(episode_type, today_str, avoid_tickers, assigned_candidate=None):
     host_names = "Alex and Jordan"
     if episode_type == "weekday_deep_dive":
         avoid_str = ", ".join(avoid_tickers) if avoid_tickers else "(none yet)"
+
+        if assigned_candidate:
+            pick_instruction = f"""1. You have been assigned to cover {assigned_candidate['company']} (ticker:
+   {assigned_candidate['ticker']}) today. Start with a quick search to confirm
+   it's still a fitting pick: genuinely small-to-mid cap (roughly
+   $300M-$10B), not oversaturating financial media this week, not a meme
+   stock riding pure hype, and not one of these tickers the show has
+   already covered: {avoid_str}. If it still fits, proceed with it for the
+   rest of your research. If it clearly no longer fits (acquired,
+   delisted, ballooned into mega-cap territory, or having an unusually
+   hyped/heavily-covered week), pick a different genuinely
+   under-the-radar small-to-mid-cap US stock instead, and briefly
+   mention in the episode that you swapped picks and why."""
+        else:
+            pick_instruction = f"""1. Identify ONE US-listed, small-to-mid cap stock (roughly $300M-$10B market
+   cap as a guideline, not a hard rule) that is genuinely under-the-radar --
+   NOT a mega-cap, NOT a stock that is already saturating financial media
+   this week, NOT a meme stock riding pure hype. Do not pick any of these
+   tickers, which the show has already covered recently: {avoid_str}."""
+
         return f"""You are producing today's ({today_str}) episode of "Under the Radar," a
 daily podcast about overlooked, under-the-radar publicly traded stocks. The
 two co-hosts are {host_names}. Target length: 15-25 minutes of spoken
@@ -106,11 +151,7 @@ no benefit, so treat a refusal as a hard stop, not a retry signal.
 
 Do this research using web search before writing anything:
 
-1. Identify ONE US-listed, small-to-mid cap stock (roughly $300M-$10B market
-   cap as a guideline, not a hard rule) that is genuinely under-the-radar --
-   NOT a mega-cap, NOT a stock that is already saturating financial media
-   this week, NOT a meme stock riding pure hype. Do not pick any of these
-   tickers, which the show has already covered recently: {avoid_str}.
+{pick_instruction}
 2. Find that company's investor relations page and read its two most recent
    quarterly earnings reports or earnings press releases. Note revenue,
    revenue growth rate, margins, segment breakdown if disclosed, guidance,
@@ -345,10 +386,27 @@ def main():
     episode_type = forced_type or episode_type_for_weekday(now.weekday())
 
     used_stocks = load_used_stocks()
-    # Avoid repeating anything covered in the last ~40 entries.
+    # Avoid repeating anything covered in the last ~40 entries (kept short
+    # so this list doesn't bloat the prompt).
     avoid_tickers = [e["ticker"] for e in used_stocks[-40:]]
 
-    prompt = build_prompt(episode_type, today_str, avoid_tickers)
+    assigned_candidate = None
+    if episode_type == "weekday_deep_dive":
+        # Check against the FULL history (not just the last 40) so the
+        # curated list never repeats a ticker, however long the show runs.
+        all_used_tickers = {e["ticker"].upper() for e in used_stocks if e.get("ticker")}
+        candidates = load_candidate_stocks()
+        assigned_candidate = next_candidate(candidates, all_used_tickers)
+        if assigned_candidate:
+            print(f"Assigned candidate from state/candidate_stocks.json: "
+                  f"{assigned_candidate['ticker']} ({assigned_candidate['company']})")
+        elif candidates:
+            print("All candidates in state/candidate_stocks.json have been covered; "
+                  "falling back to open-ended pick.")
+        else:
+            print("No state/candidate_stocks.json found; falling back to open-ended pick.")
+
+    prompt = build_prompt(episode_type, today_str, avoid_tickers, assigned_candidate)
     print(f"Requesting script from Claude for episode_type={episode_type}, date={today_str}...")
     raw_text = call_claude(prompt, api_key)
     episode = extract_json(raw_text)
