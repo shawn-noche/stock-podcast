@@ -22,7 +22,17 @@
       <itunes:category text="Investing" />
     </itunes:category>
     <itunes:explicit>false</itunes:explicit>
-    <lastBuildDate>Fri, 18 Sep 2026 20:22:58 +0000</lastBuildDate>
-
+    <lastBuildDate>Sat, 19 Sep 2026 12:47:40 +0000</lastBuildDate>
+    <item>
+      <title>The Fed Finally Pulls the Trigger: Rate Hikes Are Back</title>
+      <description>The Fed hikes rates for the first time since 2023, Treasury yields punch through levels not seen since 2007, and Wall Street spends the week trying to figure out if this is a one-and-done move or the start of something longer. Alex and Jordan break down the FOMC decision, a wild divergence between the Dow and the Nasdaq, Netflix's ugly downgrade, and why small-cap stocks are having a moment nobody's talking about.</description>
+      <itunes:summary>The Fed hikes rates for the first time since 2023, Treasury yields punch through levels not seen since 2007, and Wall Street spends the week trying to figure out if this is a one-and-done move or the start of something longer. Alex and Jordan break down the FOMC decision, a wild divergence between the Dow and the Nasdaq, Netflix's ugly downgrade, and why small-cap stocks are having a moment nobody's talking about.</itunes:summary>
+      <pubDate>Sat, 19 Sep 2026 12:47:40 +0000</pubDate>
+      <enclosure url="https://shawn-noche.github.io/stock-podcast/episodes/audio/2026-09-19-saturday_recap.mp3" length="14010285" type="audio/mpeg" />
+      <guid isPermaLink="false">9ff1d8c5-c99e-4817-8c3f-e11de0076a11</guid>
+      <itunes:duration>14:36</itunes:duration>
+      <itunes:explicit>false</itunes:explicit>
+      <itunes:episodeType>full</itunes:episodeType>
+    </item>
   </channel>
 </rss>

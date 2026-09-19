@@ -1,0 +1,285 @@
+{
+  "episode_type": "saturday_recap",
+  "date": "2026-09-19",
+  "title": "The Fed Finally Pulls the Trigger: Rate Hikes Are Back",
+  "tickers": [],
+  "description": "The Fed hikes rates for the first time since 2023, Treasury yields punch through levels not seen since 2007, and Wall Street spends the week trying to figure out if this is a one-and-done move or the start of something longer. Alex and Jordan break down the FOMC decision, a wild divergence between the Dow and the Nasdaq, Netflix's ugly downgrade, and why small-cap stocks are having a moment nobody's talking about.",
+  "lines": [
+    {
+      "speaker": "alex",
+      "text": "Welcome back to Under the Radar, everybody. It is Saturday, September 19th, and folks, we finally got the thing we've been talking about for weeks. The Fed hiked."
+    },
+    {
+      "speaker": "jordan",
+      "text": "They actually did it. First rate hike since 2023, and honestly, even though everybody kind of expected it by Wednesday morning, it still felt like a gut punch when it landed."
+    },
+    {
+      "speaker": "alex",
+      "text": "Let's set the scene. Twenty-five basis points, target range now three-seventy-five to four percent. Twelve to zero vote, so this wasn't some split, contentious committee. Everybody was on board."
+    },
+    {
+      "speaker": "jordan",
+      "text": "Which is honestly the part that surprised me more than the hike itself. Back in July you had three members who wanted to hike and got voted down. Now, two months later, it's unanimous. That's a fast shift in tone from the committee."
+    },
+    {
+      "speaker": "alex",
+      "text": "It really is. And Warsh didn't exactly soften the message either. The statement flat out said inflation remains elevated, and the framing was this hike helps deliver what they called a timelier return to that two percent target."
+    },
+    {
+      "speaker": "jordan",
+      "text": "Timelier is doing a lot of work in that sentence. Because let's be honest, this isn't the sticky-services-inflation story from a couple years ago. This is an oil story. Crude's been sitting up around one-oh-nine a barrel on Middle East supply worries, and that's bleeding into everything, energy, transport, you name it."
+    },
+    {
+      "speaker": "alex",
+      "text": "Right, and that's actually an important distinction for listeners. This isn't a demand-side, economy-running-too-hot hike. It's more of what a lot of strategists are calling an inflation-risk-management move. The Fed's trying to get ahead of an energy shock before it broadens out into everything else."
+    },
+    {
+      "speaker": "jordan",
+      "text": "Which brings us to the dot plot, because that's honestly where the real news was. It wasn't just this one hike. Most of the committee, sixteen of eighteen participants, penciled in at least one more increase before the year is out. Four of them want two more."
+    },
+    {
+      "speaker": "alex",
+      "text": "And that's why markets didn't just shrug this off as a one-and-done. The year-end rate projection moved up to something like four-point-one to four-point-four percent, way higher than where the committee had it back in June."
+    },
+    {
+      "speaker": "jordan",
+      "text": "It's also worth rewinding to Monday and Tuesday, because the setup into this meeting was already shaky. Monday the market was digesting weakness in AI-adjacent names, and by Tuesday the Dow lost over three hundred points, the S&P fell close to half a percent, Nasdaq dropped nearly eight-tenths, all while everyone was just sitting there waiting for Wednesday."
+    },
+    {
+      "speaker": "alex",
+      "text": "Right, and even in that Tuesday selloff you saw some of the AI trade already trying to stabilize. Coherent added close to two percent, AMD was up about two percent, Qualcomm jumped more than four. So there was this weird split screen even before the Fed did anything, mega-cap chip names bouncing while the broader tape leaked lower on yield fear."
+    },
+    {
+      "speaker": "jordan",
+      "text": "So naturally, stocks did their favorite thing, which is completely change their mind about what they thought two hours earlier. The S&P actually popped right when the statement dropped Wednesday, then it just rolled over hard once Warsh started taking questions."
+    },
+    {
+      "speaker": "alex",
+      "text": "Yeah, the Dow lost over six hundred points that day, closing around fifty-one-four-sixty-two. And it wasn't broad-based selling, it was very much a banks story. Financials had their worst single day since February. Goldman Sachs was leading it lower."
+    },
+    {
+      "speaker": "jordan",
+      "text": "Makes sense if you think about it from the bank's perspective. Higher-for-longer rates sound great for net interest margins in theory, but if the market starts pricing in more hikes and worrying about credit quality at the same time, that's a much messier trade than just, rates go up, banks make more money."
+    },
+    {
+      "speaker": "alex",
+      "text": "There's also just the plain old duration pain. Bond yields absolutely ripped this week. The ten-year hit five-point-oh-four-one percent at one point, which is the highest level since two thousand seven."
+    },
+    {
+      "speaker": "jordan",
+      "text": "Two thousand seven. Let that sink in for a second. That's pre-financial-crisis territory for the ten-year. And it wasn't just the Fed pushing yields up, either. There was a genuinely ugly twenty-year bond auction midweek, only thirteen billion dollars, and demand was soft enough that it added its own pressure on top of everything else."
+    },
+    {
+      "speaker": "alex",
+      "text": "Weak auctions have a way of amplifying whatever the macro story already is. And then to cap the week off, the Bank of Japan hiked its own rate to a thirty-one-year high on Friday, which pushed global yields up even further right into triple witching."
+    },
+    {
+      "speaker": "jordan",
+      "text": "Can we talk about the politics angle for a second, because it was hanging over this whole meeting. There's been real pressure on the Fed from the White House to cut, not hike, and Warsh is the president's own pick for chair. So you had this awkward dynamic of the administration wanting lower rates for housing affordability, and the Fed doing the exact opposite because of the inflation data in front of them."
+    },
+    {
+      "speaker": "alex",
+      "text": "It's a genuinely tricky spot for him. Hike into that pressure and you look like you're bending over backwards to prove independence. Hold steady and people say you're just doing what the White House wants. Warsh actually leaned into the independence framing pretty hard, he talked about the hike being good news for what he called the least well-off Americans, people without a lot of financial assets or home equity, because taming inflation protects their real wages."
+    },
+    {
+      "speaker": "jordan",
+      "text": "That's a smart way to frame a hike politically, honestly. Whether markets buy it is a different question, but as a communications strategy it's trying to get ahead of the criticism that rate hikes only help people who already have money parked in savings accounts."
+    },
+    {
+      "speaker": "alex",
+      "text": "And it's not like the committee is unified on where this goes from here either. The twenty-twenty-seven picture was described as a pretty close call internally, something like eight officials leaning toward another hike next year, six wanting to hold, and four actually seeing room to cut. That's a genuinely split committee once you get past this year."
+    },
+    {
+      "speaker": "jordan",
+      "text": "Which tells me the market shouldn't get too comfortable thinking this is a long hiking cycle. It sounds more like a targeted response to an energy shock than the Fed declaring war on inflation for the next two years."
+    },
+    {
+      "speaker": "alex",
+      "text": "Triple witching on top of a Fed week on top of a BOJ surprise. That's about as much volatility fuel as you can pack into five trading days."
+    },
+    {
+      "speaker": "jordan",
+      "text": "So let's actually do the scoreboard, because the headline number people will remember is going to be the Dow, and honestly it tells a slightly misleading story on its own. For the week, the Dow shed about seven hundred thirty-three points."
+    },
+    {
+      "speaker": "alex",
+      "text": "But the S&P actually finished the week up around seven-tenths of a percent. And get this, the Nasdaq gained two-point-six percent on the week."
+    },
+    {
+      "speaker": "jordan",
+      "text": "That gap between the Dow and the Nasdaq is the real story of the week for me. You had this rotation where anything rate-sensitive, banks, industrials, got hit, while chipmakers actually caught a bid. Broadcom was up about three percent on the week, Micron rose almost four percent."
+    },
+    {
+      "speaker": "alex",
+      "text": "It's a little counterintuitive, right, because you'd think higher rates would hurt the high-multiple growth names the most. But there's been so much cross-current in AI stocks the last couple weeks that this was more of a bounce-back after some earlier weakness than a referendum on rates."
+    },
+    {
+      "speaker": "jordan",
+      "text": "It's worth zooming out on the sector picture for the year too, since it puts the week in context. Energy has actually been the leading sector both quarter to date and year to date, which tracks with everything we just said about oil prices driving the whole inflation conversation. Consumer discretionary has been the laggard for the year, and utilities has lagged so far this quarter."
+    },
+    {
+      "speaker": "alex",
+      "text": "That energy leadership is honestly the thread connecting half the stories this week. Higher oil, higher inflation readings, more hawkish Fed, higher yields, pressure on banks and duration-sensitive names. It's basically one long chain reaction starting from the same source."
+    },
+    {
+      "speaker": "jordan",
+      "text": "Not every AI name had a good week though. Meta was down about two and a half percent, Oracle lost around two percent, and the read there was investor nerves about the sheer amount of debt these hyperscalers are issuing to fund all this capital spending."
+    },
+    {
+      "speaker": "alex",
+      "text": "Right, it's the flip side of the AI buildout story we keep coming back to on this show. Everybody loves the growth narrative until the market starts asking, wait, how exactly is all of this getting financed."
+    },
+    {
+      "speaker": "jordan",
+      "text": "And Friday itself was choppy, kind of a fitting way to close a week like this. S&P up about two-tenths of a percent, Dow down about ninety-five points, Nasdaq up around seven-tenths. Big movers included IBM down over three percent, Disney down about two-and-a-half, Nike down over two percent."
+    },
+    {
+      "speaker": "alex",
+      "text": "Meanwhile Amgen, Nvidia and Caterpillar were actually green on the day. It really was a stock-picker's kind of Friday rather than one clean directional move."
+    },
+    {
+      "speaker": "jordan",
+      "text": "Quick sidebar before earnings, there was also a little Berkshire Hathaway chatter floating around this week, with coverage reminding everyone that Buffett's compounded annual return since taking over back in 1965 is something like nineteen-point-seven percent, roughly double what the S&P has done over that stretch."
+    },
+    {
+      "speaker": "alex",
+      "text": "It's one of those stats that gets recycled a lot, but it's still wild every time you hear it. Shares were only marginally lower on the week, nothing dramatic, but with succession questions always lurking in the background at Berkshire, any mention of Buffett's track record tends to get people talking again."
+    },
+    {
+      "speaker": "jordan",
+      "text": "Let's talk earnings for a second, because Netflix had a rough week that had nothing to do with the Fed. Wells Fargo downgraded the stock to underweight, and the stock dropped more than three percent on it."
+    },
+    {
+      "speaker": "alex",
+      "text": "The thesis there was worrying engagement trends plus a weaker content slate expected for the back half of the year, which the analysts think squeezes margin expansion out into twenty-seven and twenty-eight. That's a pretty specific, pretty bearish call on a stock that's been a market darling for a while."
+    },
+    {
+      "speaker": "jordan",
+      "text": "It's a good reminder that even mega caps aren't immune to a single well-argued downgrade landing at the wrong moment. On the industrial side, Steel Dynamics and Nucor both gave third quarter guidance that came in weaker than the Street wanted, and both stocks fell more than one and a half percent."
+    },
+    {
+      "speaker": "alex",
+      "text": "Nucor's breakdown was interesting too, steel mills and steel products segments actually expected to improve, but raw materials dragging the overall number down. So it's not a story of steel demand collapsing everywhere, it's more selective softness."
+    },
+    {
+      "speaker": "jordan",
+      "text": "Now here's a fun one that's got nothing to do with earnings or the Fed. SpaceX's weighting in the Nasdaq-100 is basically doubling this week because of the quarterly index rebalance."
+    },
+    {
+      "speaker": "alex",
+      "text": "Wait, doubling? Like, how does that even happen in one rebalance?"
+    },
+    {
+      "speaker": "jordan",
+      "text": "It's going from roughly one-point-two-eight percent of the index up to about two-point-eight-two percent, effective Monday. It's because more shares are becoming publicly tradable as lockups expire after the June IPO. Estimates are that this could trigger somewhere between fifteen and twenty-two billion dollars of programmatic index buying."
+    },
+    {
+      "speaker": "alex",
+      "text": "That's a genuinely massive flow event for a single stock, and it's the kind of thing that can move markets on a Monday for reasons that have absolutely nothing to do with the company's fundamentals that day."
+    },
+    {
+      "speaker": "jordan",
+      "text": "Worth watching purely as a mechanical thing next week, especially for anyone who trades around index rebalances."
+    },
+    {
+      "speaker": "alex",
+      "text": "Alright, let's get to the part of the show I actually want to talk about, because this is squarely our lane. Small caps and micro caps have had an absolutely wild year, and this week was a perfect little microcosm of it."
+    },
+    {
+      "speaker": "jordan",
+      "text": "The Russell 2000 was actually down over three-quarters of a percent on Wednesday, the Fed day, then turned around and gained almost four-tenths of a percent by Friday. So even within the small-cap world it was a bit of a rollercoaster."
+    },
+    {
+      "speaker": "alex",
+      "text": "But zoom out from the week and look at the year. The iShares Core S&P Small-Cap ETF is up something like twenty-three and a half percent year to date, compared to roughly thirteen percent for its large-cap counterpart. That's a huge gap that most casual investors have completely missed."
+    },
+    {
+      "speaker": "jordan",
+      "text": "And it's not just a valuation-catch-up story either. The earnings growth has actually been there. Blended estimates for Russell 2000 companies were running something like eighty-four percent growth for the second quarter, and full-year twenty-twenty-six estimates are up near eighty-eight percent."
+    },
+    {
+      "speaker": "alex",
+      "text": "Those numbers sound almost too good, but a lot of it is coming off a depressed base, small companies that were barely profitable a couple years ago are suddenly scaling nicely. I'd push back a little on how sustainable eighty-plus percent growth actually is going forward."
+    },
+    {
+      "speaker": "jordan",
+      "text": "Fair, but even setting aside the eye-popping percentages, there's a real structural story underneath it. A lot of these smaller industrial and materials names are direct beneficiaries of the reshoring and data center buildout theme, without carrying the AI-bubble anxiety that's attached to the mega caps."
+    },
+    {
+      "speaker": "alex",
+      "text": "That's actually the more interesting under-the-radar detail for me this week. It's not just the Russell 2000 as an index, it's genuinely micro-cap stocks, the smallest three percent of the market, that have crushed everything. Over the trailing year they're up something like forty-five percent versus under twenty-three for the broad market."
+    },
+    {
+      "speaker": "jordan",
+      "text": "And it's not all AI-adjacent semiconductor plays hiding in there either, which I think surprises people. You've got names like a machinery maker tied into data center construction, a construction company, an oil-and-gas services provider, even a watchmaker and a cat litter producer showing up as top contributors in some of these micro-cap funds. It's genuinely idiosyncratic stuff, not just one crowded trade."
+    },
+    {
+      "speaker": "alex",
+      "text": "That's the whole appeal of this corner of the market for us. It's not one narrative everybody's piled into, it's dozens of boring, under-covered businesses quietly compounding while all the attention is on the Mag Seven."
+    },
+    {
+      "speaker": "jordan",
+      "text": "And the kicker is almost nobody's positioned for it. Inflows into small-cap ETFs have been a tiny fraction of what's gone into large-cap funds this year. Something like seven billion into small caps versus north of three hundred billion into large-cap ETFs in the first half alone."
+    },
+    {
+      "speaker": "alex",
+      "text": "So you've got a rally that's actually broadening out under the surface, more stocks participating, not just five or six mega caps carrying the index, but very few people have actually put money behind it. That disconnect is the kind of thing our listeners should file away."
+    },
+    {
+      "speaker": "jordan",
+      "text": "I'll also flag, this week's higher-for-longer scare from the Fed is exactly the kind of thing that could put a dent in that small-cap story going forward, since smaller companies tend to carry more floating-rate debt and feel rate hikes faster than the balance-sheet-heavy mega caps."
+    },
+    {
+      "speaker": "alex",
+      "text": "Which is a real risk, no argument there. But the counter is that a lot of the current rally isn't rate driven in the first place, it's earnings driven, and that ISM manufacturing data has stayed above fifty every single month this year, which is a genuinely rare stretch of sustained expansion."
+    },
+    {
+      "speaker": "jordan",
+      "text": "We'll keep tracking that one, because it's exactly the kind of story that doesn't make the front page but matters a lot if you're actually building a diversified portfolio."
+    },
+    {
+      "speaker": "alex",
+      "text": "One more quick one before we wrap, crypto had an ugly week too. Bitcoin tumbled after the Senate blocked that crypto market structure bill that a lot of the industry had been counting on getting through."
+    },
+    {
+      "speaker": "jordan",
+      "text": "Yeah, that one got a little lost in the Fed noise, but it's worth remembering, regulatory clarity, or the lack of it, still moves that market just as much as rate expectations do."
+    },
+    {
+      "speaker": "alex",
+      "text": "Alright, so pulling it all together. Big picture, we got the hike everybody expected, but the tone was hawkish enough that it reshuffled the whole week. Banks and rate-sensitive names took the hit, chips and growth caught a bounce, yields spiked to multi-decade highs, and oil is really the thread tying the whole inflation story together."
+    },
+    {
+      "speaker": "jordan",
+      "text": "And don't sleep on the fact that even with all that turbulence, the S&P and Nasdaq are still sitting on track for a fourth straight annual gain. This has been a genuinely strong year underneath the headline chaos."
+    },
+    {
+      "speaker": "alex",
+      "text": "One strategist we saw this week, Wells Fargo's Ohsung Kwon, actually trimmed his year-end S&P target down to seventy-seven hundred from seventy-nine-fifty, and flagged five to ten percent downside risk from here. So not everyone's convinced this rally just keeps sailing along smoothly."
+    },
+    {
+      "speaker": "jordan",
+      "text": "It's a good gut check heading into next week. Looking ahead, the next Fed decision isn't until late October, so we've got a stretch where the market has to trade on incoming data rather than fresh Fed headlines. Watch oil prices, watch the ten-year, and watch whether that SpaceX rebalance flow causes any weird Monday action."
+    },
+    {
+      "speaker": "alex",
+      "text": "And keep an eye on those small caps for us. If the earnings story holds up even as rates stay elevated, that's a genuinely important theme for the back half of this year."
+    },
+    {
+      "speaker": "jordan",
+      "text": "One last thing before we close it out. If you're a longer-term investor and all this Fed noise has you rattled, remember that volatility around a first hike in three years is completely normal. The bigger question isn't whether we get one choppy week, it's whether inflation actually cools from here now that the Fed's leaning against it."
+    },
+    {
+      "speaker": "alex",
+      "text": "Agreed. And if you're newer to the show, this is exactly why we like to separate the headline number, like the Dow being down for the week, from what's actually happening underneath, banks under pressure, chips bouncing, small caps still quietly having a strong year. The details matter more than the single index print most days."
+    },
+    {
+      "speaker": "jordan",
+      "text": "Before we let you go, one required bit of housekeeping. Quick reminder before we get into it: everything in this episode is for informational and entertainment purposes only. It is not financial advice, and you should always do your own research or talk to a licensed financial advisor before making investment decisions."
+    },
+    {
+      "speaker": "alex",
+      "text": "That's our show for this week. Thanks for hanging out with us on Under the Radar, we'll be back next Saturday with another recap. Take care, everybody."
+    }
+  ]
+}
