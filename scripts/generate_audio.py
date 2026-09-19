@@ -99,24 +99,24 @@ def make_silence(path, duration=0.35):
 
 
 def concat_mp3s(paths, out_path, work_dir):
+    # Each line/sting/silence clip is its own independently-encoded MP3
+    # with its own internal timestamps starting at 0. Concatenating those
+    # with "-c copy" (stream copy, no re-encoding) just splices the raw
+    # compressed frames together without fixing up timing, which is what
+    # produced the repeated "non monotonically increasing dts" warnings --
+    # and can cause audible clicks/glitches at the seams between clips.
+    # Decoding every clip and re-encoding once (no "-c copy") lets ffmpeg
+    # regenerate clean, continuous timestamps for the whole file, and we
+    # fold the loudness normalization into this same pass instead of a
+    # separate second encode.
     concat_list = os.path.join(work_dir, "final_list.txt")
     with open(concat_list, "w") as f:
         for p in paths:
             f.write(f"file '{p}'\n")
-    raw_out = os.path.join(work_dir, "concat_raw.mp3")
     subprocess.run(
         [
             "ffmpeg", "-y", "-loglevel", "error",
             "-f", "concat", "-safe", "0", "-i", concat_list,
-            "-c", "copy", raw_out,
-        ],
-        check=True,
-    )
-    # Loudness-normalize the final mix so episodes have consistent volume.
-    subprocess.run(
-        [
-            "ffmpeg", "-y", "-loglevel", "error",
-            "-i", raw_out,
             "-af", "loudnorm=I=-16:TP=-1.5:LRA=11",
             "-codec:a", "libmp3lame", "-b:a", "128k",
             out_path,
