@@ -274,6 +274,10 @@ class RunawaySearchLoop(Exception):
     pass
 
 
+class TruncatedResponse(Exception):
+    pass
+
+
 def log_usage_and_cost(usage):
     input_tokens = usage.input_tokens
     output_tokens = usage.output_tokens
@@ -306,7 +310,7 @@ def call_claude(prompt, api_key):
             search_attempts = 0
             with client.messages.stream(
                 model=ANTHROPIC_MODEL,
-                max_tokens=16000,
+                max_tokens=32000,
                 tools=[
                     {
                         "type": "web_search_20260318",
@@ -332,11 +336,22 @@ def call_claude(prompt, api_key):
                                 "without stopping; aborted to cap cost"
                             )
                 final_message = stream.get_final_message()
-            if final_message.stop_reason == "max_tokens":
-                print("WARNING: response was truncated at max_tokens; output may be incomplete.", file=sys.stderr)
             log_usage_and_cost(final_message.usage)
+            if final_message.stop_reason == "max_tokens":
+                # The response got cut off before finishing -- almost
+                # always mid-way through writing the final episode JSON,
+                # since that's the longest single piece of text in the
+                # whole exchange. Whatever text we captured is incomplete
+                # and not worth trying to parse or salvage; treat this as
+                # retryable, the same as a runaway search loop, rather
+                # than silently returning broken output that will just
+                # fail JSON parsing later with no attempts left.
+                raise TruncatedResponse(
+                    "response was truncated at max_tokens before finishing "
+                    "(likely mid-script); discarding this attempt"
+                )
             return "".join(text_parts)
-        except RunawaySearchLoop as e:
+        except (RunawaySearchLoop, TruncatedResponse) as e:
             last_error = e
             print(f"  attempt {attempt} aborted: {e}", file=sys.stderr)
             if attempt < MAX_ATTEMPTS:
