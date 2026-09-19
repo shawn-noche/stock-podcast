@@ -12,6 +12,7 @@ OPENAI_API_KEY is provided as a repository secret.
 import glob
 import json
 import os
+import re
 import subprocess
 import sys
 import uuid
@@ -164,6 +165,15 @@ def process_episode(script_path, api_key):
 
     date_str = ep.get("date") or datetime.now(timezone.utc).strftime("%Y-%m-%d")
     slug = f"{date_str}-{ep.get('episode_type', 'episode')}"
+    if ep.get("tickers"):
+        # Disambiguate same-day-and-type episodes (e.g. several manual
+        # weekday_deep_dive backlog runs in one day) with the ticker, and
+        # fall back to a short random suffix if that's still not unique.
+        ticker_part = re.sub(r"[^A-Za-z0-9]+", "", ep["tickers"][0]).upper()
+        if ticker_part:
+            slug = f"{slug}-{ticker_part}"
+    if os.path.exists(os.path.join(AUDIO_OUT_DIR, f"{slug}.mp3")):
+        slug = f"{slug}-{uuid.uuid4().hex[:6]}"
     print(f"Processing {slug} from {script_path}")
 
     work_dir = os.path.join("/tmp", f"build_{slug}_{uuid.uuid4().hex[:8]}")
