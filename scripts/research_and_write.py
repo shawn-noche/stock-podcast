@@ -208,16 +208,25 @@ def extract_json(text):
 PRICE_INPUT_PER_MTOK = 2.00
 PRICE_OUTPUT_PER_MTOK = 10.00
 PRICE_PER_1000_SEARCHES = 10.00
-MAX_SEARCHES = 5
+# A real weekday deep dive genuinely needs on the order of 8-9 searches
+# (find the pick, read two earnings reports, check recent news -- several
+# distinct lookups). An earlier, tighter budget of 5 caused every single
+# run to hit the limit, get refused, and then the model kept trying
+# anyway instead of stopping -- which is what caused a run to balloon to
+# 1.4M input tokens and ~$3.23 for one episode. Budgeting enough searches
+# for it to actually finish in one pass is the real fix: if it never gets
+# refused, it never has a reason to retry.
+MAX_SEARCHES = 8
 
 # Safety net: the model is instructed to stop cleanly once it hits
 # MAX_SEARCHES, but if it ever ignores that and keeps re-attempting refused
 # searches anyway, each retry re-sends the whole growing conversation as
-# input tokens -- this is what caused one run to balloon to 1.4M input
-# tokens and ~$3.23 for a single episode. If total search *attempts*
-# (including refused ones) blows past this ceiling, we abort the
-# connection outright rather than let cost run away unbounded.
-HARD_SEARCH_ATTEMPT_CEILING = MAX_SEARCHES + 3
+# input tokens. If total search *attempts* (including refused ones) blows
+# past this ceiling, we abort the connection outright rather than let cost
+# run away unbounded. Set with real headroom above the ~9 attempts a normal
+# run uses, so this only ever fires on genuinely runaway behavior, not on
+# ordinary research.
+HARD_SEARCH_ATTEMPT_CEILING = MAX_SEARCHES + 6
 
 
 class RunawaySearchLoop(Exception):
