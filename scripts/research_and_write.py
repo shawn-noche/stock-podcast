@@ -93,6 +93,12 @@ daily podcast about overlooked, under-the-radar publicly traded stocks. The
 two co-hosts are {host_names}. Target length: 15-25 minutes of spoken
 dialogue, roughly 2600-3800 words total across both hosts.
 
+You have a budget of AT MOST {MAX_SEARCHES} web searches total -- be
+economical. Combine what you need into broad, well-targeted queries rather
+than many narrow ones (e.g. one query per: candidate/pick, IR page +
+earnings, recent news), and stop searching as soon as you have enough to
+write a great episode.
+
 Do this research using web search before writing anything:
 
 1. Identify ONE US-listed, small-to-mid cap stock (roughly $300M-$10B market
@@ -128,6 +134,9 @@ Do this research using web search before writing anything:
 "Under the Radar," a podcast about the stock market. Co-hosts:
 {host_names}. Target length: ~20 minutes, roughly 2800-3400 words.
 
+You have a budget of AT MOST {MAX_SEARCHES} web searches total -- be
+economical, use broad well-targeted queries rather than many narrow ones.
+
 Use web search to research the past week (Monday through Friday) in the US
 stock market: major index performance, the most significant market-moving
 stories, notable earnings from the week, and any macro/economic data
@@ -149,6 +158,9 @@ them.
     return f"""You are producing this Sunday's ({today_str}) week-ahead preview episode of
 "Under the Radar," a podcast about the stock market. Co-hosts: {host_names}.
 Keep this SHORT: target 5-10 minutes, roughly 900-1500 words.
+
+You have a budget of AT MOST {MAX_SEARCHES} web searches total -- be
+economical, use broad well-targeted queries rather than many narrow ones.
 
 Use web search to find what's coming up in the next week: scheduled major
 earnings releases, economic data releases (e.g. CPI, jobs report, Fed
@@ -177,6 +189,30 @@ def extract_json(text):
         die(f"Model output was not valid JSON ({e}). Candidate:\n{candidate[:2000]}")
 
 
+# Rough cost model for logging only (Claude Sonnet 5 + web search pricing,
+# as of when this was written -- check platform.claude.com/docs/en/about-claude/pricing
+# if these ever look off).
+PRICE_INPUT_PER_MTOK = 2.00
+PRICE_OUTPUT_PER_MTOK = 10.00
+PRICE_PER_1000_SEARCHES = 10.00
+MAX_SEARCHES = 5
+
+
+def log_usage_and_cost(usage):
+    input_tokens = usage.input_tokens
+    output_tokens = usage.output_tokens
+    searches = usage.server_tool_use.web_search_requests if usage.server_tool_use else 0
+    cost = (
+        input_tokens / 1_000_000 * PRICE_INPUT_PER_MTOK
+        + output_tokens / 1_000_000 * PRICE_OUTPUT_PER_MTOK
+        + searches / 1000 * PRICE_PER_1000_SEARCHES
+    )
+    print(
+        f"Usage: {input_tokens} input tokens, {output_tokens} output tokens, "
+        f"{searches} billed web searches -> approx ${cost:.3f} for this episode"
+    )
+
+
 def call_claude(prompt, api_key):
     # This request can involve several web searches plus writing a long
     # script, which can take minutes. Streaming keeps the connection
@@ -191,6 +227,7 @@ def call_claude(prompt, api_key):
         try:
             print(f"Calling Claude API (attempt {attempt}/{MAX_ATTEMPTS})...")
             text_parts = []
+            search_attempts = 0
             with client.messages.stream(
                 model=ANTHROPIC_MODEL,
                 max_tokens=8192,
@@ -198,7 +235,7 @@ def call_claude(prompt, api_key):
                     {
                         "type": "web_search_20260318",
                         "name": "web_search",
-                        "max_uses": 8,
+                        "max_uses": MAX_SEARCHES,
                     }
                 ],
                 messages=[{"role": "user", "content": prompt}],
@@ -207,10 +244,12 @@ def call_claude(prompt, api_key):
                     if event.type == "content_block_delta" and getattr(event.delta, "type", None) == "text_delta":
                         text_parts.append(event.delta.text)
                     elif event.type == "content_block_start" and getattr(event.content_block, "type", None) == "server_tool_use":
-                        print("  ...running a web search")
+                        search_attempts += 1
+                        print(f"  ...search attempt {search_attempts}")
                 final_message = stream.get_final_message()
             if final_message.stop_reason == "max_tokens":
                 print("WARNING: response was truncated at max_tokens; output may be incomplete.", file=sys.stderr)
+            log_usage_and_cost(final_message.usage)
             return "".join(text_parts)
         except (anthropic.APIConnectionError, anthropic.APITimeoutError, anthropic.InternalServerError) as e:
             last_error = e
