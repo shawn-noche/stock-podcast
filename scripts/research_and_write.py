@@ -14,6 +14,7 @@ import os
 import re
 import sys
 import time
+import uuid
 from datetime import datetime, timezone
 
 import anthropic
@@ -322,7 +323,17 @@ def main():
 
     now = datetime.now(timezone.utc)
     today_str = now.strftime("%Y-%m-%d")
-    episode_type = episode_type_for_weekday(now.weekday())
+
+    # Manual runs (Actions tab -> "Run workflow") can force a specific
+    # episode type via the FORCE_EPISODE_TYPE env var, e.g. to produce
+    # extra weekday_deep_dive episodes and build up a backlog on a day
+    # that would otherwise auto-select a recap/preview. Scheduled runs
+    # leave this unset and fall back to the normal day-of-week logic.
+    valid_types = {"weekday_deep_dive", "saturday_recap", "sunday_preview"}
+    forced_type = (os.environ.get("FORCE_EPISODE_TYPE") or "").strip()
+    if forced_type and forced_type not in valid_types:
+        die(f"FORCE_EPISODE_TYPE={forced_type!r} is not one of {sorted(valid_types)}")
+    episode_type = forced_type or episode_type_for_weekday(now.weekday())
 
     used_stocks = load_used_stocks()
     # Avoid repeating anything covered in the last ~40 entries.
@@ -342,7 +353,11 @@ def main():
         save_used_stocks(used_stocks)
 
     os.makedirs(PENDING_DIR, exist_ok=True)
-    out_path = os.path.join(PENDING_DIR, f"{today_str}-{episode_type}.json")
+    # Include a short random suffix so multiple episodes of the same type
+    # produced on the same calendar day (e.g. running several manual
+    # weekday_deep_dive backlog builds in one day) never collide on
+    # filename -- each is its own file all the way through audio/manifest.
+    out_path = os.path.join(PENDING_DIR, f"{today_str}-{episode_type}-{uuid.uuid4().hex[:6]}.json")
     with open(out_path, "w") as f:
         json.dump(episode, f, indent=2)
     print(f"Wrote {out_path}: '{episode['title']}' ({len(episode['lines'])} lines, tickers={episode.get('tickers')})")
