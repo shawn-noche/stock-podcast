@@ -82,6 +82,31 @@ FINISHED saying, not interrupt mid-thought. Reactions and quick agreement
 are fine as long as they're a full beat ("That's exactly the surprising
 part to me.") rather than a bare one-word interjection standing alone.
 
+ALSO IMPORTANT, and just as easy to get wrong even with full-sentence lines:
+do NOT write this as a rigid back-and-forth where the mic switches to the
+other host after literally every single line, all episode long, like a
+tennis rally or a formal interview. Real co-hosts don't take turns with
+perfect regularity. Several times per episode, have ONE host speak for TWO
+lines in a row (occasionally three) to fully develop an explanation, walk
+through a set of numbers, or tell a story, before handing off -- especially
+when covering earnings figures or a multi-part point. If you look at the
+"speaker" values in your own output in order, they should NOT simply
+alternate alex/jordan/alex/jordan for the entire episode; there should be
+several places where the same speaker appears twice (or three times) back
+to back.
+
+Relatedly: do not have almost every line open by immediately agreeing with
+or countering what the other host just said ("Right, ...", "Exactly, ...",
+"That's a fair point, ..."). That pattern, repeated on nearly every line,
+is exactly what makes two co-hosts sound like they're cutting each other
+off even when each line is a complete sentence and there's a pause between
+them -- it reads as constant instant rebuttal rather than a conversation
+with room to breathe. Vary how lines start: let some lines simply continue
+the thought, ask a plain follow-up question, introduce a new angle, or sit
+with a number for a beat, instead of reflexively reacting to the prior
+line. As a rough guide, well under half of all lines should open with a
+quick agree/rebuttal word like that.
+
 Do not use stage directions or sound effect cues, only spoken words.
 
 The disclaimer below must appear, spoken in full by one of the hosts, near
@@ -464,6 +489,45 @@ def validate_episode(ep):
             die("A line is missing 'text'")
 
 
+# Quick-agree/rebuttal openers that, used on nearly every line, are what
+# made past episodes sound like the hosts were constantly cutting each
+# other off (see the "ALSO IMPORTANT" pacing guidance in SCHEMA_INSTRUCTIONS
+# above). This isn't an exhaustive list, just the common cases, for a cheap
+# sanity check logged to the run -- it never fails the build, since a
+# script that trips it is still usable, just worth a listen.
+QUICK_OPENERS = ("right", "exactly", "that's", "yeah", "okay", "no,")
+
+
+def log_pacing_diagnostics(ep):
+    lines = ep["lines"]
+    speakers = [l["speaker"].lower() for l in lines]
+    same_speaker_runs = sum(1 for i in range(1, len(speakers)) if speakers[i] == speakers[i - 1])
+    quick_opener_count = 0
+    for line in lines:
+        first_words = " ".join(line["text"].split()[:2]).lower().strip(",.")
+        if any(first_words.startswith(o) for o in QUICK_OPENERS):
+            quick_opener_count += 1
+    pct = 100 * quick_opener_count / len(lines) if lines else 0
+    print(
+        f"[pacing] {len(lines)} lines, {same_speaker_runs} same-speaker-in-a-row "
+        f"transitions, {quick_opener_count} ({pct:.0f}%) open with a quick "
+        f"agree/rebuttal word"
+    )
+    if same_speaker_runs == 0:
+        print(
+            "[pacing] WARNING: every single line alternates speaker with no "
+            "exceptions -- this rigid ping-pong pattern is a likely cause of "
+            "hosts sounding like they're talking over each other, even with "
+            "no literal audio overlap and a clean pause between lines."
+        )
+    if pct > 50:
+        print(
+            f"[pacing] WARNING: {pct:.0f}% of lines open with an instant "
+            "agree/rebuttal word -- consider this a soft signal the episode "
+            "may read as rapid-fire rather than a relaxed conversation."
+        )
+
+
 def main():
     api_key = os.environ.get("ANTHROPIC_API_KEY")
     if not api_key:
@@ -525,6 +589,7 @@ def main():
 
     episode = extract_json(raw_text)
     validate_episode(episode)
+    log_pacing_diagnostics(episode)
 
     episode["episode_type"] = episode_type
     episode["date"] = today_str
