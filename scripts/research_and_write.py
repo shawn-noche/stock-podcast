@@ -97,7 +97,11 @@ You have a budget of AT MOST {MAX_SEARCHES} web searches total -- be
 economical. Combine what you need into broad, well-targeted queries rather
 than many narrow ones (e.g. one query per: candidate/pick, IR page +
 earnings, recent news), and stop searching as soon as you have enough to
-write a great episode.
+write a great episode. IMPORTANT: if a search is ever refused because
+you've used up this budget, do NOT try again -- immediately stop searching
+and write the episode using only the information you've already gathered.
+Repeatedly re-attempting a blocked search wastes a huge amount of money for
+no benefit, so treat a refusal as a hard stop, not a retry signal.
 
 Do this research using web search before writing anything:
 
@@ -136,6 +140,10 @@ Do this research using web search before writing anything:
 
 You have a budget of AT MOST {MAX_SEARCHES} web searches total -- be
 economical, use broad well-targeted queries rather than many narrow ones.
+IMPORTANT: if a search is ever refused because you've used up this budget,
+do NOT try again -- immediately stop searching and write the episode using
+only what you've already gathered. Repeatedly re-attempting a blocked
+search wastes a huge amount of money for no benefit.
 
 Use web search to research the past week (Monday through Friday) in the US
 stock market: major index performance, the most significant market-moving
@@ -161,6 +169,10 @@ Keep this SHORT: target 5-10 minutes, roughly 900-1500 words.
 
 You have a budget of AT MOST {MAX_SEARCHES} web searches total -- be
 economical, use broad well-targeted queries rather than many narrow ones.
+IMPORTANT: if a search is ever refused because you've used up this budget,
+do NOT try again -- immediately stop searching and write the episode using
+only what you've already gathered. Repeatedly re-attempting a blocked
+search wastes a huge amount of money for no benefit.
 
 Use web search to find what's coming up in the next week: scheduled major
 earnings releases, economic data releases (e.g. CPI, jobs report, Fed
@@ -196,6 +208,19 @@ PRICE_INPUT_PER_MTOK = 2.00
 PRICE_OUTPUT_PER_MTOK = 10.00
 PRICE_PER_1000_SEARCHES = 10.00
 MAX_SEARCHES = 5
+
+# Safety net: the model is instructed to stop cleanly once it hits
+# MAX_SEARCHES, but if it ever ignores that and keeps re-attempting refused
+# searches anyway, each retry re-sends the whole growing conversation as
+# input tokens -- this is what caused one run to balloon to 1.4M input
+# tokens and ~$3.23 for a single episode. If total search *attempts*
+# (including refused ones) blows past this ceiling, we abort the
+# connection outright rather than let cost run away unbounded.
+HARD_SEARCH_ATTEMPT_CEILING = MAX_SEARCHES + 3
+
+
+class RunawaySearchLoop(Exception):
+    pass
 
 
 def log_usage_and_cost(usage):
@@ -246,11 +271,25 @@ def call_claude(prompt, api_key):
                     elif event.type == "content_block_start" and getattr(event.content_block, "type", None) == "server_tool_use":
                         search_attempts += 1
                         print(f"  ...search attempt {search_attempts}")
+                        if search_attempts > HARD_SEARCH_ATTEMPT_CEILING:
+                            # Close the connection immediately -- stop paying
+                            # for further generation on a run that's ignoring
+                            # its search budget instead of writing.
+                            stream.close()
+                            raise RunawaySearchLoop(
+                                f"exceeded {HARD_SEARCH_ATTEMPT_CEILING} search attempts "
+                                "without stopping; aborted to cap cost"
+                            )
                 final_message = stream.get_final_message()
             if final_message.stop_reason == "max_tokens":
                 print("WARNING: response was truncated at max_tokens; output may be incomplete.", file=sys.stderr)
             log_usage_and_cost(final_message.usage)
             return "".join(text_parts)
+        except RunawaySearchLoop as e:
+            last_error = e
+            print(f"  attempt {attempt} aborted: {e}", file=sys.stderr)
+            if attempt < MAX_ATTEMPTS:
+                time.sleep(5)
         except (anthropic.APIConnectionError, anthropic.APITimeoutError, anthropic.InternalServerError) as e:
             last_error = e
             print(f"  attempt {attempt} failed with a transient error: {e}", file=sys.stderr)
