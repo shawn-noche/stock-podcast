@@ -88,7 +88,7 @@ def make_sting(out_path, work_dir, ascending=True):
     )
 
 
-def make_silence(path, duration=0.35):
+def make_silence(path, duration=0.5):
     subprocess.run(
         [
             "ffmpeg", "-y", "-loglevel", "error",
