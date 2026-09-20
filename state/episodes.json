@@ -1,5 +1,32 @@
 [
   {
+    "guid": "20067e56-11ab-4a09-8445-aa0bd0c5a395",
+    "title": "Costco, Cracker Barrel, and a Trump-Xi Summit: Your Week Ahead",
+    "description": "A packed week of earnings from Costco, Darden, Lennar, and AutoZone lands right after the Fed's September meeting, alongside fresh housing and sentiment data. Alex and Jordan map out what to watch, including the high-stakes Trump-Xi summit that could move markets either direction.",
+    "date": "2026-09-20",
+    "pub_datetime_utc": "2026-09-20T14:07:29.300167+00:00",
+    "episode_type": "sunday_preview",
+    "tickers": [
+      "AZO",
+      "GIS",
+      "KBH",
+      "THO",
+      "CBRL",
+      "COST",
+      "DRI",
+      "LEN",
+      "PAYX",
+      "PLAY",
+      "MLKN",
+      "SFIX"
+    ],
+    "audio_filename": "2026-09-20-sunday_preview-AZO.mp3",
+    "notes_filename": "2026-09-20-sunday_preview-AZO.txt",
+    "duration_seconds": 308.904,
+    "duration_formatted": "05:09",
+    "file_size_bytes": 4942893
+  },
+  {
     "guid": "ce032bf1-e98b-4d50-8ec6-6af1405d6514",
     "title": "The Truck Company Riding the Grid Boom Nobody's Watching",
     "description": "H&E Equipment got bought out, so we found the next best thing: Custom Truck One Source, a $2.5 billion specialty rental and manufacturing company quietly posting double-digit growth off the electric grid buildout. We break down two straight guidance raises, a looming emissions-rule twist, and why almost nobody's talking about this one yet.",
