@@ -1,0 +1,121 @@
+The Truck Company Riding the Grid Boom Nobody's Watching
+
+H&E Equipment got bought out, so we found the next best thing: Custom Truck One Source, a $2.5 billion specialty rental and manufacturing company quietly posting double-digit growth off the electric grid buildout. We break down two straight guidance raises, a looming emissions-rule twist, and why almost nobody's talking about this one yet.
+
+--- Transcript ---
+
+Alex: So Jordan, quick confession before we start: the stock we were originally planning to cover today doesn't exist anymore.
+
+Jordan: Wait, what do you mean it doesn't exist? Did it go bankrupt or something?
+
+Alex: No, nothing that dramatic. H&E Equipment Services, ticker HEES, got acquired. United Rentals made a run at it first back in January, and then Herc Holdings actually closed the deal. The stock got delisted from Nasdaq back in June.
+
+Jordan: Okay, so that's actually a good outcome for anyone who owned it. But not great for our episode plan.
+
+Alex: Exactly, so we went looking for something in the same neighborhood, and we landed on a company called Custom Truck One Source, ticker CTOS. And honestly, I think it might be an even better story than the original pick.
+
+Jordan: I'll be the judge of that. But I'm already intrigued, because I feel like I've never once heard this name mentioned anywhere.
+
+Alex: That's kind of the whole point of today's episode. This is a two and a half billion dollar company that just put up back to back quarters of double digit revenue growth, raised guidance twice in a row, and I would bet most of our listeners have never heard the ticker. So let's get into why that is, and whether it should stay that way.
+
+Jordan: Alright, let's start at the beginning then. What does Custom Truck One Source actually do? Because the name alone doesn't tell me much.
+
+Alex: It's actually a pretty simple business once you break it down. Think about all the infrastructure that keeps the lights on and the internet running, power lines, cell towers, rail networks. Someone has to physically go out and build and maintain that stuff, and they need very specific, very expensive trucks to do it. Bucket trucks, digger derricks, cranes, that kind of thing.
+
+Jordan: Right, the trucks with the big arm that lifts a worker up to a power line.
+
+Alex: That's the one. Custom Truck One Source rents those out to utility companies and their contractors. That's their Specialty Equipment Rentals segment. But here's the clever part. They also manufacture and sell brand new versions of those same trucks, and they sell used equipment straight out of their own rental fleet once it's done its time. That second piece is called Specialty Truck Equipment and Manufacturing, or STEM for short.
+
+Jordan: So it's like a flywheel. They build the truck, rent it out for a few years, collect income the whole time, and then sell it used and recycle that cash into the next one.
+
+Alex: That's a great way to put it. And because the end customers are electric utilities doing transmission and distribution work, plus telecom, rail, forestry, waste management, this whole business rides on infrastructure spending cycles. Right now, that cycle happens to be pointed very much in their favor.
+
+Jordan: Because of the grid buildout everyone's talking about, with data centers needing so much more power.
+
+Alex: Exactly that theme. Utilities are spending heavily on transmission and distribution to keep up with demand, and Custom Truck One Source is basically a toll booth on that spending, since crews can't do the work without the trucks.
+
+Jordan: Okay, that context helps a lot. Let's get into the actual numbers then, because I want to see if the business matches the story you're painting.
+
+Alex: Let's start with the most recent quarter, Q2 2026, reported back in early August. Revenue came in at 563.4 million dollars, a record for the company, up 10.2 percent year over year.
+
+Jordan: Double digit growth for a company like this, that's not nothing. That's a real acceleration in demand.
+
+Alex: It gets better. Average OEC on rent, which is basically the value of equipment they've got out earning money, was up 13.1 percent. Gross profit jumped 20.9 percent to 124 million dollars. And Adjusted EBITDA was up 25 percent year over year to 117 million.
+
+Jordan: So earnings are growing more than twice as fast as revenue. That tells me margins are expanding nicely, not just volume going up.
+
+Alex: Right, and utilization backs that up too. Fleet utilization climbed to 81.6 percent, which is a healthy number for a rental business. You want your expensive equipment sitting idle as little as possible, and that number moving up means demand is outpacing their ability to just throw more trucks at the problem.
+
+Jordan: What did management do with guidance after a quarter like that?
+
+Alex: They raised it, and not just a token bump. Full year revenue guidance moved up to a range of 2.1 to 2.2 billion dollars, which works out to 8 to 13 percent growth for the year. And on the profitability side, they raised both ends of their Adjusted EBITDA guidance to a range of 437.5 to 455 million, which is 14 to 19 percent growth.
+
+Jordan: That's the second thing I want to flag, because you said two guidance raises in a row. This wasn't the first one this year.
+
+Alex: Correct, if you go back to Q1, reported in late April, management had already affirmed guidance in a range of 2.005 to 2.12 billion for revenue. Then a few months later in Q2, they didn't just hold that number, they raised the whole range higher. That's a pretty clean signal that business is accelerating into the year rather than slowing down.
+
+Jordan: What stood out to you from that Q1 report specifically, before the raise even happened?
+
+Alex: The order trends. Management said net order growth was up 13 percent year over year in Q1, and they specifically called out strength from local and regional customers, not just the big national utilities. They also said that despite some softness in the broader infrastructure end market, they were confident enough in order growth to expect another year of growth in the STEM manufacturing segment.
+
+Jordan: That phrase, despite some softness in the broader end market, that's interesting. It sounds like they're saying the overall industry isn't red hot everywhere, but this company is still finding pockets of strength.
+
+Alex: That's exactly how I read it too. It suggests this isn't just a rising tide lifting every boat story, it's more that Custom Truck One Source is winning share or is positioned in the specific niches, like utility T&D, that are outperforming the rest of infrastructure spending.
+
+Jordan: What about the balance sheet? Rental companies can get pretty leveraged buying all that equipment.
+
+Alex: Good instinct, and management addressed it directly. They said they expect to generate more than 50 million dollars of levered free cash flow this year and bring their net leverage ratio down to meaningfully below four times by the end of fiscal 2026, with a longer term target of three times by 2027.
+
+Jordan: So they're growing the top line, expanding margins, and deleveraging all at the same time. That's a pretty rare combination for an equipment-heavy business.
+
+Alex: It is, and it's part of why I think this deserves more attention than it's getting. Now let's talk about the piece of recent news that I think is the most underappreciated angle here, because it ties directly into risk and opportunity at the same time.
+
+Jordan: Go for it.
+
+Alex: There are new EPA emissions standards for trucks coming in 2027. That's the kind of regulatory change that can be a real headache for manufacturers, because engine costs go up and supply chains get disrupted right around the transition. Management specifically flagged this in the Q2 call.
+
+Jordan: And usually when a company brings up a regulatory change unprompted, it's either a big risk they're worried about, or they think they've got an edge on it.
+
+Alex: In this case it sounds like the latter. Their words were that given their current inventory position, the chassis pre-buy actions they've already taken, and their relationships with chassis manufacturer partners, they believe they're well positioned to navigate the impact of the new standards.
+
+Jordan: So they basically stocked up on chassis inventory ahead of time, before the rule change makes everyone else scramble.
+
+Alex: That's the idea. And it lines up with the inventory number too, they had roughly 1.04 billion dollars of inventory on the books at the end of Q2. If competitors get caught flat footed when the new emissions rules kick in, and Custom Truck One Source already has trucks built or chassis secured, that's a real competitive advantage during the transition window.
+
+Jordan: That's the kind of detail that's easy to miss buried in an earnings call transcript, but could matter a lot in 2027 when the rule actually takes effect.
+
+Alex: Which brings us to the bigger picture question. Why is a company putting up numbers like this still flying so far under the radar?
+
+Jordan: I have a theory, but let's hear yours first.
+
+Alex: Part of it is just the size. At around two and a half billion dollars in market cap, Custom Truck One Source sits below where a lot of large cap focused funds and financial media even bother looking. It's not small enough to be a meme stock story, and it's not big enough to be a household name like United Rentals.
+
+Jordan: And the business itself just isn't glamorous. Specialty utility trucks don't exactly trend on social media the way an AI chip company does.
+
+Alex: That's my theory too. Nobody's writing viral posts about bucket trucks, even though those bucket trucks are arguably just as necessary to the AI and data center buildout as the chips themselves, because someone has to physically build the power infrastructure that feeds those data centers.
+
+Jordan: It's kind of funny when you put it that way. Everyone's obsessed with the flashy end of the grid story, the power generation, the chips, the software. Meanwhile the unglamorous middle part, actually building and maintaining the wires, gets almost no attention.
+
+Alex: And that's really the pitch here. If you believe in the grid modernization and data center power buildout theme, which is one of the biggest macro stories of 2026, Custom Truck One Source is a lesser known way to get exposure to it, versus buying the more obvious, more crowded names.
+
+Jordan: What would actually change that under the radar status, though? What's the catalyst that gets more eyes on this name?
+
+Alex: A few things could do it. Continued acceleration tied to that grid and data center power investment supercycle would be the obvious one. Another guidance raise in the next quarter or two would definitely get analysts paying closer attention. And then there's the balance sheet story, if they actually hit that sub four times leverage target and keep progressing toward three times, that makes the stock more palatable for institutional investors who might be avoiding it right now purely because of leverage.
+
+Jordan: And I'd add the emissions rule angle to that list too. If 2027 comes around and this pre-buy strategy really does give them an edge over competitors scrambling to catch up, that's the kind of story that gets picked up by trade press and eventually filters into mainstream financial media.
+
+Alex: It's also worth mentioning, just for context, that the equipment rental industry as a whole has been consolidating. That's literally how we ended up doing this episode, since our original pick H&E Equipment got folded into Herc Holdings. Custom Truck One Source operates in a more specialized corner of that same industry, utility and telecom trucks specifically, rather than general construction equipment, so it's not really competing head to head with the giants in the same way.
+
+Jordan: Which might actually protect it a bit, being off in its own niche rather than getting caught up in the same consolidation wave, or it could make it a target itself down the road if a bigger player wants that specialty exposure.
+
+Alex: That's a fair point, and honestly either outcome would probably be good for shareholders. Either it keeps compounding on its own as the grid buildout continues, or someone decides it's worth paying a premium for exactly the niche that's currently keeping it under the radar.
+
+Jordan: So to wrap up the numbers side of things, two straight quarters of double digit revenue growth, EBITDA growing even faster than revenue, utilization climbing toward 82 percent, two consecutive guidance raises, and a company that's actively trying to get ahead of a 2027 regulatory shift. That's a lot of positive signal for a stock that basically nobody's talking about.
+
+Alex: That's the whole thesis in a nutshell. It's not a hype story, there's no exciting product launch or a celebrity CEO tweeting about it. It's just a boring, essential business benefiting from a boring, essential trend, and the market hasn't caught up to that yet.
+
+Jordan: Before we let everyone go, we do need to say the obligatory disclaimer, because we're not licensed to tell anyone what to do with their money.
+
+Alex: Quick reminder before we get into it: everything in this episode is for informational and entertainment purposes only. It is not financial advice, and you should always do your own research or talk to a licensed financial advisor before making investment decisions.
+
+Jordan: Well said. That does it for today's episode. Thanks for spending some time under the radar with us, and we'll catch you next time.
