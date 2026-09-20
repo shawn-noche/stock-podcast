@@ -1,29 +1,33 @@
 #!/usr/bin/env python3
-"""Researches and writes today's episode script using the Claude API
-(with its server-side web search tool), then drops the result into
-pending/ for generate_audio.py to turn into audio.
+"""Researches and writes today's episode script, then drops the result
+into pending/ for generate_audio.py to turn into audio.
 
-This runs as TWO separate Claude API calls rather than one combined call:
+RESEARCH now has two possible paths for the weekday deep-dive:
 
-1. RESEARCH: has the web_search tool, produces a short plain-text research
-   brief (not the episode itself).
-2. WRITE: has NO tools at all, takes the research brief as input, and
-   writes the final two-host JSON episode script.
+1. DETERMINISTIC (normal path): edgar_fetch.py pulls the company's actual
+   earnings filings straight from SEC EDGAR and a few news headlines via
+   plain HTTP -- no LLM involved in gathering the data at all. Claude's
+   only job is to read that real material and distill it into a brief, in
+   a single call with NO tools. This is what actually fixes the recurring
+   cost and reliability problems: there's no agentic search loop left for
+   the model to mismanage, so the failure modes that kept costing real
+   money (searches ballooning the token count, the model not stopping when
+   told to, truncation right before the payoff) can't happen anymore.
+2. WEB-SEARCH FALLBACK: if the EDGAR fetch fails for any reason (ticker
+   not found, no filings, a network hiccup -- this is new code hitting
+   live external services, so a safety net matters), or for episode types
+   EDGAR can't help with (the weekly recap/preview, or the rare case where
+   every curated candidate has been used), fall back to the original
+   Claude-web-search research call.
 
-Why split it up: the original single-call design asked the model to
-search AND write a ~3000-word script in one continuous exchange. That
-combination turned out to be fragile in two ways that kept causing failed
-runs -- (a) after using up its search budget the model sometimes kept
-retrying refused searches many more times instead of stopping, and each
-retry re-sends the whole growing conversation as input tokens, which is
-what caused one run to cost $3.23; and (b) by the time a long research
-phase finished, there often wasn't enough of the max_tokens budget left
-for the model to finish writing the full script, so it got cut off
-mid-way with no usable output. Splitting the work in two makes each call
-much easier to bound: the research call only has to produce a short brief
-(so truncation is far less likely and a failed attempt is cheap to retry),
-and the write call structurally CANNOT run away on search, because it
-doesn't have the search tool at all.
+WRITING has no tools at all either way, so it structurally cannot run
+away on search regardless of which research path was used. After writing,
+a pacing check (see log_pacing_diagnostics) looks for the specific pattern
+that made early episodes sound like the hosts were interrupting each
+other -- rigid alex/jordan/alex/jordan alternation with almost every line
+opening on an instant "Right,"/"Exactly,"-style rebuttal -- and if it's
+still there, automatically requests ONE corrective rewrite before the
+episode is allowed to become audio, instead of silently publishing it.
 
 Runs inside GitHub Actions, which has normal internet access.
 """
@@ -38,6 +42,7 @@ from datetime import datetime, timezone
 import anthropic
 
 import config
+import edgar_fetch
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PENDING_DIR = os.path.join(ROOT, "pending")
@@ -45,7 +50,14 @@ USED_STOCKS_PATH = os.path.join(ROOT, "state", "used_stocks.json")
 CANDIDATE_STOCKS_PATH = os.path.join(ROOT, "state", "candidate_stocks.json")
 
 ANTHROPIC_MODEL = "claude-sonnet-5"
-MAX_ATTEMPTS = 3
+# Lowered from 3 -> 2: if a call fails the same way on attempt 1, it is very
+# likely to fail the same way on attempt 2 as well (these failures have been
+# systematic, not transient network blips), so a 3rd identical attempt was
+# mostly just paying for a third near-guaranteed failure. Two attempts still
+# gives real transient errors (dropped connections, etc.) a chance to
+# recover, while capping the worst-case cost of a run that's broken for a
+# structural reason at 2x a normal call instead of 3x.
+MAX_ATTEMPTS = 2
 
 SCHEMA_INSTRUCTIONS = """
 Respond with ONLY a single JSON object, no markdown code fences, no commentary
@@ -299,6 +311,62 @@ finished episode."""
 
 
 # ---------------------------------------------------------------------------
+# Stage 1, deterministic path: distill real SEC filings (already fetched by
+# edgar_fetch.py, no search tool involved) into the same brief format the
+# writer expects.
+# ---------------------------------------------------------------------------
+
+def build_distillation_prompt(today_str, bundle):
+    filings_block = "\n\n".join(
+        f"=== {f['form']} filed {f['filingDate']} ({f['url']}) ===\n{f['text']}"
+        for f in bundle["filings"]
+    )
+    if bundle["news"]:
+        news_block = "\n".join(
+            f"- {title} ({source}, {pub_date})" for title, source, pub_date in bundle["news"]
+        )
+    else:
+        news_block = "(no recent news headlines found)"
+
+    return f"""You are the RESEARCHER for today's ({today_str}) episode of "Under the
+Radar," a daily podcast about overlooked, under-the-radar publicly traded
+stocks. Your ONLY job right now is research -- someone else will turn your
+notes into the actual episode script, so do NOT write any dialogue.
+
+Below are real primary-source documents for today's company, {bundle['company']}
+(ticker: {bundle['ticker']}), fetched directly from SEC EDGAR, plus a list
+of recent news headlines. Read them and distill a research brief. Do not
+invent any facts that aren't supported by this material -- if something
+isn't covered, say so plainly rather than guessing.
+
+SEC FILINGS ({bundle['source_kind']}):
+\"\"\"
+{filings_block}
+\"\"\"
+
+RECENT NEWS HEADLINES:
+{news_block}
+
+Write a RESEARCH BRIEF as plain text (not JSON, no dialogue) using exactly
+these headings:
+
+TICKER: {bundle['ticker']}
+COMPANY: {bundle['company']}
+WHAT IT DOES / HOW IT MAKES MONEY: <plain-language explanation of the
+  business model and revenue streams, inferred from the filings>
+RECENT EARNINGS: <what stood out in these filings -- revenue, growth,
+  margins, guidance, surprises>
+RECENT NEWS: <notable news from the headlines above and what it means; if
+  none are relevant, say so>
+WHY UNDER THE RADAR: <why this stock is flying under the radar right now,
+  and what could change that>
+
+Keep it factual and reasonably concise -- this is working notes for a
+writer, not the finished episode, so plain prose or bullet points under
+each heading is fine."""
+
+
+# ---------------------------------------------------------------------------
 # Stage 2: writing (no tools at all -- cannot run away on search)
 # ---------------------------------------------------------------------------
 
@@ -353,17 +421,25 @@ RESEARCH NOTES:
 {SCHEMA_INSTRUCTIONS}"""
 
 
+class InvalidEpisode(Exception):
+    pass
+
+
+class CallFailed(Exception):
+    pass
+
+
 def extract_json(text):
     text = text.strip()
     start = text.find("{")
     end = text.rfind("}")
     if start == -1 or end == -1 or end < start:
-        die(f"Could not find a JSON object in model output. Raw output:\n{text[:2000]}")
+        raise InvalidEpisode(f"Could not find a JSON object in model output. Raw output:\n{text[:2000]}")
     candidate = text[start:end + 1]
     try:
         return json.loads(candidate)
     except json.JSONDecodeError as e:
-        die(f"Model output was not valid JSON ({e}). Candidate:\n{candidate[:2000]}")
+        raise InvalidEpisode(f"Model output was not valid JSON ({e}). Candidate:\n{candidate[:2000]}")
 
 
 # Rough cost model for logging only (Claude Sonnet 5 + web search pricing,
@@ -375,14 +451,15 @@ PRICE_PER_1000_SEARCHES = 10.00
 MAX_SEARCHES = 8
 
 # Safety net for the research call: the model is instructed to stop
-# cleanly once it hits MAX_SEARCHES, but if it ever ignores that and keeps
-# re-attempting refused searches anyway, each retry re-sends the whole
-# growing conversation as input tokens. If total search *attempts*
-# (including refused ones) blows past this ceiling, we abort the
-# connection outright. Because this only guards the (short) research call
-# now, not a call that also has to write the full script, an abort here is
-# cheap to retry.
-HARD_SEARCH_ATTEMPT_CEILING = MAX_SEARCHES + 6
+# cleanly once it hits MAX_SEARCHES, but in practice it routinely keeps
+# attempting a handful more (observed: 13-14 total attempts is NORMAL
+# behavior for this model on this prompt, not a runaway -- most of those
+# past #8 are refused server-side and cost nothing, they're just the model
+# trying anyway before it gives up and writes). So this ceiling needs to sit
+# well above that normal range, or it aborts perfectly healthy runs before
+# they get a chance to finish. It's only meant to catch a genuinely
+# pathological case that never stops trying at all.
+HARD_SEARCH_ATTEMPT_CEILING = MAX_SEARCHES + 10
 
 
 class RunawaySearchLoop(Exception):
@@ -470,23 +547,29 @@ def call_claude(prompt, api_key, label, use_search, max_tokens):
             if attempt < MAX_ATTEMPTS:
                 time.sleep(10 * attempt)
         except anthropic.APIStatusError as e:
-            die(f"[{label}] Claude API request failed ({e.status_code}): {e.response.text[:2000]}")
+            raise CallFailed(f"[{label}] Claude API request failed ({e.status_code}): {e.response.text[:2000]}")
 
-    die(f"[{label}] Claude API request failed after {MAX_ATTEMPTS} attempts: {last_error}")
+    raise CallFailed(f"[{label}] Claude API request failed after {MAX_ATTEMPTS} attempts: {last_error}")
 
 
 def validate_episode(ep):
     required = ["episode_type", "date", "title", "tickers", "description", "lines"]
     for key in required:
         if key not in ep:
-            die(f"Model output missing required field '{key}'")
+            raise InvalidEpisode(f"Model output missing required field '{key}'")
     if not isinstance(ep["lines"], list) or not ep["lines"]:
-        die("Model output 'lines' must be a non-empty list")
+        raise InvalidEpisode("Model output 'lines' must be a non-empty list")
     for line in ep["lines"]:
         if line.get("speaker", "").lower() not in config.HOST_VOICES:
-            die(f"Unexpected speaker '{line.get('speaker')}'; must be one of {list(config.HOST_VOICES)}")
+            raise InvalidEpisode(f"Unexpected speaker '{line.get('speaker')}'; must be one of {list(config.HOST_VOICES)}")
         if not line.get("text"):
-            die("A line is missing 'text'")
+            raise InvalidEpisode("A line is missing 'text'")
+
+
+def parse_and_validate_episode(raw_text):
+    ep = extract_json(raw_text)
+    validate_episode(ep)
+    return ep
 
 
 # Quick-agree/rebuttal openers that, used on nearly every line, are what
@@ -498,7 +581,7 @@ def validate_episode(ep):
 QUICK_OPENERS = ("right", "exactly", "that's", "yeah", "okay", "no,")
 
 
-def log_pacing_diagnostics(ep):
+def pacing_stats(ep):
     lines = ep["lines"]
     speakers = [l["speaker"].lower() for l in lines]
     same_speaker_runs = sum(1 for i in range(1, len(speakers)) if speakers[i] == speakers[i - 1])
@@ -508,24 +591,32 @@ def log_pacing_diagnostics(ep):
         if any(first_words.startswith(o) for o in QUICK_OPENERS):
             quick_opener_count += 1
     pct = 100 * quick_opener_count / len(lines) if lines else 0
+    return same_speaker_runs, quick_opener_count, pct
+
+
+def log_pacing_diagnostics(ep, label="pacing"):
+    lines = ep["lines"]
+    same_speaker_runs, quick_opener_count, pct = pacing_stats(ep)
     print(
-        f"[pacing] {len(lines)} lines, {same_speaker_runs} same-speaker-in-a-row "
+        f"[{label}] {len(lines)} lines, {same_speaker_runs} same-speaker-in-a-row "
         f"transitions, {quick_opener_count} ({pct:.0f}%) open with a quick "
         f"agree/rebuttal word"
     )
+    is_flagged = same_speaker_runs == 0 or pct > 50
     if same_speaker_runs == 0:
         print(
-            "[pacing] WARNING: every single line alternates speaker with no "
+            f"[{label}] FLAGGED: every single line alternates speaker with no "
             "exceptions -- this rigid ping-pong pattern is a likely cause of "
             "hosts sounding like they're talking over each other, even with "
             "no literal audio overlap and a clean pause between lines."
         )
     if pct > 50:
         print(
-            f"[pacing] WARNING: {pct:.0f}% of lines open with an instant "
-            "agree/rebuttal word -- consider this a soft signal the episode "
-            "may read as rapid-fire rather than a relaxed conversation."
+            f"[{label}] FLAGGED: {pct:.0f}% of lines open with an instant "
+            "agree/rebuttal word -- this reads as rapid-fire rather than a "
+            "relaxed conversation."
         )
+    return is_flagged, same_speaker_runs, quick_opener_count, pct
 
 
 def main():
@@ -569,27 +660,114 @@ def main():
             print("No state/candidate_stocks.json found; falling back to open-ended pick.")
 
     print(f"=== Stage 1: research (episode_type={episode_type}, date={today_str}) ===")
-    research_prompt = build_research_prompt(episode_type, today_str, avoid_tickers, assigned_candidate)
-    # Research output is just a short brief, not a full script, so a much
-    # smaller max_tokens is plenty and keeps a truncation-triggered retry
-    # cheap.
-    research_notes, research_cost = call_claude(
-        research_prompt, api_key, label="research", use_search=True, max_tokens=4000
-    )
+
+    def run_web_search_research():
+        # The original path: Claude does its own web search. Kept as a
+        # fallback for episode types EDGAR can't help with (recap/preview,
+        # or the rare case every curated candidate is used up), and as a
+        # safety net if the deterministic EDGAR fetch below fails.
+        research_prompt = build_research_prompt(episode_type, today_str, avoid_tickers, assigned_candidate)
+        # NOTE: max_tokens here has to cover the ENTIRE research turn, not
+        # just the brief text -- every search query and search result the
+        # model generates along the way counts against this same budget,
+        # and in practice that alone has run past 7000-8000 tokens before
+        # the model even starts writing the brief (Episode #11 hit exactly
+        # this: capped at 4000, it got cut off mid-search every time and
+        # never got to write anything, on all 3 attempts, for ~$0.90 total
+        # with zero usable output). Raising the ceiling doesn't cost more by
+        # itself -- you're only ever billed for tokens actually generated --
+        # it just stops a normal-length research pass from getting
+        # truncated right before the payoff.
+        return call_claude(
+            research_prompt, api_key, label="research", use_search=True, max_tokens=12000
+        )
+
+    research_notes = None
+    research_cost = 0.0
+
+    if episode_type == "weekday_deep_dive" and assigned_candidate:
+        try:
+            print(f"Fetching SEC EDGAR data for {assigned_candidate['ticker']}...")
+            bundle = edgar_fetch.fetch_research_bundle(
+                assigned_candidate["ticker"], assigned_candidate["company"]
+            )
+            print(
+                f"  found {len(bundle['filings'])} filing(s) via {bundle['source_kind']}, "
+                f"{len(bundle['news'])} news headline(s)"
+            )
+            distillation_prompt = build_distillation_prompt(today_str, bundle)
+            # No search tool, so no runaway risk; input is bounded by the
+            # fetched documents (typically well under 10K tokens) and the
+            # output is just the short brief, so this is a small, cheap,
+            # predictable call.
+            research_notes, research_cost = call_claude(
+                distillation_prompt, api_key, label="research", use_search=False, max_tokens=4000
+            )
+        except (edgar_fetch.DataFetchFailed, CallFailed) as e:
+            print(f"WARNING: deterministic EDGAR research failed ({e}); "
+                  "falling back to web-search research for this episode.")
+
+    if research_notes is None:
+        try:
+            research_notes, research_cost = run_web_search_research()
+        except CallFailed as e:
+            die(str(e))
+
     print("--- research brief ---")
     print(research_notes)
     print("--- end research brief ---")
 
     print(f"=== Stage 2: writing (episode_type={episode_type}, date={today_str}) ===")
     writing_prompt = build_writing_prompt(episode_type, today_str, research_notes)
-    raw_text, writing_cost = call_claude(
-        writing_prompt, api_key, label="write", use_search=False, max_tokens=16000
-    )
-    print(f"Total cost for this episode: approx ${research_cost + writing_cost:.3f}")
+    try:
+        raw_text, writing_cost = call_claude(
+            writing_prompt, api_key, label="write", use_search=False, max_tokens=16000
+        )
+    except CallFailed as e:
+        die(str(e))
 
-    episode = extract_json(raw_text)
-    validate_episode(episode)
-    log_pacing_diagnostics(episode)
+    try:
+        episode = parse_and_validate_episode(raw_text)
+    except InvalidEpisode as e:
+        die(str(e))
+
+    is_flagged, same_speaker_runs, quick_opener_count, pct = log_pacing_diagnostics(
+        episode, label="pacing (attempt 1)"
+    )
+
+    if is_flagged:
+        print("[pacing] Script failed the pacing gate -- requesting one "
+              "corrective rewrite before this is allowed to become audio.")
+        corrective_prompt = writing_prompt + f"""
+
+IMPORTANT CORRECTION NEEDED: your previous attempt at this same brief came
+back with {same_speaker_runs} same-speaker-in-a-row transitions (should be
+several, not zero) and {quick_opener_count} of {len(episode['lines'])} lines
+({pct:.0f}%) opening with an instant agree/rebuttal word like "Right," or
+"Exactly," (should be well under half). This is exactly the rigid
+back-and-forth pattern described above that makes hosts sound like they're
+interrupting each other. Write a new version of the full episode that
+actually follows that guidance this time: real cases of one host
+continuing for two or three lines in a row, and lines that don't all open
+by instantly agreeing or countering."""
+        try:
+            raw_text2, writing_cost2 = call_claude(
+                corrective_prompt, api_key, label="write-corrected", use_search=False, max_tokens=16000
+            )
+            writing_cost += writing_cost2
+            episode2 = parse_and_validate_episode(raw_text2)
+            is_flagged2, *_ = log_pacing_diagnostics(episode2, label="pacing (attempt 2)")
+            episode = episode2
+            if is_flagged2:
+                print("[pacing] Corrective rewrite still flagged; publishing it anyway "
+                      "(capped at one retry to bound cost) -- worth a listen.")
+            else:
+                print("[pacing] Corrective rewrite passed the gate.")
+        except (CallFailed, InvalidEpisode) as e:
+            print(f"[pacing] Corrective rewrite failed ({e}); keeping the "
+                  "original (flagged) version rather than losing the whole run.")
+
+    print(f"Total cost for this episode: approx ${research_cost + writing_cost:.3f}")
 
     episode["episode_type"] = episode_type
     episode["date"] = today_str
