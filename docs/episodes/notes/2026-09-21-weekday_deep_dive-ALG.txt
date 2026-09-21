@@ -1,0 +1,123 @@
+Mowers, Sweepers, and a Nine-Quarter Slump: The Case for Alamo Group
+
+A $2 billion industrial manufacturer just posted an earnings beat, closed a bolt-on acquisition, and got a tariff-relief tailwind -- and almost nobody's talking about it. Alex and Jordan dig into Alamo Group's mowers-and-sewer-trucks business, break down two quarters of results, and explain why 'boring but essential' might be exactly what makes this stock interesting right now.
+
+--- Transcript ---
+
+Alex: Hey, welcome to Under the Radar. I'm Alex.
+
+Jordan: And I'm Jordan. If this is your first time with us, here's the idea. Every weekday we take one small, overlooked stock that almost nobody's talking about, and we spend real time figuring out whether it deserves more attention.
+
+Alex: Saturdays we zoom out and recap the whole week in the market, and Sundays we give you a quick preview of what's coming up next week.
+
+Jordan: All right, let's get into today's show.
+
+Alex: So I want to start with a number, and I want you to just sit with it for a second before I tell you what company it's attached to.
+
+Jordan: Okay, I'm listening.
+
+Alex: Second quarter revenue, four hundred fifty point seven million dollars, up seven point six percent year over year, beat on both the top and bottom line, and the stock still barely moved the needle in terms of media coverage. Analysts have a buy rating with a price target north of two hundred bucks. And I'd bet most of our listeners have never heard the ticker.
+
+Jordan: Alright, I'll bite. What is it?
+
+Alex: Alamo Group, ticker ALG. And I think it's a genuinely great example of what this show is supposed to be about -- a real, profitable, dividend-paying company that just doesn't have a story sexy enough to trend anywhere.
+
+Jordan: I'll be honest, I had never looked closely at this one before this week. But the more I dug in, the more I realized there's actually a pretty interesting tension happening inside this business right now -- one part of it is decelerating, one part of it might be waking up, and the market seems to not quite know what to do with that.
+
+Alex: Which is exactly why it's worth twenty minutes of anyone's time. This isn't a broken company or a value trap. It's a roughly two billion dollar industrial manufacturer with real earnings, a buyback program, and a dividend, sitting in this weird in-between moment where the growth story is muddled enough that nobody wants to write the exciting headline about it.
+
+Jordan: So let's get into what it actually does, because I think a lot of people are going to hear 'agricultural and infrastructure equipment' and their eyes are going to glaze over a little.
+
+Alex: Fair, but stick with us, because once you hear it explained plainly it's actually pretty intuitive. Alamo Group makes two kinds of things, split into two divisions. The first is Vegetation Management -- think tractor-mounted mowers, the big arm-mounted mowing equipment you see clearing highway medians and ditches, plus tree-care and land-clearing gear. That stuff mostly gets sold through agricultural equipment dealers and to government agencies that maintain roadside vegetation.
+
+Jordan: So that's basically 'how does the grass along every highway in America stay under control.'
+
+Alex: Pretty much. And then the second division is Industrial Equipment, which is the municipal and utility side -- street sweepers, snowplows, sewer cleaners, vacuum trucks, hydro-excavators, catch-basin cleaning systems, trenchers, salt spreaders. That's sold mainly to municipalities, utilities, and infrastructure contractors. So one division is basically agriculture-and-government-adjacent mowing equipment, the other is straight-up municipal infrastructure hardware.
+
+Jordan: And the way it makes money is just what it sounds like -- it designs and manufactures this equipment and sells it, largely through dealer networks and direct government contracts, and it grows partly by building more of that stuff organically and partly by buying smaller specialized manufacturers and bolting them onto the existing business.
+
+Alex: Right, and that bolt-on acquisition strategy is actually a real part of the story this year, because a big chunk of the growth we're about to talk about in the Industrial division specifically came from one of those deals.
+
+Jordan: Okay so let's get into the actual numbers, because I think this is where it gets genuinely interesting. Let's start with the most recent one -- second quarter twenty twenty-six, reported back in early August. Net sales were four hundred fifty point seven million, up from four hundred nineteen point one million a year earlier, so that's the seven point six percent growth Alex mentioned up top.
+
+Alex: But here's the thing that jumps out immediately -- net income was basically flat. Thirty point nine million dollars, or two dollars fifty-five cents a share, versus thirty-one point one million, or two fifty-seven a share, in the same quarter last year. So revenue's up almost eight percent, and GAAP earnings per share actually ticked down slightly.
+
+Jordan: Which sounds like a red flag on the surface, but the adjusted numbers tell a better story -- adjusted earnings came in at two dollars eighty-two cents a share, which beat Wall Street's estimate by about three point three percent, and revenue beat estimates by roughly three point four percent. That's why the stock actually moved higher on the print, even though the raw GAAP EPS number looked underwhelming.
+
+Alex: So there's some noise in there -- one-time costs, acquisition-related charges, that kind of thing -- that gets stripped out in the adjusted figures, and the adjusted picture is the one that beat expectations on both lines.
+
+Jordan: Now break down the two divisions for me, because I think this is where the real story is hiding.
+
+Alex: So Industrial Equipment, the sweepers-and-sewer-trucks side, had a really strong quarter -- sales up twelve point eight percent to two hundred seventy-one point six million. But a good chunk of that growth wasn't organic, it was fueled by the Petersen acquisition, which closed back in January. Vegetation Management, on the other hand, was basically flat -- sales of one hundred seventy-nine point one million, up just zero point four percent year over year.
+
+Jordan: So almost all the headline growth this quarter is coming from the mowing-and-tree-care side standing still while the municipal side gets a boost from an acquisition, not from organic demand accelerating.
+
+Alex: Exactly, and margins tell a similar story of two divisions moving in different directions. Industrial Equipment's adjusted EBITDA margin was sixteen point seven percent, basically in line with sixteen point eight percent a year ago -- so profitability held up fine even with the acquisition folded in. But Vegetation Management's adjusted EBITDA margin was stuck at ten point four percent, flat year over year, with the company specifically calling out inflation, tariffs, and an unfavorable sales mix as the drags, even though they said operational improvements were happening under the hood.
+
+Jordan: And then there's the number that actually worries me the most out of this whole report, which is book-to-bill. Both divisions came in below one -- Industrial Equipment at zero point eight five, Vegetation Management at zero point nine. That means in both parts of the business, new orders coming in are running behind the sales going out the door.
+
+Alex: Which is the classic leading indicator problem. Revenue and earnings tell you what already happened. Book-to-bill tells you what's coming, and a reading under one in both divisions simultaneously is basically management's own order book saying 'don't expect this growth rate to continue without a pickup in demand.'
+
+Jordan: It's worth pausing on that, though, because a book-to-bill under one doesn't automatically mean disaster -- it can just mean a normal digestion period after a couple of really strong years, which is actually exactly what happened here. It only becomes a real problem if it keeps sliding for several more quarters in a row.
+
+Alex: Right, and the company also used the quarter to return some cash to shareholders -- buybacks and dividends in the first half of twenty twenty-six, per the release. So even in a quarter with some caution flags, they weren't hoarding cash defensively, they were still returning capital, which tells you management isn't panicking about the balance sheet.
+
+Jordan: Let's back up one quarter, though, because Q1 twenty twenty-six, reported back in early May, actually has one number in it that I think is the single most important data point in this entire episode.
+
+Alex: Go for it.
+
+Jordan: Vegetation Management posted its first year-over-year sales increase in nine quarters. Nine. That's more than two full years of that division shrinking or flat, and in Q1 it finally turned positive -- net sales of one hundred seventy-five point four million versus one hundred sixty-three point nine million a year earlier. Overall company revenue growth for the quarter was six point seven percent, helped by that Vegetation rebound plus continued contribution from acquisitions.
+
+Jordan: But gross margin compressed in that quarter, and Industrial Equipment's organic sales actually declined -- net orders in that division were down eleven percent. So even in the quarter where the good news was Vegetation Management finally turning a corner, the other division was showing cracks in its own order book.
+
+Alex: And management's own language around that quarter is what I keep coming back to. They said, quote, 'we're a bit more cautious on Vegetation despite the good quarter,' specifically citing rising input costs, stagnant retail tractor sales, and inflation. That's a company telling you directly not to get too excited about one good print.
+
+Jordan: And on the Industrial side they used this phrase, a 'transition year,' because that division is lapping two years of high-teens growth that came from government infrastructure spending flowing through the system. Management's own guidance for Industrial organic sales in twenty twenty-six is flattish to up low single digits, which is a massive deceleration from what they'd been putting up.
+
+Alex: So if you zoom out across both quarters, the picture is: Vegetation Management might finally be bottoming after almost two and a half years of pain, but management themselves are cautious about calling it a real recovery. And Industrial Equipment, which has been the growth engine, is deliberately guiding you to expect much slower growth because the infrastructure-spending tailwind that drove the last two years is fading.
+
+Jordan: That's a genuinely hard narrative to package into a headline, and I think that's a big part of why this stock isn't getting attention -- there's no clean story here, it's 'one segment might be recovering, the other is decelerating on purpose,' and that's just not the kind of thing that goes viral.
+
+Alex: Let's move to the news flow, then, because there's actually been a fair amount happening even if none of it made a big splash. The biggest one is the Petersen Industries acquisition, which closed in January twenty twenty-six. Petersen makes specialized truck-mounted grapple loader equipment, and it's the acquisition that's been directly fueling that Industrial Equipment growth we just walked through.
+
+Jordan: So that's the bolt-on M&A strategy in action -- rather than waiting around for organic demand to reaccelerate, they went out and bought a specialized manufacturer that plugs straight into their existing municipal and utility customer base.
+
+Alex: Then in June, Alamo put in place a new six hundred two point five million dollar credit agreement, which gives them a lot more financing flexibility -- useful both for funding future acquisitions and for weathering whatever tariff and input-cost pressure comes next. And around that same period, the stock actually popped five point nine percent on news of a U.S. tariff cut that eased import costs on farm equipment components.
+
+Jordan: That tariff angle matters more than it might sound like on the surface, because remember, tariffs and input cost inflation were literally called out by management as one of the reasons Vegetation Management's margins are stuck at that ten point four percent level. So any relief on that front flows pretty directly into the part of the business that's been struggling the most.
+
+Alex: On the insider side, it's a mixed bag, but nothing alarming. Back in March, there was a small insider purchase -- two hundred thirty-three shares, worth about thirty-nine thousand nine hundred eighty-five dollars. Not a huge dollar amount, but insider buying is always worth noting as a small vote of confidence.
+
+Jordan: And more recently, on September fourth, Executive Vice President Edward Rizzuti sold twenty-five hundred thirty-seven shares for about four hundred forty-three thousand dollars. That's the kind of sale that looks routine -- executives sell shares for all sorts of personal reasons, tax planning, diversification, and a sale of that size from an EVP isn't a red flag on its own.
+
+Alex: Right, I wouldn't read much into either of those in isolation. What I do think matters more is the analyst picture -- consensus rating is a Buy, average price target around two hundred nine dollars and eighty cents, with a range from one eighty-eight up to two twenty-five. That's meaningful implied upside from current levels, and it's coming from people who actually cover the name closely.
+
+Jordan: So now let's actually dig into the under-the-radar question directly, because I think that's the heart of why we picked this one. Why is a Buy-rated, profitable, dividend-paying industrial manufacturer with real upside to price targets just sitting here basically ignored?
+
+Alex: I think it comes down to a few things stacking on top of each other. First, the products themselves are just fundamentally unglamorous -- mowers, sewer-cleaning trucks, snowplows, salt spreaders. Nobody's writing a viral thread about municipal sweeper demand. It's the definition of boring-but-essential infrastructure equipment.
+
+Jordan: Second, and I think this is the bigger driver honestly, the growth narrative right now is genuinely muddled, not because the business is doing badly, but because it's doing well in a complicated way. You've got Vegetation Management potentially bottoming after nine quarters of pain, but management themselves hedging on whether that's real. You've got Industrial Equipment decelerating from an artificially high growth rate driven by government infrastructure money. And you've got book-to-bill under one in both divisions right now.
+
+Jordan: None of that is a disaster. But none of it is a clean, easy story either, and clean easy stories are what get coverage and attention. A stock that's 'quietly fine but complicated' just doesn't generate headlines the way a dramatic beat or a dramatic miss does.
+
+Alex: There's also a sector-level risk that's worth naming directly, because it explains why some of that caution is warranted rather than just noise. State DOTs -- the departments of transportation that are big customers for Vegetation Management equipment -- could keep delaying capital orders if there's continued uncertainty around federal infrastructure funding. That would directly suppress volumes and margins in that division even if the nine-quarter slump is technically over.
+
+Jordan: And separately, tree care demand connects to housing starts, which have stayed depressed, so that's another headwind that isn't going away just because one quarter turned positive. On the other side, there's a real risk that tariff-driven input cost escalation could offset whatever procurement savings companies like Alamo are getting elsewhere, which would keep compressing gross margins even as demand improves.
+
+Alex: So what would actually change this? What turns Alamo Group from an ignored name into one people are actually talking about?
+
+Jordan: A few concrete things. First, a real rebound in municipal and state DOT capital spending tied to some kind of infrastructure funding renewal -- that would hit Vegetation Management demand directly. Second, continued tariff relief on imported equipment and inputs, which would ease that margin pressure management has been flagging. Third, more bolt-on M&A like the Petersen deal, which has already proven it can accelerate segment growth pretty quickly.
+
+Alex: And fourth, probably the most important one to watch quarter to quarter -- a reacceleration in book-to-bill above one in both divisions. Right now you've got zero point eight five in Industrial and zero point nine in Vegetation. If those numbers start climbing back toward or past one, that's the market getting a real signal that order demand is actually recovering, not just that revenue is being propped up by acquisitions and prior backlog.
+
+Jordan: That's really the number I'd tell anyone following this story to circle for the next couple of quarters. Everything else -- the margin discussion, the tariff relief, the M&A -- kind of flows downstream from whether orders are actually picking back up.
+
+Alex: And in the meantime, you've got a company trading at a level where analysts see real upside, that's still buying back stock and paying a dividend, all while nobody's paying much attention because the story doesn't fit neatly into a single sentence.
+
+Jordan: Which honestly might be the most classic under-the-radar setup there is -- not a hidden gem nobody's found, but a perfectly visible, perfectly boring company that the market just hasn't bothered to get excited about yet.
+
+Alex: Before we wrap up, let's do the required disclaimer, and I'll take this one. Quick reminder before we get into it: everything in this episode is for informational and entertainment purposes only. It is not financial advice, and you should always do your own research or talk to a licensed financial advisor before making investment decisions.
+
+Jordan: Alamo Group is a name that's easy to overlook, but the numbers are worth watching -- keep an eye on book-to-bill, keep an eye on whether that Vegetation Management rebound has legs, and keep an eye on how the tariff situation actually plays out in the margins.
+
+Alex: That's it for today's episode. Thanks for spending twenty minutes with us on a mower-and-sewer-truck company, of all things -- we'll see you next time on Under the Radar.
