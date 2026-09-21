@@ -29,7 +29,15 @@ HOST_VOICES = {
     "jordan": "nova",
 }
 
-TTS_MODEL = "gpt-4o-mini-tts"
+# gpt-4o-mini-tts was used originally, but it has a confirmed, still-open
+# OpenAI bug where it silently drops the end of sentences/clips (see the
+# OpenAI developer forum threads on "gpt-4o-mini-tts truncates final
+# sentences") -- this is what was causing episodes to sound like the hosts
+# were cutting each other off. tts-1 is an older, non-autoregressive model
+# with no reports of this truncation behavior, and costs about the same per
+# minute as gpt-4o-mini-tts (tts-1-hd would roughly double the cost for
+# higher fidelity we don't need here).
+TTS_MODEL = "tts-1"
 TTS_FORMAT = "mp3"
 
 DISCLAIMER = (
