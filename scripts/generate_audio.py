@@ -31,6 +31,40 @@ MANIFEST_PATH = os.path.join(ROOT, "state", "episodes.json")
 
 OPENAI_TTS_URL = "https://api.openai.com/v1/audio/speech"
 
+# A flat pause length between every single line is what made rapid
+# back-and-forth exchanges -- a speaker change straight into a short,
+# reactive reply -- sound like the incoming host was cutting the first one
+# off, even though there is always real silence between the two clips (see
+# the "won't let him finish" listener feedback on the 2026-09-20 CTOS
+# episode: pocketsphinx word-level analysis of that exact published file
+# confirmed zero literal audio overlap and a clean ~0.7s gap at every line
+# boundary, so the complaint was about how a short, instant-sounding reply
+# READS after only a beat of silence, not a bug in the gap itself).
+#
+# This gives a noticeably longer beat specifically before a short or
+# reactive-sounding reply, and only there. It is pure post-processing on
+# top of whatever script the model wrote, so unlike the writing-prompt
+# pacing guidance (which the model doesn't always follow -- confirmed on
+# the CTOS episode, which still came back 100% strictly alternating even
+# after one automatic corrective rewrite), this fix applies identically to
+# every episode no matter how the model wrote it.
+REACTIVE_OPENERS = (
+    "right", "exactly", "that's", "yeah", "okay", "no,", "correct,",
+    "true,", "totally,", "yep,", "well,",
+)
+SHORT_LINE_WORD_THRESHOLD = 12
+LONG_PAUSE_SECONDS = 1.3
+
+
+def _sounds_like_a_quick_reply(text):
+    words = text.split()
+    if not words:
+        return False
+    if len(words) <= SHORT_LINE_WORD_THRESHOLD:
+        return True
+    first_two = " ".join(words[:2]).lower().strip(".,")
+    return any(first_two.startswith(o.strip(",")) for o in REACTIVE_OPENERS)
+
 
 def die(msg):
     print(f"ERROR: {msg}", file=sys.stderr)
@@ -183,6 +217,8 @@ def process_episode(script_path, api_key):
     line_paths = []
     silence_path = os.path.join(work_dir, "silence.mp3")
     make_silence(silence_path)
+    silence_long_path = os.path.join(work_dir, "silence_long.mp3")
+    make_silence(silence_long_path, duration=LONG_PAUSE_SECONDS)
 
     intro_path = os.path.join(work_dir, "intro.mp3")
     outro_path = os.path.join(work_dir, "outro.mp3")
@@ -199,7 +235,16 @@ def process_episode(script_path, api_key):
         line_mp3 = os.path.join(work_dir, f"line_{i:04d}.mp3")
         tts_line(line["text"], voice, line_mp3, api_key)
         line_paths.append(line_mp3)
-        line_paths.append(silence_path)
+
+        # Pick the pause that follows this line based on what's coming next,
+        # not a flat value -- see the module-level comment on
+        # _sounds_like_a_quick_reply for why.
+        next_line = lines[i + 1] if i + 1 < len(lines) else None
+        if next_line is not None and next_line["speaker"].lower() != speaker \
+                and _sounds_like_a_quick_reply(next_line["text"]):
+            line_paths.append(silence_long_path)
+        else:
+            line_paths.append(silence_path)
     line_paths.append(outro_path)
 
     os.makedirs(AUDIO_OUT_DIR, exist_ok=True)
