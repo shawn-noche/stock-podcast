@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" xmlns:atom="http://www.w3.org/2005/Atom">
+<rss version="2.0" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:podcast="https://podcastindex.org/namespace/1.0">
   <channel>
     <title>Under the Radar</title>
     <link>https://shawn-noche.github.io/stock-podcast/</link>
@@ -22,7 +22,19 @@
       <itunes:category text="Investing" />
     </itunes:category>
     <itunes:explicit>false</itunes:explicit>
-    <lastBuildDate>Mon, 21 Sep 2026 16:29:48 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 21 Sep 2026 17:44:47 +0000</lastBuildDate>
+    <item>
+      <title>The Marine Contractor Nobody's Watching: Digging Into Orion Group Holdings (ORN)</title>
+      <description>This week we're heading to the docks with Orion Group Holdings, a Houston-based specialty construction company that builds ports, Navy facilities, and marine infrastructure most investors have never heard of. We break down a rough Q2 print, a price-target cut, and why this $379 million small-cap is exactly the kind of name that flies under the radar until it doesn't.</description>
+      <itunes:summary>This week we're heading to the docks with Orion Group Holdings, a Houston-based specialty construction company that builds ports, Navy facilities, and marine infrastructure most investors have never heard of. We break down a rough Q2 print, a price-target cut, and why this $379 million small-cap is exactly the kind of name that flies under the radar until it doesn't.</itunes:summary>
+      <pubDate>Mon, 21 Sep 2026 17:44:47 +0000</pubDate>
+      <enclosure url="https://shawn-noche.github.io/stock-podcast/episodes/audio/2026-09-21-weekday_deep_dive-ORN.mp3" length="8475693" type="audio/mpeg" />
+      <guid isPermaLink="false">b43bf8c6-ef30-47b7-ac4d-d9baa1136ca5</guid>
+      <itunes:duration>08:50</itunes:duration>
+      <itunes:explicit>false</itunes:explicit>
+      <itunes:episodeType>full</itunes:episodeType>
+      <podcast:transcript url="https://shawn-noche.github.io/stock-podcast/episodes/notes/2026-09-21-weekday_deep_dive-ORN.txt" type="text/plain" />
+    </item>
     <item>
       <title>The Tractor Turnaround Nobody's Watching: Titan Machinery's Quiet Margin Story</title>
       <description>Revenue is still falling double digits, but gross margins just hit their best levels in years. We dig into Titan Machinery, a small-cap farm and construction equipment dealer working through a brutal ag downturn while quietly executing an inventory turnaround that Wall Street's technicals haven't caught up to yet.</description>
@@ -33,6 +45,7 @@
       <itunes:duration>11:13</itunes:duration>
       <itunes:explicit>false</itunes:explicit>
       <itunes:episodeType>full</itunes:episodeType>
+      <podcast:transcript url="https://shawn-noche.github.io/stock-podcast/episodes/notes/2026-09-21-weekday_deep_dive-TITN.txt" type="text/plain" />
     </item>
     <item>
       <title>Costco, Cracker Barrel, and a Trump-Xi Summit: Your Week Ahead</title>
@@ -44,6 +57,7 @@
       <itunes:duration>05:09</itunes:duration>
       <itunes:explicit>false</itunes:explicit>
       <itunes:episodeType>full</itunes:episodeType>
+      <podcast:transcript url="https://shawn-noche.github.io/stock-podcast/episodes/notes/2026-09-20-sunday_preview-AZO.txt" type="text/plain" />
     </item>
     <item>
       <title>The Truck Company Riding the Grid Boom Nobody's Watching</title>
@@ -55,6 +69,7 @@
       <itunes:duration>10:15</itunes:duration>
       <itunes:explicit>false</itunes:explicit>
       <itunes:episodeType>full</itunes:episodeType>
+      <podcast:transcript url="https://shawn-noche.github.io/stock-podcast/episodes/notes/2026-09-20-weekday_deep_dive-CTOS.txt" type="text/plain" />
     </item>
     <item>
       <title>The Modular Building Company Quietly Riding the AI Boom</title>
@@ -66,6 +81,7 @@
       <itunes:duration>10:53</itunes:duration>
       <itunes:explicit>false</itunes:explicit>
       <itunes:episodeType>full</itunes:episodeType>
+      <podcast:transcript url="https://shawn-noche.github.io/stock-podcast/episodes/notes/2026-09-19-weekday_deep_dive-MGRC.txt" type="text/plain" />
     </item>
     <item>
       <title>The Workers' Comp Company That Bought Back 70% of Itself</title>
@@ -77,6 +93,7 @@
       <itunes:duration>13:39</itunes:duration>
       <itunes:explicit>false</itunes:explicit>
       <itunes:episodeType>full</itunes:episodeType>
+      <podcast:transcript url="https://shawn-noche.github.io/stock-podcast/episodes/notes/2026-09-19-weekday_deep_dive-CRVL.txt" type="text/plain" />
     </item>
     <item>
       <title>The Fed Finally Pulls the Trigger: Rate Hikes Are Back</title>
@@ -88,6 +105,7 @@
       <itunes:duration>14:36</itunes:duration>
       <itunes:explicit>false</itunes:explicit>
       <itunes:episodeType>full</itunes:episodeType>
+      <podcast:transcript url="https://shawn-noche.github.io/stock-podcast/episodes/notes/2026-09-19-saturday_recap.txt" type="text/plain" />
     </item>
   </channel>
 </rss>
