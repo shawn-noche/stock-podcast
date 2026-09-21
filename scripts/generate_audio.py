@@ -313,7 +313,14 @@ def process_episode(script_path, api_key):
     work_dir = os.path.join("/tmp", f"build_{slug}_{uuid.uuid4().hex[:8]}")
     os.makedirs(work_dir, exist_ok=True)
 
-    lines = ep["lines"]
+    # A fixed, evergreen welcome (config.SHOW_INTRO_LINES) is prepended to
+    # every episode's actual lines before any TTS happens -- see the comment
+    # on SHOW_INTRO_LINES in config.py. Putting it here, rather than as a
+    # separate step, means it automatically gets the same sentence-splitting/
+    # truncation-floor protection, the same adaptive pause logic, the same
+    # word-count accounting for the whole-episode duration check below, and
+    # shows up in the transcript .txt -- all for free, with no special-casing.
+    lines = config.SHOW_INTRO_LINES + ep["lines"]
     line_paths = []
     silence_path = os.path.join(work_dir, "silence.mp3")
     make_silence(silence_path)
