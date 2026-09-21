@@ -98,14 +98,27 @@ ALSO IMPORTANT, and just as easy to get wrong even with full-sentence lines:
 do NOT write this as a rigid back-and-forth where the mic switches to the
 other host after literally every single line, all episode long, like a
 tennis rally or a formal interview. Real co-hosts don't take turns with
-perfect regularity. Several times per episode, have ONE host speak for TWO
-lines in a row (occasionally three) to fully develop an explanation, walk
-through a set of numbers, or tell a story, before handing off -- especially
-when covering earnings figures or a multi-part point. If you look at the
-"speaker" values in your own output in order, they should NOT simply
-alternate alex/jordan/alex/jordan for the entire episode; there should be
-several places where the same speaker appears twice (or three times) back
-to back.
+perfect regularity. Have ONE host speak for TWO lines in a row (occasionally
+three) to fully develop an explanation, walk through a set of numbers, or
+tell a story, before handing off -- especially when covering earnings
+figures or a multi-part point. Here is exactly the pattern to use, as a
+concrete example (notice Alex keeps the mic for a second line before
+Jordan responds):
+
+  {"speaker": "alex", "text": "Revenue came in at 563 million, up about 10
+    percent year over year."}
+  {"speaker": "alex", "text": "And margins actually expanded even faster
+    than that, which is the more interesting part of this report."}
+  {"speaker": "jordan", "text": "That's the piece I want to dig into,
+    because revenue growth alone doesn't tell you if the business is
+    actually getting healthier."}
+
+This is a hard requirement, not a suggestion: use this same-speaker-keeps-
+talking pattern at LEAST five separate times somewhere in the episode. If
+you look at the "speaker" values in your own output in order, they must
+NOT simply alternate alex/jordan/alex/jordan for the entire episode --
+count it yourself before you finish: there must be at least five places
+where the same speaker appears on two or more consecutive lines.
 
 Relatedly: do not have almost every line open by immediately agreeing with
 or countering what the other host just said ("Right, ...", "Exactly, ...",
@@ -741,15 +754,33 @@ def main():
         corrective_prompt = writing_prompt + f"""
 
 IMPORTANT CORRECTION NEEDED: your previous attempt at this same brief came
-back with {same_speaker_runs} same-speaker-in-a-row transitions (should be
-several, not zero) and {quick_opener_count} of {len(episode['lines'])} lines
+back with {same_speaker_runs} same-speaker-in-a-row transitions (needed: at
+least 5) and {quick_opener_count} of {len(episode['lines'])} lines
 ({pct:.0f}%) opening with an instant agree/rebuttal word like "Right," or
 "Exactly," (should be well under half). This is exactly the rigid
 back-and-forth pattern described above that makes hosts sound like they're
-interrupting each other. Write a new version of the full episode that
-actually follows that guidance this time: real cases of one host
-continuing for two or three lines in a row, and lines that don't all open
-by instantly agreeing or countering."""
+interrupting each other, and it is the single most common way this
+episode gets rejected, so treat it as a hard constraint, not a style
+preference.
+
+Write a new version of the full episode. Before you output it, plan out at
+least 5 specific moments where one host will keep talking for 2-3 lines in
+a row -- pick real spots that fit this material, such as walking through a
+multi-part earnings number, explaining a business model, or telling a
+short story, the same way this example does:
+
+  {{"speaker": "alex", "text": "Revenue came in at 563 million, up about 10
+    percent year over year."}}
+  {{"speaker": "alex", "text": "And margins actually expanded even faster
+    than that, which is the more interesting part of this report."}}
+  {{"speaker": "jordan", "text": "That's the piece I want to dig into,
+    because revenue growth alone doesn't tell you if the business is
+    actually getting healthier."}}
+
+Then write the full episode using that plan, and also cut down how often
+lines open with an instant agree/rebuttal word. Count the same-speaker
+transitions in your own output before you finish -- if it's below 5, add
+more before responding."""
         try:
             raw_text2, writing_cost2 = call_claude(
                 corrective_prompt, api_key, label="write-corrected", use_search=False, max_tokens=16000
