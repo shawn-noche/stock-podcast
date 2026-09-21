@@ -22,12 +22,15 @@ RESEARCH now has two possible paths for the weekday deep-dive:
 
 WRITING has no tools at all either way, so it structurally cannot run
 away on search regardless of which research path was used. After writing,
-a pacing check (see log_pacing_diagnostics) looks for the specific pattern
-that made early episodes sound like the hosts were interrupting each
-other -- rigid alex/jordan/alex/jordan alternation with almost every line
-opening on an instant "Right,"/"Exactly,"-style rebuttal -- and if it's
-still there, automatically requests ONE corrective rewrite before the
-episode is allowed to become audio, instead of silently publishing it.
+a quality gate (see log_quality_diagnostics) checks two things: the
+specific pacing pattern that made early episodes sound like the hosts were
+interrupting each other (rigid alex/jordan/alex/jordan alternation with
+almost every line opening on an instant "Right,"/"Exactly,"-style
+rebuttal), and whether the script actually hit its target word count
+(episodes drifted shorter and shorter over time with nothing checking
+this). If either is still a problem, this automatically requests ONE
+corrective rewrite before the episode is allowed to become audio, instead
+of silently publishing it.
 
 Runs inside GitHub Actions, which has normal internet access.
 """
@@ -383,12 +386,52 @@ each heading is fine."""
 # Stage 2: writing (no tools at all -- cannot run away on search)
 # ---------------------------------------------------------------------------
 
+# Length targets per episode type. These are the ONE source of truth for
+# both what the writer is told to aim for (build_writing_prompt reads
+# "guidance" and "min_words" below) and what the automated quality gate
+# actually checks (log_quality_diagnostics). Before 2026-09-22 the prompt
+# stated a 2600-3800 word target for weekday deep dives but nothing ever
+# verified the model actually hit it, and real episodes drifted shorter and
+# shorter with nothing catching it -- 13:39 on the first one down to 6:45 a
+# few days later, all silently published. Now a script that comes in under
+# the minimum triggers the same one-shot corrective rewrite as a pacing
+# problem, instead of publishing something far short of what listeners were
+# told to expect.
+LENGTH_TARGETS = {
+    "weekday_deep_dive": {
+        "min_words": 2600,
+        "max_words": 3800,
+        "guidance": ("Target length: 15-25 minutes of spoken dialogue, roughly "
+                     "2600-3800 words total across both hosts."),
+    },
+    "saturday_recap": {
+        "min_words": 2800,
+        "max_words": 3400,
+        "guidance": "Target length: ~20 minutes, roughly 2800-3400 words.",
+    },
+    "sunday_preview": {
+        "min_words": 900,
+        "max_words": 1500,
+        "guidance": "Keep this SHORT: target 5-10 minutes, roughly 900-1500 words.",
+    },
+}
+
+
 def build_writing_prompt(episode_type, today_str, research_notes):
     host_names = "Alex and Jordan"
 
+    target = LENGTH_TARGETS[episode_type]
+    length_guidance = target["guidance"] + (
+        f" This is a hard minimum, not a suggestion: before you finish "
+        f"writing, add up the word counts of every line. If the total is "
+        f"under {target['min_words']} words, you are not done -- go back "
+        "and add real depth (more specifics from the numbers, more "
+        "back-and-forth on what something actually means, more context on "
+        "why it matters) rather than padding with filler or repeating "
+        "yourself, then recount. Do not submit a script under the minimum."
+    )
+
     if episode_type == "weekday_deep_dive":
-        length_guidance = ("Target length: 15-25 minutes of spoken dialogue, roughly "
-                            "2600-3800 words total across both hosts.")
         structure = """It must, in this rough order:
    - Cold open that hooks the listener on why this stock is worth 20 minutes
      of their time.
@@ -403,14 +446,12 @@ def build_writing_prompt(episode_type, today_str, research_notes):
    - Close with the required disclaimer (verbatim, spoken by one host) and a
      sign-off."""
     elif episode_type == "saturday_recap":
-        length_guidance = "Target length: ~20 minutes, roughly 2800-3400 words."
         structure = """Recap the week: what happened, why it mattered, and any threads worth
    remembering, based on the research notes below. This episode has no
    single featured ticker unless the notes name specific stocks central to
    the recap. Close with the required disclaimer (verbatim, spoken by one
    host) and a sign-off."""
     else:
-        length_guidance = "Keep this SHORT: target 5-10 minutes, roughly 900-1500 words."
         structure = """Preview what to watch for in the week ahead, based on the research notes
    below, in a brief, upbeat tone. Close with the required disclaimer
    (verbatim, spoken by one host) and a sign-off."""
@@ -607,15 +648,28 @@ def pacing_stats(ep):
     return same_speaker_runs, quick_opener_count, pct
 
 
-def log_pacing_diagnostics(ep, label="pacing"):
+def total_word_count(ep):
+    return sum(len(line["text"].split()) for line in ep["lines"])
+
+
+def log_quality_diagnostics(ep, episode_type, label="quality"):
+    """Combined pacing + length gate. Both checks feed the SAME one-shot
+    corrective rewrite in main() (see LENGTH_TARGETS above for why length is
+    checked here now too), so a script never triggers more than one retry
+    call no matter how many things are wrong with it -- that keeps the
+    worst-case cost the same as before this was added."""
     lines = ep["lines"]
     same_speaker_runs, quick_opener_count, pct = pacing_stats(ep)
+    word_count = total_word_count(ep)
+    min_words = LENGTH_TARGETS[episode_type]["min_words"]
     print(
-        f"[{label}] {len(lines)} lines, {same_speaker_runs} same-speaker-in-a-row "
+        f"[{label}] {len(lines)} lines, {word_count} words (minimum: "
+        f"{min_words}), {same_speaker_runs} same-speaker-in-a-row "
         f"transitions, {quick_opener_count} ({pct:.0f}%) open with a quick "
         f"agree/rebuttal word"
     )
-    is_flagged = same_speaker_runs == 0 or pct > 50
+    pacing_flagged = same_speaker_runs == 0 or pct > 50
+    length_flagged = word_count < min_words
     if same_speaker_runs == 0:
         print(
             f"[{label}] FLAGGED: every single line alternates speaker with no "
@@ -629,7 +683,22 @@ def log_pacing_diagnostics(ep, label="pacing"):
             "agree/rebuttal word -- this reads as rapid-fire rather than a "
             "relaxed conversation."
         )
-    return is_flagged, same_speaker_runs, quick_opener_count, pct
+    if length_flagged:
+        print(
+            f"[{label}] FLAGGED: only {word_count} words, below the "
+            f"{min_words}-word minimum for this episode type -- this "
+            "episode is running short."
+        )
+    return {
+        "flagged": pacing_flagged or length_flagged,
+        "pacing_flagged": pacing_flagged,
+        "length_flagged": length_flagged,
+        "same_speaker_runs": same_speaker_runs,
+        "quick_opener_count": quick_opener_count,
+        "pct": pct,
+        "word_count": word_count,
+        "min_words": min_words,
+    }
 
 
 def main():
@@ -744,24 +813,35 @@ def main():
     except InvalidEpisode as e:
         die(str(e))
 
-    is_flagged, same_speaker_runs, quick_opener_count, pct = log_pacing_diagnostics(
-        episode, label="pacing (attempt 1)"
-    )
+    diag = log_quality_diagnostics(episode, episode_type, label="quality (attempt 1)")
 
-    if is_flagged:
-        print("[pacing] Script failed the pacing gate -- requesting one "
+    if diag["flagged"]:
+        print("[quality] Script failed the quality gate -- requesting one "
               "corrective rewrite before this is allowed to become audio.")
+
+        length_note = ""
+        if diag["length_flagged"]:
+            length_note = (
+                f"This episode is ALSO running too short -- it came back at "
+                f"{diag['word_count']} words, well under the "
+                f"{diag['min_words']}-word minimum listeners are told to "
+                "expect for this show. Add real depth, not filler: more "
+                "specifics from the numbers, more back-and-forth on what a "
+                "given figure actually means, more discussion of the "
+                "under-the-radar angle and what could change it. "
+            )
+
         corrective_prompt = writing_prompt + f"""
 
 IMPORTANT CORRECTION NEEDED: your previous attempt at this same brief came
-back with {same_speaker_runs} same-speaker-in-a-row transitions (needed: at
-least 5) and {quick_opener_count} of {len(episode['lines'])} lines
-({pct:.0f}%) opening with an instant agree/rebuttal word like "Right," or
-"Exactly," (should be well under half). This is exactly the rigid
-back-and-forth pattern described above that makes hosts sound like they're
-interrupting each other, and it is the single most common way this
-episode gets rejected, so treat it as a hard constraint, not a style
-preference.
+back with {diag['same_speaker_runs']} same-speaker-in-a-row transitions
+(needed: at least 5) and {diag['quick_opener_count']} of
+{len(episode['lines'])} lines ({diag['pct']:.0f}%) opening with an instant
+agree/rebuttal word like "Right," or "Exactly," (should be well under
+half). {length_note}This rigid back-and-forth pattern is exactly what
+makes hosts sound like they're interrupting each other, and running short
+cheats listeners out of what they were told to expect -- treat all of this
+as a hard constraint, not a style preference.
 
 Write a new version of the full episode. Before you output it, plan out at
 least 5 specific moments where one host will keep talking for 2-3 lines in
@@ -777,25 +857,28 @@ short story, the same way this example does:
     because revenue growth alone doesn't tell you if the business is
     actually getting healthier."}}
 
-Then write the full episode using that plan, and also cut down how often
-lines open with an instant agree/rebuttal word. Count the same-speaker
-transitions in your own output before you finish -- if it's below 5, add
-more before responding."""
+Then write the full episode using that plan, cut down how often lines open
+with an instant agree/rebuttal word, and make sure the total word count
+across every line clears {diag['min_words']} words -- by expanding the
+content itself (more numbers, more context, more of what it means), not by
+padding sentences. Count the same-speaker transitions AND the total word
+count in your own output before you finish -- if either is short, add more
+before responding."""
         try:
             raw_text2, writing_cost2 = call_claude(
                 corrective_prompt, api_key, label="write-corrected", use_search=False, max_tokens=16000
             )
             writing_cost += writing_cost2
             episode2 = parse_and_validate_episode(raw_text2)
-            is_flagged2, *_ = log_pacing_diagnostics(episode2, label="pacing (attempt 2)")
+            diag2 = log_quality_diagnostics(episode2, episode_type, label="quality (attempt 2)")
             episode = episode2
-            if is_flagged2:
-                print("[pacing] Corrective rewrite still flagged; publishing it anyway "
+            if diag2["flagged"]:
+                print("[quality] Corrective rewrite still flagged; publishing it anyway "
                       "(capped at one retry to bound cost) -- worth a listen.")
             else:
-                print("[pacing] Corrective rewrite passed the gate.")
+                print("[quality] Corrective rewrite passed the gate.")
         except (CallFailed, InvalidEpisode) as e:
-            print(f"[pacing] Corrective rewrite failed ({e}); keeping the "
+            print(f"[quality] Corrective rewrite failed ({e}); keeping the "
                   "original (flagged) version rather than losing the whole run.")
 
     print(f"Total cost for this episode: approx ${research_cost + writing_cost:.3f}")
