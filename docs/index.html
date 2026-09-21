@@ -65,7 +65,15 @@
   .episode h2 { font-size: 17px; margin: 0 0 6px; }
   .episode .meta { color: var(--muted); font-size: 13px; margin-bottom: 10px; }
   .episode p { font-size: 14px; line-height: 1.5; color: #cdd9d3; margin: 0 0 12px; white-space: pre-wrap; }
-  audio { width: 100%; }
+  audio { width: 100%; margin-bottom: 10px; }
+  .transcript-link {
+    display: inline-block;
+    color: var(--accent);
+    font-size: 13px;
+    text-decoration: none;
+    font-weight: 600;
+  }
+  .transcript-link:hover { text-decoration: underline; }
   .empty { text-align: center; color: var(--muted); padding: 40px 20px; }
   footer { text-align: center; color: var(--muted); font-size: 12px; padding: 30px 20px 50px; }
 </style>
@@ -105,12 +113,18 @@
           const audioUrl = enclosure ? enclosure.getAttribute('url') : '';
           const pubDate = item.querySelector('pubDate')?.textContent ?? '';
           const niceDate = pubDate ? new Date(pubDate).toDateString() : '';
+          // podcast:transcript is a namespaced tag; getElementsByTagName
+          // matches on the literal "podcast:transcript" tag name here,
+          // which works across browsers for a feed parsed this way.
+          const transcriptEl = item.getElementsByTagName('podcast:transcript')[0];
+          const transcriptUrl = transcriptEl ? transcriptEl.getAttribute('url') : '';
           return `
             <div class="episode">
               <h2>${title}</h2>
               <div class="meta">${niceDate}</div>
               <p>${desc}</p>
               ${audioUrl ? `<audio controls preload="none" src="${audioUrl}"></audio>` : ''}
+              ${transcriptUrl ? `<a class="transcript-link" href="${transcriptUrl}" target="_blank" rel="noopener">Read transcript →</a>` : ''}
             </div>`;
         }).join('');
       } catch (e) {
