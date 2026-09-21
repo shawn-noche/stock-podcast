@@ -54,6 +54,42 @@ REACTIVE_OPENERS = (
 )
 SHORT_LINE_WORD_THRESHOLD = 12
 LONG_PAUSE_SECONDS = 1.3
+MICRO_PAUSE_SECONDS = 0.15
+
+# 2026-09-21, ORN episode: Shawn reported the hosts "not letting each other
+# finish," with a concrete example -- Alex's very first line got cut off
+# mid-word at "it just pos-" and Jordan's reply started almost immediately
+# after. Downloading and directly analyzing that exact published file
+# confirmed this wasn't the pacing/perception issue from the CTOS episode:
+# word-level timing showed Alex's line stopping before its last sentence
+# ("...that made at least one analyst cut their price target." never got
+# spoken at all), and Jordan's very next line ALSO got cut short before its
+# own last sentence -- real dropped content, not a pause problem. A
+# whole-episode word-count-vs-duration check across several published
+# episodes ruled out a global slowdown/speedup explanation; this looks like
+# gpt-4o-mini-tts (an autoregressive, LLM-driven TTS model) occasionally
+# stopping generation before it has spoken all of a longer, multi-sentence
+# input -- a known category of failure for this kind of TTS model, distinct
+# from older parametric TTS engines that always render 100% of their input.
+#
+# Two independent, code-only defenses, neither of which depends on the
+# writer model behaving any differently (that's a separate API call and had
+# nothing to do with this bug):
+#   1. Send each SENTENCE to the TTS API as its own request, not a whole
+#      multi-sentence line -- a short, single-sentence input is much less
+#      likely to get cut off than a paragraph.
+#   2. After every TTS call, check the resulting clip's duration against a
+#      generous floor for how fast that many words could plausibly be
+#      spoken, and retry if it's implausibly short. A final whole-episode
+#      version of the same check runs again in process_episode() as a last
+#      resort before anything is allowed to publish.
+MIN_PLAUSIBLE_WPM = 260
+MAX_TTS_RETRIES = 2
+
+SENTENCE_ABBREVIATIONS = (
+    "U.S.", "U.K.", "Mr.", "Mrs.", "Ms.", "Dr.", "Inc.", "Corp.", "Ltd.",
+    "vs.", "etc.", "Jr.", "Sr.", "St.", "Co.",
+)
 
 
 def _sounds_like_a_quick_reply(text):
@@ -64,6 +100,44 @@ def _sounds_like_a_quick_reply(text):
         return True
     first_two = " ".join(words[:2]).lower().strip(".,")
     return any(first_two.startswith(o.strip(",")) for o in REACTIVE_OPENERS)
+
+
+def split_into_sentences(text):
+    """Splits one line of dialogue into individual sentences, each sent to
+    the TTS API on its own -- see the module comment above MIN_PLAUSIBLE_WPM
+    for why. Careful not to split on decimal numbers (9.5, 379.2) or common
+    abbreviations (U.S., Inc.), since a stock-podcast script is full of
+    both.
+    """
+    text = text.strip()
+    if not text:
+        return []
+
+    protected = text
+    placeholders = []
+    for abbr in SENTENCE_ABBREVIATIONS:
+        if abbr in protected:
+            token = f"\x00ABBR{len(placeholders)}\x00"
+            placeholders.append((token, abbr))
+            protected = protected.replace(abbr, token)
+    protected = re.sub(r"(\d)\.(\d)", lambda m: m.group(1) + "\x00DEC\x00" + m.group(2), protected)
+
+    parts = re.split(r"(?<=[.!?])\s+", protected)
+
+    sentences = []
+    for part in parts:
+        for token, abbr in placeholders:
+            part = part.replace(token, abbr)
+        part = part.replace("\x00DEC\x00", ".")
+        part = part.strip()
+        if part:
+            sentences.append(part)
+    return sentences if sentences else [text]
+
+
+def _min_plausible_duration(text):
+    word_count = len(text.split())
+    return word_count / (MIN_PLAUSIBLE_WPM / 60.0)
 
 
 def die(msg):
@@ -87,6 +161,32 @@ def tts_line(text, voice, out_path, api_key):
         die(f"TTS request failed ({resp.status_code}): {resp.text[:500]}")
     with open(out_path, "wb") as f:
         f.write(resp.content)
+
+
+def tts_sentence(text, voice, out_path, api_key):
+    """Wraps tts_line() with the duration-floor retry described above the
+    MIN_PLAUSIBLE_WPM constant. Returns the clip's final duration."""
+    min_duration = _min_plausible_duration(text)
+    last_duration = None
+    for attempt in range(1, MAX_TTS_RETRIES + 1):
+        tts_line(text, voice, out_path, api_key)
+        last_duration = probe_duration_seconds(out_path)
+        if last_duration >= min_duration:
+            return last_duration
+        print(
+            f"WARNING: TTS clip came back {last_duration:.1f}s for "
+            f"{len(text.split())} words (floor: {min_duration:.1f}s) -- "
+            f"looks truncated. Retrying ({attempt}/{MAX_TTS_RETRIES}): "
+            f"{text[:80]!r}",
+            file=sys.stderr,
+        )
+    print(
+        f"WARNING: still only {last_duration:.1f}s after {MAX_TTS_RETRIES} "
+        f"attempts (floor: {min_duration:.1f}s) -- using it anyway rather "
+        f"than failing the whole episode over one clip: {text[:80]!r}",
+        file=sys.stderr,
+    )
+    return last_duration
 
 
 def make_tone(path, freq, duration=0.16, volume=0.25):
@@ -219,6 +319,8 @@ def process_episode(script_path, api_key):
     make_silence(silence_path)
     silence_long_path = os.path.join(work_dir, "silence_long.mp3")
     make_silence(silence_long_path, duration=LONG_PAUSE_SECONDS)
+    silence_micro_path = os.path.join(work_dir, "silence_micro.mp3")
+    make_silence(silence_micro_path, duration=MICRO_PAUSE_SECONDS)
 
     intro_path = os.path.join(work_dir, "intro.mp3")
     outro_path = os.path.join(work_dir, "outro.mp3")
@@ -227,17 +329,28 @@ def process_episode(script_path, api_key):
 
     line_paths.append(intro_path)
     line_paths.append(silence_path)
+    total_word_count = 0
     for i, line in enumerate(lines):
         speaker = line["speaker"].lower()
         voice = config.HOST_VOICES.get(speaker)
         if not voice:
             die(f"Unknown speaker '{speaker}' in {script_path}; add it to HOST_VOICES in config.py")
-        line_mp3 = os.path.join(work_dir, f"line_{i:04d}.mp3")
-        tts_line(line["text"], voice, line_mp3, api_key)
-        line_paths.append(line_mp3)
+        total_word_count += len(line["text"].split())
 
-        # Pick the pause that follows this line based on what's coming next,
-        # not a flat value -- see the module-level comment on
+        # Each line is sent to TTS one sentence at a time -- see the
+        # module comment above MIN_PLAUSIBLE_WPM for why -- with only a
+        # very small breathing gap between sentences of the SAME line,
+        # since that's one host continuing one thought, not a real pause.
+        sentences = split_into_sentences(line["text"])
+        for j, sentence in enumerate(sentences):
+            clip_path = os.path.join(work_dir, f"line_{i:04d}_{j:02d}.mp3")
+            tts_sentence(sentence, voice, clip_path, api_key)
+            line_paths.append(clip_path)
+            if j < len(sentences) - 1:
+                line_paths.append(silence_micro_path)
+
+        # Pick the pause that follows this line based on what's coming
+        # next, not a flat value -- see the module-level comment on
         # _sounds_like_a_quick_reply for why.
         next_line = lines[i + 1] if i + 1 < len(lines) else None
         if next_line is not None and next_line["speaker"].lower() != speaker \
@@ -255,6 +368,24 @@ def process_episode(script_path, api_key):
 
     duration_seconds = probe_duration_seconds(final_path)
     file_size = os.path.getsize(final_path)
+
+    # Last-resort safety net for the whole episode, on top of the per-
+    # sentence retries above: if the finished file is shorter than even
+    # implausibly fast speech could explain for this many total words,
+    # something was still dropped somewhere in the pipeline. Refuse to
+    # publish rather than let a truncated episode reach listeners -- this
+    # script stays in pending/ (not moved to state/processed/ below) so
+    # the next run retries it from scratch.
+    min_plausible_total = total_word_count / (MIN_PLAUSIBLE_WPM / 60.0)
+    if duration_seconds < min_plausible_total:
+        os.remove(final_path)  # don't leave a broken file behind in docs/
+        die(
+            f"{script_path}: finished audio is {duration_seconds:.0f}s, "
+            f"shorter than {min_plausible_total:.0f}s -- the fastest "
+            f"{total_word_count} words could plausibly be spoken. Some "
+            "dialogue was likely dropped during audio generation. Refusing "
+            "to publish; this episode will be retried on the next run."
+        )
 
     notes_filename = f"{slug}.txt"
     notes_path = os.path.join(NOTES_OUT_DIR, notes_filename)
