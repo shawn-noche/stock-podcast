@@ -46,3 +46,20 @@ DISCLAIMER = (
     "advice, and you should always do your own research or talk to a "
     "licensed financial advisor before making investment decisions."
 )
+
+# A short, FIXED spoken welcome played at the very start of every single
+# episode (after the musical intro sting, before that day's actual
+# content) -- added 2026-09-22 because a first-time listener could land on
+# any random episode, not necessarily episode 1, and had no way to know
+# what the show even is. This is plain fixed text, not something the
+# writer model generates per episode, so it's always present, never drifts
+# in quality, and never gets cut for time by the model. generate_audio.py
+# runs it through the exact same TTS pipeline as every other line (so it
+# gets the same sentence-splitting and truncation-floor protection) --
+# see the "lines = ..." line near the top of process_episode().
+SHOW_INTRO_LINES = [
+    {"speaker": "alex", "text": "Hey, welcome to Under the Radar. I'm Alex."},
+    {"speaker": "jordan", "text": "And I'm Jordan. If this is your first time with us, here's the idea. Every weekday we take one small, overlooked stock that almost nobody's talking about, and we spend real time figuring out whether it deserves more attention."},
+    {"speaker": "alex", "text": "Saturdays we zoom out and recap the whole week in the market, and Sundays we give you a quick preview of what's coming up next week."},
+    {"speaker": "jordan", "text": "All right, let's get into today's show."},
+]
