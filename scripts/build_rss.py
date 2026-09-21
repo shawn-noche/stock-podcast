@@ -26,6 +26,15 @@ def build_item(ep):
     audio_url = config.BASE_URL + "episodes/audio/" + ep["audio_filename"]
     pub_dt = datetime.fromisoformat(ep["pub_datetime_utc"])
     pub_date_rfc822 = format_datetime(pub_dt)
+    # generate_audio.py already writes a full transcript .txt alongside the
+    # audio for every episode -- it just wasn't linked from anywhere a
+    # listener (or Shawn) could find it. <podcast:transcript> is the
+    # standard Podcasting 2.0 tag podcast apps look for, and the same URL
+    # is also rendered as a plain link on the website below.
+    transcript_tag = ""
+    if ep.get("notes_filename"):
+        transcript_url = config.BASE_URL + "episodes/notes/" + ep["notes_filename"]
+        transcript_tag = f'\n      <podcast:transcript url="{esc(transcript_url)}" type="text/plain" />'
     return f"""    <item>
       <title>{esc(ep['title'])}</title>
       <description>{esc(ep['description'])}</description>
@@ -35,7 +44,7 @@ def build_item(ep):
       <guid isPermaLink="false">{esc(ep['guid'])}</guid>
       <itunes:duration>{esc(ep['duration_formatted'])}</itunes:duration>
       <itunes:explicit>{config.ITUNES_EXPLICIT}</itunes:explicit>
-      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episodeType>full</itunes:episodeType>{transcript_tag}
     </item>"""
 
 
@@ -54,7 +63,7 @@ def main():
     cover_url = config.BASE_URL + COVER_FILENAME
 
     feed = f"""<?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" xmlns:atom="http://www.w3.org/2005/Atom">
+<rss version="2.0" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:podcast="https://podcastindex.org/namespace/1.0">
   <channel>
     <title>{esc(config.SHOW_TITLE)}</title>
     <link>{esc(config.BASE_URL)}</link>
