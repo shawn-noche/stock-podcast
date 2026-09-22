@@ -1,0 +1,223 @@
+{
+  "episode_type": "weekday_deep_dive",
+  "date": "2026-09-22",
+  "title": "The Irrigation Stock Wall Street Forgot: Inside Lindsay Corporation's Quiet Beat",
+  "tickers": [
+    "LNN"
+  ],
+  "description": "A profitable, dividend-paying industrial name just posted an earnings beat and almost nobody noticed. Alex and Jordan dig into Lindsay Corporation, the Omaha company that sells both farm irrigation equipment and highway crash barriers, and ask why the stock is sitting on a 'Strong Sell' technical reading right after beating expectations.",
+  "lines": [
+    {
+      "speaker": "alex",
+      "text": "So Jordan, I want to start today with a stock that I'd bet ninety-five percent of our listeners have literally never heard of, and that's exactly the point of this show."
+    },
+    {
+      "speaker": "jordan",
+      "text": "I love when you start like that, because it usually means we're about to talk about something unglamorous that's quietly making money while everyone's staring at the same ten tech names."
+    },
+    {
+      "speaker": "alex",
+      "text": "That's precisely it. The ticker is L-N-N, Lindsay Corporation, out of Omaha, Nebraska. Market cap around one point one seven billion dollars, so squarely small-to-mid-cap territory."
+    },
+    {
+      "speaker": "alex",
+      "text": "And here's the hook: this company just beat earnings expectations last quarter, it pays a dividend, it's been around since 1955, and yet right now some pure technical screens are flashing a 'Strong Sell' on the stock. That disconnect between what the business is doing and how the market is pricing it is worth twenty minutes of anyone's time."
+    },
+    {
+      "speaker": "jordan",
+      "text": "Okay, a company that beats earnings and gets a sell signal at the same time \u2014 that's the kind of contradiction that usually means either the market knows something we don't, or sentiment is just lagging the fundamentals. I want to figure out which one it is today."
+    },
+    {
+      "speaker": "alex",
+      "text": "Before we even get into Lindsay, I have to tell you how we landed on it, because it's a little bit of a funny story. Our original plan for this episode was a totally different company, H&E Equipment Services, ticker HEES."
+    },
+    {
+      "speaker": "alex",
+      "text": "Turns out HEES doesn't even exist as a standalone stock anymore. Herc Holdings acquired them \u2014 the deal closed back in June of 2025, H&E shareholders got seventy-eight seventy-five in cash plus a slice of Herc stock per share, and the company got delisted. So that pick was dead on arrival."
+    },
+    {
+      "speaker": "jordan",
+      "text": "Which, honestly, is a good reminder for anyone building a watchlist off an old article \u2014 always double check the ticker is still trading before you get attached to a thesis. So Lindsay was the replacement pick."
+    },
+    {
+      "speaker": "alex",
+      "text": "Exactly, and I think it's actually a better fit for this show than the original idea would have been, because Lindsay checks every box for 'under the radar' \u2014 profitable, dividend-paying, boring end markets, no meme-stock energy whatsoever."
+    },
+    {
+      "speaker": "jordan",
+      "text": "Alright, let's get into what this company actually does, because 'irrigation and highway barriers' is not a sentence you hear on financial television very often."
+    },
+    {
+      "speaker": "alex",
+      "text": "It's really two separate businesses stapled together, and that's actually part of the thesis. The bigger, older piece is their Zimmatic brand \u2014 that's center-pivot and lateral-move irrigation equipment. Picture those giant rotating sprinkler arms you see from an airplane window making perfect green circles in farm fields."
+    },
+    {
+      "speaker": "alex",
+      "text": "Farmers buy that equipment to mechanize irrigation and use water more efficiently, and Lindsay sells it globally, not just in the U.S. So that revenue stream is tied to farm income, commodity prices like corn and soybeans, and broader global food-security spending. When farmers are flush with cash from high crop prices, they upgrade equipment. When farm income is squeezed, that capex gets delayed."
+    },
+    {
+      "speaker": "jordan",
+      "text": "So that segment is basically a proxy for how healthy the global farm economy is at any given moment. That makes sense as a business, but it also means it's cyclical and somewhat outside Lindsay's control \u2014 they're at the mercy of commodity prices they don't set."
+    },
+    {
+      "speaker": "alex",
+      "text": "Right, which is exactly why the second segment matters so much for the story. Their Infrastructure segment sells road-safety and traffic-control equipment \u2014 crash cushions at highway on-ramps and off-ramps, moveable barriers for toll booths, specialty barriers around bridge supports and utility poles, road-marking tape, plus rail products like signals, junction boxes, and signs."
+    },
+    {
+      "speaker": "alex",
+      "text": "That side of the business runs on a completely different clock. It's driven by government and state highway spending, infrastructure budgets, and road-safety mandates, not by what corn is trading at in Chicago. So you've got one segment tied to agriculture and global food demand, and another tied to government infrastructure budgets \u2014 two demand drivers that don't really move together."
+    },
+    {
+      "speaker": "jordan",
+      "text": "That's actually a pretty elegant hedge, when you think about it. If farm income has a rough stretch, in theory the highway-safety side can still be chugging along on state and federal road budgets, and vice versa if infrastructure spending slows down but crop prices spike."
+    },
+    {
+      "speaker": "alex",
+      "text": "That diversification is honestly one of the more underappreciated things about this company. It's not a pure-play bet on one commodity cycle, which is unusual for a company this size."
+    },
+    {
+      "speaker": "jordan",
+      "text": "Let's get into the actual numbers, because that's where this gets interesting. What do we know about the most recent quarters?"
+    },
+    {
+      "speaker": "alex",
+      "text": "So the most recent report was fiscal third quarter 2026, presented back on July 2nd, and it beat earnings expectations. Reported EPS came in at one dollar fifty-three for the quarter, ahead of what analysts were modeling."
+    },
+    {
+      "speaker": "alex",
+      "text": "Zooming out to the trailing twelve months, EPS sits at five twenty a share. And with the stock trading around one fourteen fifty-nine, that puts the trailing price-to-earnings ratio at roughly twenty-two times. On top of that, it's paying a dividend yield of about one point three one percent."
+    },
+    {
+      "speaker": "jordan",
+      "text": "A twenty-two times multiple isn't dirt cheap, but it's not a stretched valuation either for a company that just beat expectations. I do wish we had the full revenue breakdown by segment for that quarter, because 'EPS beat' alone doesn't tell you whether it was driven by actual sales growth or just cost-cutting and margin expansion."
+    },
+    {
+      "speaker": "alex",
+      "text": "That's a fair flag, and I'll be straight with our listeners here \u2014 our research process hit a wall before we could pull the exact revenue figures, segment-level growth rates, gross margins, and management's guidance language directly off the Q2 and Q3 fiscal 2026 releases. What we can say with confidence, because it's directly confirmed, is that the quarter beat estimates on the bottom line and that trailing twelve month EPS is five twenty."
+    },
+    {
+      "speaker": "jordan",
+      "text": "I appreciate you being upfront about that instead of us just making up a revenue number to sound authoritative. That's actually a good teaching moment for listeners too \u2014 when you're doing your own diligence on a name like this, don't stop at the headline 'beat expectations' line. Pull the actual press release and look at whether it's the irrigation side or the infrastructure side doing the heavy lifting, and what happened to gross margin specifically."
+    },
+    {
+      "speaker": "alex",
+      "text": "Exactly right, and the good news is there's a very clear next checkpoint for anyone who wants to do that homework. Lindsay's next earnings report is scheduled for October 22nd, so that's about a month out from when we're recording this, and it'll give us a much fresher read on segment trends heading into their fiscal year end."
+    },
+    {
+      "speaker": "jordan",
+      "text": "October 22nd \u2014 that's a date worth putting on the calendar if you're even remotely interested in this name, because a second consecutive beat would start to look less like a one-off and more like a pattern the market is sleeping on."
+    },
+    {
+      "speaker": "alex",
+      "text": "Which brings us to the news side of things, and this is where it gets genuinely strange. The stock is trading in that one-fourteen to one-fifteen dollar range, it just posted an earnings beat, and yet some pure technical and momentum-based screens are showing a 'Strong Sell' signal on it."
+    },
+    {
+      "speaker": "jordan",
+      "text": "Walk me through how that's even possible. Usually when a stock beats earnings you see some kind of positive reaction, at least in the short term."
+    },
+    {
+      "speaker": "alex",
+      "text": "So a few things can produce that split. Technical and momentum screens are generally looking backward at price action \u2014 moving averages, relative strength, trading volume \u2014 rather than forward at fundamentals. If the stock has been range-bound or drifting sideways to down over recent months, a pure momentum algorithm will flag it as weak regardless of what the underlying business just reported."
+    },
+    {
+      "speaker": "alex",
+      "text": "It can also mean institutional money simply hasn't rotated back in yet. Small and mid-cap industrials with unglamorous end markets like irrigation and highway barriers don't get the same kind of momentum-chasing flows that, say, an AI-adjacent stock gets the second it beats. So you can have fundamentals improving while the technical tape still looks tired, purely because there isn't enough buying volume yet to flip those signals."
+    },
+    {
+      "speaker": "jordan",
+      "text": "So it's less 'the market has secret bad information about Lindsay' and more 'nobody's really paying attention, so the price hasn't caught up to the news yet.' That's actually the definition of an under-the-radar setup, if that's really what's happening here."
+    },
+    {
+      "speaker": "alex",
+      "text": "That's my read on it, though I want to be careful not to oversell that as a guarantee. A 'Strong Sell' from a momentum screen isn't nothing \u2014 it can also just mean the stock is genuinely out of favor for reasons that aren't obvious from where we're sitting, and it could stay unloved for a good while longer even if fiscal fundamentals keep improving."
+    },
+    {
+      "speaker": "jordan",
+      "text": "What about actual news flow \u2014 contracts, insider buying, analyst notes, anything tied to the farm economy or a highway bill? Because that's usually where you'd find the next catalyst for a name like this."
+    },
+    {
+      "speaker": "alex",
+      "text": "This is the honest gap in today's episode. We weren't able to complete a dedicated sweep of the last few weeks of news before putting this together \u2014 no confirmed contract wins, no insider transaction data, no fresh analyst upgrades or downgrades that we can cite with confidence. So rather than guess, we're flagging it plainly: if you're interested in this name, that's homework worth doing yourself, searching something like 'Lindsay Corporation LNN news September 2026' for anything on infrastructure-bill order flow or farm-economy commentary from management."
+    },
+    {
+      "speaker": "jordan",
+      "text": "I'd rather you tell us 'we don't know yet' than fill dead air with something that isn't verified. That's kind of the whole ethos of this show \u2014 we're not here to hype something up past what we can actually back up."
+    },
+    {
+      "speaker": "alex",
+      "text": "Agreed, and it actually loops back nicely into the bigger question we should spend real time on, which is why this stock is under the radar in the first place, and what would actually have to happen for that to change."
+    },
+    {
+      "speaker": "jordan",
+      "text": "Let's dig into that, because I think there are really two separate reasons it flies under the radar, and they're both structural rather than temporary."
+    },
+    {
+      "speaker": "jordan",
+      "text": "First, it's a size and coverage problem. At around one point one seven billion in market cap, Lindsay isn't small enough to be a tiny speculative micro-cap that gets talked about on forums, but it's also nowhere near large enough to force its way onto CNBC or get dozens of Wall Street analysts publishing notes every week. It sits in this awkward middle zone where institutional coverage is thin and retail attention is basically zero."
+    },
+    {
+      "speaker": "jordan",
+      "text": "Second, and I think this one matters just as much, its end markets have zero narrative sex appeal. Nobody's writing a breathless headline about center-pivot irrigation arms or highway crash cushions. Compare that to anything with 'AI' or 'quantum' in the name that gets a hundred articles a day regardless of whether the underlying business is even profitable yet."
+    },
+    {
+      "speaker": "alex",
+      "text": "It's kind of the classic boring-industrial trap \u2014 the products are essential, the company is profitable and paying a dividend, but there's no story to tell at a cocktail party. 'I bought stock in a company that makes farm sprinklers and guardrail cushions' just doesn't have the same ring as 'I bought the next big AI chip company.'"
+    },
+    {
+      "speaker": "jordan",
+      "text": "Which is exactly the kind of setup that can work in a patient investor's favor, because low attention often means the stock hasn't been bid up to reflect good news yet. So what actually flips the switch here? What turns Lindsay from ignored to noticed?"
+    },
+    {
+      "speaker": "alex",
+      "text": "I'd point to three realistic catalysts. The first is a genuine upswing in U.S. farm income, or a renewed global food-security push, either of which would directly drive capital spending on irrigation equipment. Farmers replace and upgrade Zimmatic systems when crop prices and farm balance sheets are healthy, so that segment's growth is basically a lagging mirror of agricultural profitability."
+    },
+    {
+      "speaker": "alex",
+      "text": "The second catalyst is a new federal or state infrastructure and highway-safety spending cycle, which would directly benefit the Infrastructure segment \u2014 more highway construction and repair projects mean more demand for crash cushions, moveable barriers, and roadside safety equipment. And the third is simpler: just a sustained string of earnings beats, quarter after quarter, which eventually forces analysts to initiate or upgrade coverage and draws in small-cap fund managers who screen for exactly this kind of quiet, profitable compounder."
+    },
+    {
+      "speaker": "jordan",
+      "text": "So none of those three catalysts are things Lindsay can fully control on its own \u2014 they're largely external, whether it's commodity prices, government budgets, or Wall Street simply deciding to pay attention. That's the risk side of the under-the-radar thesis, honestly. Being overlooked can persist for a long time if none of those triggers show up."
+    },
+    {
+      "speaker": "alex",
+      "text": "That's a completely fair caveat. This isn't a story where I'd tell you a catalyst is imminent or guaranteed. It's more that the ingredients are sitting there \u2014 a real earnings beat, a reasonable twenty-two times trailing multiple, a small dividend, two genuinely uncorrelated revenue streams \u2014 and the market simply hasn't rewarded any of it yet, based on that technical sell signal we mentioned."
+    },
+    {
+      "speaker": "jordan",
+      "text": "Which is really the definition of a name worth putting on a watchlist rather than a name worth chasing today. You want to see whether that October 22nd report confirms the trend before getting more convicted either way."
+    },
+    {
+      "speaker": "alex",
+      "text": "Exactly. I'd treat this less as 'go buy Lindsay tomorrow' and more as 'here's a name that's doing the fundamentals right while nobody's watching, so keep it on your radar and watch how the next report and the next few months of farm-economy and infrastructure headlines shake out.'"
+    },
+    {
+      "speaker": "jordan",
+      "text": "One last thing I want to flag for anyone taking notes here \u2014 the dividend yield of one point three one percent isn't going to make anyone rich on its own, but paired with a company that's profitable enough to keep paying it while also beating earnings, it at least tells you management isn't stretching the balance sheet to survive. It's a modest signal of financial discipline, not a headline reason to buy."
+    },
+    {
+      "speaker": "alex",
+      "text": "Right, it's a supporting detail rather than the main thesis. The main thesis is really the combination of the earnings beat, the reasonable valuation relative to that beat, and the sentiment-versus-fundamentals gap we keep coming back to."
+    },
+    {
+      "speaker": "jordan",
+      "text": "Alright, I think we've covered the core of it \u2014 what the company does, the two segments, what we know and don't know from the last couple of earnings reports, the strange technical picture, and the real reasons it's stayed under the radar. Before we wrap, we've got to say the thing we say on every episode."
+    },
+    {
+      "speaker": "alex",
+      "text": "Quick reminder before we get into it: everything in this episode is for informational and entertainment purposes only. It is not financial advice, and you should always do your own research or talk to a licensed financial advisor before making investment decisions."
+    },
+    {
+      "speaker": "jordan",
+      "text": "Well said. So keep an eye on that October 22nd earnings date if Lindsay Corporation caught your interest today, and go pull the actual press release for the revenue and margin detail we couldn't fully confirm ourselves."
+    },
+    {
+      "speaker": "alex",
+      "text": "That's it for today's episode of Under the Radar. Thanks for spending twenty minutes with us on a company most people will never think about, and we'll catch you next time."
+    },
+    {
+      "speaker": "jordan",
+      "text": "See you then."
+    }
+  ]
+}
