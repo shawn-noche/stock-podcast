@@ -1,0 +1,123 @@
+The Boring Pump Maker Wall Street Forgot: Inside Gorman-Rupp
+
+We started this episode chasing one under-the-radar equipment stock and ended up with a completely different one after a mid-year acquisition took it off the board. Alex and Jordan explain how H&E Equipment's buyout saga led them to Gorman-Rupp, a century-old Ohio pump manufacturer quietly up nearly 30% in 2025, and dig into why unglamorous industrials like this one keep slipping past most investors' radar.
+
+--- Transcript ---
+
+Alex: Hey, welcome to Under the Radar. I'm Alex.
+
+Jordan: And I'm Jordan. If this is your first time with us, here's the idea. Every weekday we take one small, overlooked stock that almost nobody's talking about, and we spend real time figuring out whether it deserves more attention.
+
+Alex: Saturdays we zoom out and recap the whole week in the market, and Sundays we give you a quick preview of what's coming up next week.
+
+Jordan: All right, let's get into today's show.
+
+Alex: So Jordan, I have to be honest with our listeners right off the bat, because this episode almost didn't happen the way we planned it.
+
+Alex: We were originally going to spend today on a company called H&E Equipment Services, ticker HEES, an equipment rental company that had this juicy under-the-radar acquisition story building all year.
+
+Jordan: And then it just stopped being a story we could tell, because the stock doesn't exist anymore.
+
+Alex: Exactly, and I actually think the reason it doesn't exist is a great way to open this episode, because it tells you something real about how hot the industrial equipment space has gotten this year.
+
+Alex: Back in January, United Rentals announced they were buying H&E for 92 dollars a share, a deal worth something like 4.8 billion dollars including debt.
+
+Alex: Then in February, United Rentals just walked away from it. No deal. And normally that would tank the stock and the story just dies quietly.
+
+Jordan: But instead a second buyer showed up almost immediately, which tells you the interest in that business was real, not just United Rentals doing due diligence and getting cold feet on the whole sector.
+
+Alex: Right, Herc Holdings, ticker HRI, stepped in and actually closed the acquisition on June 2nd of this year, paying 78 dollars and 75 cents in cash plus a fraction of a Herc share for every H&E share.
+
+Jordan: So the takeaway isn't really about H&E anymore, it's about the fact that equipment and industrial machinery has been an unusually active corner of the market for mergers in 2025.
+
+Alex: Which is exactly why, when our research hit that dead end, we didn't just throw up our hands. We went looking for another small industrial name that fit the same profile: unglamorous, overlooked, steady, and sitting in a sector where deal-making is clearly in the air.
+
+Jordan: And that's how we landed on today's actual pick, which is a company most people have genuinely never heard of. Ticker GRC, the Gorman-Rupp Company.
+
+Alex: It's a small cap, it's based in Mansfield, Ohio, and it makes pumps. That's it. That's the business. And I want to make the case today that boring is exactly the point.
+
+Jordan: Let's actually get into what that means, because pumps sounds like the most forgettable word you could possibly build a company around, but the applications here are pretty wide.
+
+Jordan: Gorman-Rupp designs, manufactures, and sells pumps and pumping systems, and the way they make money is by selling into industries that genuinely cannot function without moving liquid from one place to another reliably.
+
+Jordan: Think municipal water and wastewater treatment, construction and industrial dewatering, agriculture and irrigation, fire protection systems, and OEM and military applications where their pumps get built into somebody else's larger equipment.
+
+Alex: So when a city needs to move sewage through a treatment plant, or a construction site needs to keep a foundation from flooding, or a farm needs to irrigate a field, there's a decent chance a Gorman-Rupp pump is doing the actual physical work.
+
+Jordan: And what I find interesting about that business model, even without getting into the specific numbers yet, is that it's not really a hits-driven business. Nobody's waiting on the next flashy pump release.
+
+Alex: It's closer to infrastructure than it is to a typical growth stock. You sell the pump once, but then it needs maintenance, replacement parts, and eventually a full replacement, especially in municipal water systems where the equipment runs around the clock for years.
+
+Jordan: That kind of installed-base dynamic is what a lot of industrial investors love, because it smooths out the revenue over time instead of making the company dependent on one big order landing in one particular quarter.
+
+Alex: It's also a company with real history behind it. This isn't some SPAC-era pump startup, this is a business that's been operating for over a century, which in a market obsessed with the next thing is honestly kind of refreshing.
+
+Jordan: Alright, let's talk performance, because this is where I have to be upfront with listeners about what we do and don't have solid numbers on this cycle.
+
+Jordan: The headline figure we can confirm is that Gorman-Rupp stock is up roughly 29 percent year to date in 2025, which for a sleepy pump manufacturer is a genuinely strong run.
+
+Alex: And the story behind that stock move, based on what we've got, is steady year-over-year revenue and earnings growth, the kind of slow, unspectacular compounding that doesn't generate headlines but does generate returns if you're patient with it.
+
+Jordan: What really caught my attention is that analysts aren't just looking at the past, they're actually forecasting that growth accelerates from here, with earnings growth of about 13.6 percent expected over the next twelve months.
+
+Alex: That's a meaningfully faster clip than what's implied by the steady growth they've already been putting up, so the market seems to be pricing in some kind of inflection point rather than just more of the same.
+
+Jordan: Now I want to be really transparent with our listeners here, because normally on this show we'd walk you through the exact revenue print, the margin line, the guidance commentary from management, quarter by quarter.
+
+Jordan: For Gorman-Rupp specifically, we don't have those precise figures verified for the last two quarters in front of us today, and rather than make up numbers to sound more authoritative, we'd rather tell you plainly: go check their most recent 10-Q and press releases on their investor relations site before you make any decision here.
+
+Alex: That's fair, and honestly it's part of the under-the-radar story itself. This is a company where the detailed earnings breakdowns just aren't sitting on the front page of every finance app the way they would be for, say, a mega-cap tech name reporting this week.
+
+Jordan: Which is sort of the whole point of this show, right? We're not here to rehash the numbers everyone already has memorized on Nvidia's earnings call. We're here to point at the stuff that requires a little more digging.
+
+Alex: So let's talk about what we can reasonably infer from what we do know. A 29 percent stock gain isn't happening in a vacuum. The market is rewarding something, and it's rewarding it before the big acceleration analysts are forecasting has even fully shown up in the numbers yet.
+
+Jordan: That's actually the interesting tension here. Usually you see a stock run up like that after a blowout quarter changes the narrative overnight. This looks more like a slow re-rating, where investors are gradually deciding the growth is more durable than they assumed.
+
+Alex: And for a business like pumps, durable growth usually comes from a pretty boring but reliable list of drivers: aging municipal infrastructure that eventually has to be replaced, construction and agricultural demand tied to broader economic activity, and steady order flow from the fire protection and military side of the business.
+
+Jordan: None of those are exciting sentences to say out loud on a podcast, but that's kind of the appeal for a certain type of investor. You're not betting on a breakthrough product, you're betting that the world keeps needing water moved from one place to another, which, historically, it always has.
+
+Alex: Let's shift to the news side, because this is another spot where we want to be straight with listeners about what's confirmed versus what's context.
+
+Jordan: We don't have a specific, verified recent press release or contract announcement for Gorman-Rupp to report on today, and we're not going to pretend otherwise. What we do have is the broader environment the stock is sitting in, which is worth walking through.
+
+Alex: And that broader environment is exactly the HEES-to-Herc story we opened with. When you've got United Rentals and Herc Holdings fighting over a 4.8 billion dollar equipment rental company, that tells you capital is actively flowing into industrial and equipment-adjacent businesses right now.
+
+Jordan: It's a sector where consolidation is clearly on management teams' minds, and when consolidation is happening around you, even a company that isn't directly in play can benefit from the increased attention on the space.
+
+Alex: There's also the water infrastructure angle, which isn't a Gorman-Rupp-specific headline but is a real macro tailwind worth flagging. Aging water and wastewater systems across the country have been a policy talking point for years, and any pickup in public infrastructure capital spending tends to flow pretty directly into pump demand.
+
+Jordan: It's worth noting we're speaking generally about that infrastructure backdrop rather than pointing to a specific new contract or grant announcement tied to Gorman-Rupp this quarter. But it's the kind of tailwind that explains why analysts might be modeling in accelerating growth even without one single catalyst driving it.
+
+Alex: So let's get to the actual question in the title of this episode. Why is a company like this, up 29 percent, with accelerating growth forecasts, still flying under the radar instead of getting talked about everywhere?
+
+Jordan: I think the honest answer is that pumps are just about the least sexy product category you can build a public company around, and that unsexiness does real work in keeping retail investors and financial media away from it.
+
+Alex: There's no consumer brand recognition here. Nobody's walking around with a Gorman-Rupp logo on a hoodie. There's no AI angle, no subscription software story, no charismatic founder doing interviews. It's a century-old manufacturer in Ohio making equipment that, by design, you're not supposed to notice unless it breaks.
+
+Jordan: And that lack of noise is exactly why it shows up on lists of names getting a fresh look right now, because there's been a real rotation this year out of expensive, hyped-up mega-cap tech and into steadier, cheaper, less-followed industrial names.
+
+Alex: When people get nervous that the AI trade has run too far, too fast, one place that money tends to migrate toward is exactly this kind of stock: unglamorous, reasonably priced relative to its growth, and not remotely correlated to whatever headline is moving the Nasdaq that day.
+
+Jordan: So what would actually pull Gorman-Rupp out of obscurity and onto more people's radar? I'd put the earnings acceleration itself at the top of the list. If that 13.6 percent forward growth estimate actually shows up and then some, that's the kind of thing that gets picked up by screener tools and starts appearing on more small-cap watchlists.
+
+Alex: A second one is exactly the infrastructure spending story we just talked about. If water and wastewater capital spending picks up meaningfully at the federal or municipal level, a pump maker sitting right in the middle of that demand becomes a much easier story for analysts to write up and for investors to get excited about.
+
+Jordan: And the third one, which I think is underrated given everything we just walked through with H&E, is M&A speculation. The equipment and industrial machinery space has been genuinely active this year, and once one deal like United Rentals versus Herc grabs headlines, investors start scanning the rest of the sector asking who's next.
+
+Alex: It doesn't even need to be Gorman-Rupp itself getting a buyout offer for that dynamic to help the stock. Sometimes just being in a sector where deals are happening is enough to get more analyst coverage initiated and more eyeballs on the name.
+
+Jordan: I'd also just flag, for anyone who wants to actually act on this rather than just nod along with us, that the responsible next step is pulling Gorman-Rupp's actual last two quarterly reports and reading management's own commentary on demand trends and margins.
+
+Alex: We gave you the shape of the story today: century-old, boring-by-design pump manufacturer, up 29 percent in 2025, steady historical growth, accelerating growth forecast, sitting in a sector that's clearly attracting deal interest. But the granular quarterly detail is homework you should do yourself before putting real money behind it.
+
+Jordan: That's a good spot to actually pause and give our standard reminder, because we take that seriously, especially on an episode where we've been upfront about some of the gaps in what we could verify.
+
+Alex: Quick reminder before we get into it: everything in this episode is for informational and entertainment purposes only. It is not financial advice, and you should always do your own research or talk to a licensed financial advisor before making investment decisions.
+
+Jordan: Well said. So to wrap it up, we came into this episode planning to talk about one stock, watched it literally get acquired out from under us mid-research, and ended up somewhere more interesting: a hundred-plus-year-old Ohio pump company that most investors have simply never had a reason to look at.
+
+Alex: Sometimes the most under-the-radar stock isn't the one with a dramatic story, it's the one that's just quietly compounding while nobody's paying attention. That's Gorman-Rupp for now, and we'll keep an eye on it and bring you the harder numbers once we've got them fully verified.
+
+Jordan: Thanks for spending this time with us. We'll see you next episode on Under the Radar.

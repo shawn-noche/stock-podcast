@@ -1,5 +1,23 @@
 [
   {
+    "guid": "1ca64c0e-5670-470c-b134-e8bd8164a9ea",
+    "title": "The Boring Pump Maker Wall Street Forgot: Inside Gorman-Rupp",
+    "description": "We started this episode chasing one under-the-radar equipment stock and ended up with a completely different one after a mid-year acquisition took it off the board. Alex and Jordan explain how H&E Equipment's buyout saga led them to Gorman-Rupp, a century-old Ohio pump manufacturer quietly up nearly 30% in 2025, and dig into why unglamorous industrials like this one keep slipping past most investors' radar.",
+    "date": "2026-09-24",
+    "pub_datetime_utc": "2026-09-24T14:57:44.261787+00:00",
+    "episode_type": "weekday_deep_dive",
+    "tickers": [
+      "GRC",
+      "HRI",
+      "HEES"
+    ],
+    "audio_filename": "2026-09-24-weekday_deep_dive-GRC.mp3",
+    "notes_filename": "2026-09-24-weekday_deep_dive-GRC.txt",
+    "duration_seconds": 544.992,
+    "duration_formatted": "09:05",
+    "file_size_bytes": 8720301
+  },
+  {
     "guid": "12f68ee1-67a0-46f1-aa22-999416129195",
     "title": "The Irrigation Stock Wall Street Forgot: Inside Lindsay Corporation's Quiet Beat",
     "description": "A profitable, dividend-paying industrial name just posted an earnings beat and almost nobody noticed. Alex and Jordan dig into Lindsay Corporation, the Omaha company that sells both farm irrigation equipment and highway crash barriers, and ask why the stock is sitting on a 'Strong Sell' technical reading right after beating expectations.",

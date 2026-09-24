@@ -22,7 +22,19 @@
       <itunes:category text="Investing" />
     </itunes:category>
     <itunes:explicit>false</itunes:explicit>
-    <lastBuildDate>Tue, 22 Sep 2026 14:46:23 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 24 Sep 2026 14:57:44 +0000</lastBuildDate>
+    <item>
+      <title>The Boring Pump Maker Wall Street Forgot: Inside Gorman-Rupp</title>
+      <description>We started this episode chasing one under-the-radar equipment stock and ended up with a completely different one after a mid-year acquisition took it off the board. Alex and Jordan explain how H&amp;E Equipment's buyout saga led them to Gorman-Rupp, a century-old Ohio pump manufacturer quietly up nearly 30% in 2025, and dig into why unglamorous industrials like this one keep slipping past most investors' radar.</description>
+      <itunes:summary>We started this episode chasing one under-the-radar equipment stock and ended up with a completely different one after a mid-year acquisition took it off the board. Alex and Jordan explain how H&amp;E Equipment's buyout saga led them to Gorman-Rupp, a century-old Ohio pump manufacturer quietly up nearly 30% in 2025, and dig into why unglamorous industrials like this one keep slipping past most investors' radar.</itunes:summary>
+      <pubDate>Thu, 24 Sep 2026 14:57:44 +0000</pubDate>
+      <enclosure url="https://shawn-noche.github.io/stock-podcast/episodes/audio/2026-09-24-weekday_deep_dive-GRC.mp3" length="8720301" type="audio/mpeg" />
+      <guid isPermaLink="false">1ca64c0e-5670-470c-b134-e8bd8164a9ea</guid>
+      <itunes:duration>09:05</itunes:duration>
+      <itunes:explicit>false</itunes:explicit>
+      <itunes:episodeType>full</itunes:episodeType>
+      <podcast:transcript url="https://shawn-noche.github.io/stock-podcast/episodes/notes/2026-09-24-weekday_deep_dive-GRC.txt" type="text/plain" />
+    </item>
     <item>
       <title>The Irrigation Stock Wall Street Forgot: Inside Lindsay Corporation's Quiet Beat</title>
       <description>A profitable, dividend-paying industrial name just posted an earnings beat and almost nobody noticed. Alex and Jordan dig into Lindsay Corporation, the Omaha company that sells both farm irrigation equipment and highway crash barriers, and ask why the stock is sitting on a 'Strong Sell' technical reading right after beating expectations.</description>
